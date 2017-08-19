@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context="com.socialteinc.socialate.CheckEmailActivity">
+
+    <Button
+            android:id="@+id/nextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_marginRight="8dp"
+            android:text="@string/next"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"/>
+
+    <TextView
+            android:id="@+id/emailRegistrationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/email_registration"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
+
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailRegistrationTextView"
+            android:id="@+id/textInputLayout">
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email_address" android:id="@+id/emailEditText"/>
+    </android.support.design.widget.TextInputLayout>
+</android.support.constraint.ConstraintLayout>

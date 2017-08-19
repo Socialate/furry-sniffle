@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Socialate</string>
+    <string name="email_registration">Email Registration</string>
+    <string name="next">next</string>
+    <string name="email_address">Email Address</string>
+    <string name="email_taken">Email address is taken</string>
 </resources>
