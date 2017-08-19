@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -29,11 +30,11 @@ public class registerEmailTest
     @Test
     public void CreateAccountSuccess() {
         // Type text and then press the button.
-        onView(withId(R.id.loginPasswordEditText)).perform(typeText("Password1234"));
+        onView(withId(R.id.loginPasswordEditText)).perform(typeText("Password1234")).perform(closeSoftKeyboard());
         onView(withId(R.id.createAccountButton)).perform(click());
 
         //TODO (3) add intent createProfileIntent
-        // successful login moves user to next screen
+        // successful createAccount moves user to next screen
        intended(hasComponent(new ComponentName(getTargetContext(), CreateProfileActivity.class)));
     }
 
@@ -45,7 +46,7 @@ public class registerEmailTest
         onView(withId(R.id.createAccountButton)).perform(click());
 
         //TODO (4) add toast message for fail
-        //failed login shows error message
+        //failed createAccount shows error message
         RegisterEmailActivity activity = mRegisterEmailActivityRule.getActivity();
         onView(withText(R.string.password_short)).inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
