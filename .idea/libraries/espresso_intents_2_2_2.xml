@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="espresso-intents-2.2.2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/12bf346371ede7194039f2912cf7c6f721c32baa/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/12bf346371ede7194039f2912cf7c6f721c32baa/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/test/espresso/espresso-intents/2.2.2/espresso-intents-2.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
