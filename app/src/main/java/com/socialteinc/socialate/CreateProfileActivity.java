@@ -1,11 +1,12 @@
 package com.socialteinc.socialate;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CreateProfileActivity extends Activity {
+public class CreateProfileActivity extends AppCompatActivity {
 
     private String TAG = CreateProfileActivity.class.getSimpleName();
 
@@ -36,6 +37,7 @@ public class CreateProfileActivity extends Activity {
     private EditText mFullNameEditText;
     private Button mSubmitButton;
     private Uri mImageUri = null;
+    private Toolbar mToolbar;
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -59,8 +61,13 @@ public class CreateProfileActivity extends Activity {
         mDisplayNameEditText = findViewById(R.id.displayNameEditText);
         mFullNameEditText = findViewById(R.id.fullNameEditText);
         mSubmitButton = findViewById(R.id.setupSubmitButton);
+        mToolbar = findViewById(R.id.createProfileToolbar);
 
         mProgressDialog = new ProgressDialog(this);
+
+        //Initialise toolbar
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Profile Setup");
 
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
@@ -123,6 +130,7 @@ public class CreateProfileActivity extends Activity {
                     Intent mainIntent = new Intent(CreateProfileActivity.this, MainActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mainIntent);
+                    finish();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

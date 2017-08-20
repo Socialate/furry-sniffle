@@ -1,10 +1,11 @@
 package com.socialteinc.socialate;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegisterEmailActivity extends Activity {
+public class RegisterEmailActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterEmailActivity.class.getSimpleName();
 
@@ -25,6 +26,7 @@ public class RegisterEmailActivity extends Activity {
     private EditText mEmail;
     private EditText mPassword;
     private Button mCreateAccountButton;
+    private Toolbar mToolbar;
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -38,9 +40,15 @@ public class RegisterEmailActivity extends Activity {
         String email = intent.getStringExtra("signUpEmailAddress");
 
         // Initialize references to views
-        mEmail = (EditText) findViewById(R.id.loginEmailEditText);
-        mPassword = (EditText) findViewById(R.id.loginPasswordEditText);
-        mCreateAccountButton = (Button) findViewById(R.id.createAccountButton);
+        mEmail = findViewById(R.id.loginEmailEditText);
+        mPassword = findViewById(R.id.loginPasswordEditText);
+        mCreateAccountButton = findViewById(R.id.createAccountButton);
+        mToolbar = findViewById(R.id.registerEmailToolbar);
+
+        //Initialise toolbar
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Email Registration");
 
         mEmail.setText(email);
 

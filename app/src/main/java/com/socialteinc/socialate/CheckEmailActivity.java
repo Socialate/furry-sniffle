@@ -1,9 +1,10 @@
 package com.socialteinc.socialate;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,14 +16,15 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.ProviderQueryResult;
 
-public class CheckEmailActivity extends Activity {
+public class CheckEmailActivity extends AppCompatActivity {
 
     private static final String TAG = CheckEmailActivity
             .class.getSimpleName();
 
     // References variables
-    EditText mEmailEditText;
-    Button mNextButton;
+    private EditText mEmailEditText;
+    private Button mNextButton;
+    private Toolbar mToolbar;
 
 
     @Override
@@ -33,6 +35,12 @@ public class CheckEmailActivity extends Activity {
         // Initialize references to views
         mEmailEditText = findViewById(R.id.emailEditText);
         mNextButton = findViewById(R.id.nextButton);
+        mToolbar = findViewById(R.id.checkEmailToolbar);
+
+        //Initialise toolbar
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Email Registration");
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override

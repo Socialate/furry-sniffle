@@ -14,4 +14,5 @@
     <string name="submit">Submit</string>
     <string name="profile_setup">Profile Setup</string>
     <string name="failed_account">Failed to Create Account, Try Again.</string>
+    <string name="setup_your_new_profile">Setup Your New Profile</string>
 </resources>
