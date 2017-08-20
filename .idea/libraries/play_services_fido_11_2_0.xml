@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="play-services-fido-11.2.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/0eb1e316bd6c5d9cc51a32c67eb0880009f8c037/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/0eb1e316bd6c5d9cc51a32c67eb0880009f8c037/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

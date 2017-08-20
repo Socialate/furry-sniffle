@@ -9,9 +9,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -33,21 +31,30 @@ public class CheckEmailTest
         onView(withId(R.id.emailEditText)).perform(typeText("ftmuda@yahoo.com")).perform(closeSoftKeyboard());
         onView(withId(R.id.nextButton)).perform(click());
 
-        //TODO (1) add intent registerEmailIntent
-        // successful login moves user to next screen
-       intended(hasComponent(new ComponentName(getTargetContext(), RegisterEmailActivity.class)));
+        //COMPLETED (1) add intent registerEmailIntent
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // successful email check moves user to next screen
+        intended(hasComponent(new ComponentName(getTargetContext(), RegisterEmailActivity.class)));
     }
 
     @Test
     public void EmailFailed()
     {
         // Type text and then press the button.
-        onView(withId(R.id.emailEditText)).perform(typeText("ftmuda@yahoo.com"));
+        onView(withId(R.id.emailEditText)).perform(typeText("sandile.cyber@gmail.com")).perform(closeSoftKeyboard());
         onView(withId(R.id.nextButton)).perform(click());
 
-        //TODO (2) add toast message for fail
-        //failed login shows error message
-        CheckEmailActivity activity = mCheckEmailActivityRule.getActivity();
-        onView(withText(R.string.email_taken)).inRoot(withDecorView(not(is(activity.getWindow().getDecorView())))).check(matches(isDisplayed()));
+        //COMPLETED(2) add toast message for fail
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //failed check email shows error message
+        onView(withText(R.string.email_taken)).inRoot(withDecorView(not(is(mCheckEmailActivityRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
     }
 }
