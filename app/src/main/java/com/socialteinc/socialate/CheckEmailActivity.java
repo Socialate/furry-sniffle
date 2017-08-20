@@ -77,7 +77,7 @@ public class CheckEmailActivity extends Activity {
     private void signUpUser(String email) {
 
         Intent emailRegisterIntent = new Intent(CheckEmailActivity.this, RegisterEmailActivity.class);
-        emailRegisterIntent.putExtra("signUpEmail", email);
+        emailRegisterIntent.putExtra("signUpEmailAddress", email);
         emailRegisterIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(emailRegisterIntent);
     }
