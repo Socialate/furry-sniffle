@@ -14,6 +14,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
@@ -73,12 +76,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private boolean isValidEmail(CharSequence target) {
+    public static boolean isValidEmail(CharSequence target) {
         /* ***
          * Little helper method for verifying if the password pattern matches
          * Author: Sandile Shongwe
          * ***/
-        return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        final Matcher matcher = pattern.matcher(target);
+        return matcher.matches() && target != null ;
     }
 
 }
