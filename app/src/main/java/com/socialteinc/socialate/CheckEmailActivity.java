@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +26,7 @@ public class CheckEmailActivity extends AppCompatActivity {
     private EditText mEmailEditText;
     private Button mNextButton;
     private Toolbar mToolbar;
+    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -36,6 +38,7 @@ public class CheckEmailActivity extends AppCompatActivity {
         mEmailEditText = findViewById(R.id.emailEditText);
         mNextButton = findViewById(R.id.nextButton);
         mToolbar = findViewById(R.id.checkEmailToolbar);
+        mProgressDialog = new ProgressDialog(this);
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
@@ -47,7 +50,11 @@ public class CheckEmailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String email = mEmailEditText.getText().toString();
-                if(!TextUtils.isEmpty(email)){
+                if(!TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    mProgressDialog.setTitle("Checking Email Address");
+                    mProgressDialog.setMessage("Please wait while we check email.");
+                    mProgressDialog.setCanceledOnTouchOutside(false);
+                    mProgressDialog.show();
                     checkAccountEmailExistsInFirebase(email);
                 }
             }
@@ -72,7 +79,8 @@ public class CheckEmailActivity extends AppCompatActivity {
                     signUpUser(email);
 
                 }else{
-                    Toast.makeText(CheckEmailActivity.this, "Email address is taken", Toast.LENGTH_LONG).show();
+                    mProgressDialog.dismiss();
+                    Toast.makeText(CheckEmailActivity.this, "Account with Email Address Exists", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -84,6 +92,7 @@ public class CheckEmailActivity extends AppCompatActivity {
     */
     private void signUpUser(String email) {
 
+        mProgressDialog.dismiss();
         Intent emailRegisterIntent = new Intent(CheckEmailActivity.this, RegisterEmailActivity.class);
         emailRegisterIntent.putExtra("signUpEmailAddress", email);
         emailRegisterIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
