@@ -23,7 +23,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.login);
+        setContentView(R.layout.login_activity);
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
 
@@ -39,8 +39,8 @@ public class LoginActivity extends Activity {
          * Author: Sandile Shongwe
          * ***/
 
-        String email = ""; //((EditText) findViewById(R.id.email_field)).getText().toString();
-        String password = ""; // ((EditText) findViewById(R.id.password_field)).getText().toString();
+        String email = ((EditText) findViewById(R.id.email_field)).getText().toString();
+        String password = ((EditText) findViewById(R.id.password_field)).getText().toString();
 
         if (isValidEmail(email) && password != null) {
             mAuth.signInWithEmailAndPassword(email, password)
