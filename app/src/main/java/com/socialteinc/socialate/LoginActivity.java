@@ -50,6 +50,9 @@ public class LoginActivity extends Activity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("login activity", "signInWithEmail:success *******");
+                                Intent activity = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(activity);
+                                finish();
 
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -69,6 +72,8 @@ public class LoginActivity extends Activity {
     public void signUp(View v){
         //Intent activity = new Intent(this,CheckEmailActivity.class);
         //startActivity(activity);
+        //finish
+        Log.d("login activity"," Need an account click successful");
 
     }
 

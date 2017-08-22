@@ -82,7 +82,7 @@
                 android:textSize="18sp" android:layout_weight="0.23" android:textAlignment="textEnd"/>
         <TextView
                 android:text="@string/click_here"
-                android:layout_width="wrap_content"
+                android:layout_width="wrap_content" android:onClick="signUp"
                 android:layout_height="wrap_content" android:id="@+id/creatAccountTextView" android:layout_weight="0.26"
                 android:textSize="18sp" android:textColor="@color/colorPrimary"/>
     </LinearLayout>

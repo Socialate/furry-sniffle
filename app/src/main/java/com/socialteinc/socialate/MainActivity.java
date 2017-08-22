@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
             Log.d("MainActivity", "User is not signed in let's sign them in");
             Intent activity = new Intent(this,LoginActivity.class);
             startActivity(activity);
+            finish();
         }
         Log.d("MainActivity", "successfully launched .........");
     }
