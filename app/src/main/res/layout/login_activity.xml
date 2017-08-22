@@ -10,9 +10,12 @@
     <android.support.design.widget.TextInputLayout
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:id="@+id/textInputLayout" tools:layout_editor_absoluteY="0dp" tools:ignore="MissingConstraints">
+            android:id="@+id/textInputLayout" tools:ignore="MissingConstraints"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout1" android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
 
         <EditText
                 android:layout_width="match_parent"
@@ -26,11 +29,12 @@
     <android.support.design.widget.TextInputLayout
             android:layout_width="395dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
             android:id="@+id/textInputLayout1"
-            tools:layout_editor_absoluteY="86dp" tools:layout_editor_absoluteX="8dp" tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints"
+            android:layout_marginLeft="8dp" app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/SinginButton"
+            android:layout_marginRight="8dp" app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
 
 
         <EditText
@@ -44,12 +48,44 @@
             android:text="@string/login"
             android:background="@color/colorPrimary"
             android:textColor="@color/colorPrimaryText"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
-            app:layout_constraintRight_toRightOf="@+id/textInputLayout1"
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/SinginButton" android:onClick="signIn"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_marginRight="8dp" app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="15dp" app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            android:layout_marginLeft="8dp" app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+    <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteY="217dp"
-            tools:layout_editor_absoluteX="139dp" android:id="@+id/SinginButton" android:onClick="signIn"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="32dp" android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" android:textSize="30sp" app:layout_constraintHorizontal_bias="0.501"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            android:text="@string/socialate" android:id="@+id/appNameTextView" android:textColor="@color/colorPrimaryText"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="25dp"
+            android:id="@+id/linearLayout" android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
+        <TextView
+                android:text="@string/need_an_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/needAccountTextView"
+                android:textSize="18sp" android:layout_weight="0.23" android:textAlignment="textEnd"/>
+        <TextView
+                android:text="@string/click_here"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/creatAccountTextView" android:layout_weight="0.26"
+                android:textSize="18sp" android:textColor="@color/colorPrimary"/>
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
