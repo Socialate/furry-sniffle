@@ -24,4 +24,11 @@
     <string name="click_here">Click here.</string>
     <string name="add_entertainment_spot">Add Entertainment Spot</string>
     <string name="logout">Logout</string>
+    <string name="choose_picture">Choose Picture</string>
+    <string name="picture_of_area">picture of area</string>
+    <string name="add_new_entertainment_area">Add New Entertainment Area</string>
+    <string name="name_of_place">Name of place</string>
+    <string name="name_of_owner_optional">Name of Owner(optional)</string>
+    <string name="physical_address">Physical Address</string>
+    <string name="description">Description</string>
 </resources>

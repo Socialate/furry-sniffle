@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
      * This function launches add entertainment activity to create a new spot
      */
     private void onAddEntertainment(){
-//        Intent addEntertainmentIntent = new Intent(this, AddEntertainmentActivity.class);
-//        startActivity(addEntertainmentIntent);
+        Intent addEntertainmentIntent = new Intent(this, AddEntertainmentActivity.class);
+        startActivity(addEntertainmentIntent);
     }
 
     /**
