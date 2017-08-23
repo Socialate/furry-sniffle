@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
     private EditText mEntertainmentTitleEditText;
     private EditText mEntertainmentDescriptionEditText;
     private EditText mEntertainmentAddress;
+    private EditText mEntertainmentOwner;
     private Button mChooseImageButton;
     private Button mSubmitButton;
     private String mAuthor;
@@ -53,6 +55,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
 
     private static final int GALLERY_REQUEST_CODE = 1;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +76,18 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
 
         // Initialize references to views
-//        mEntertainmentImageView = (ImageView) findViewById(R.id.EntertainmentImageView) ;
-//        mEntertainmentTitleEditText = (EditText) findViewById(R.id.EntertainmentTitleView);
-//        mEntertainmentDescriptionEditText = (EditText) findViewById(R.id.EntertainmentDescription);
-//        mEntertainmentAddress = (EditText) findViewById(R.id.EntertainmentAddress);
-//        mChooseImageButton = (Button) findViewById(R.id.chooseImageView);
-//        mSubmitButton = (Button) findViewById(R.id.submitButton);
+        mEntertainmentImageView = findViewById(R.id.EntertainmentImageView);
+        mEntertainmentOwner = findViewById(R.id.NameOfOwnerEditText);
+        mEntertainmentTitleEditText = findViewById(R.id.entertainmentTitleEditText);
+        mEntertainmentDescriptionEditText = findViewById(R.id.entertainmentDescrptionEditText);
+        mEntertainmentAddress = findViewById(R.id.entertainmentAddressEditText);
+        mChooseImageButton = findViewById(R.id.chooseImageButton);
+        mSubmitButton = findViewById(R.id.addEntertainmentAreaButton);
+        mToolbar = findViewById(R.id.addEntertainmentToolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Entertainment Area");
 
         // Initialize progress bar
         mProgressDialog = new ProgressDialog(this);
@@ -117,6 +126,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
     private void startPosting() {
 
         final String title_val = mEntertainmentTitleEditText.getText().toString();
+        final String owner_val = mEntertainmentOwner.getText().toString();
         final String description_val = mEntertainmentDescriptionEditText.getText().toString();
         final String address_val = mEntertainmentAddress.getText().toString();
 
@@ -146,14 +156,15 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
                             Entertainment Entertainment = new Entertainment(
                                     mFirebaseUser.getUid(),
-                                    mAuthor,
                                     title_val,
-                                    description_val,
-                                    downloadUrl.toString(),
                                     address_val,
                                     null,
                                     null,
-                                    null);
+                                    description_val,
+                                    downloadUrl.toString(),
+                                    mAuthor,
+                                    owner_val,
+                                    null );
 
                             mEntertainmentsDatabaseReference.push().setValue(Entertainment).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

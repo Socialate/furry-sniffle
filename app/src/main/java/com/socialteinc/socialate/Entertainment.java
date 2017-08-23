@@ -10,12 +10,13 @@ public class Entertainment {
     private String photoUrl;
     private String uid;
     private String author;
+    private String owner;
     private String establishmentCategory;
 
     public Entertainment() {
     }
 
-    public Entertainment(String name, String address, String latitude, String longitude, String description, String photoUrl, String uid, String author, String establishmentCategory) {
+    public Entertainment(String uid, String name, String address, String latitude, String longitude, String description, String photoUrl, String author, String owner, String establishmentCategory) {
         this.name = name;
         this.address = address;
         this.latitude = latitude;
@@ -24,6 +25,7 @@ public class Entertainment {
         this.photoUrl = photoUrl;
         this.uid = uid;
         this.author = author;
+        this.owner = owner;
         this.establishmentCategory = establishmentCategory;
     }
 
@@ -38,6 +40,14 @@ public class Entertainment {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public String getAddress() {
