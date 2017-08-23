@@ -9,10 +9,10 @@
     <include
             layout="@layout/app_bar_layout"
             android:id="@+id/checkEmailToolbar"
-            android:layout_height="wrap_content" android:layout_width="match_parent"
-            android:layout_marginRight="0dp" app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginLeft="0dp" app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="0dp"
+            android:layout_height="wrap_content" android:layout_width="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.0"/>
 
     <Button
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout"/>
 
     <android.support.design.widget.TextInputLayout
-            android:layout_width="368dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
