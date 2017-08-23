@@ -1,6 +1,7 @@
 package com.socialteinc.socialate;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,12 +21,16 @@ import java.util.regex.Pattern;
 public class LoginActivity extends Activity {
     private FirebaseAuth mAuth;
 
+    private ProgressDialog mProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
+
+        mProgressDialog = new ProgressDialog(this);
 
     }
 
@@ -43,11 +48,19 @@ public class LoginActivity extends Activity {
         String password = ((EditText) findViewById(R.id.password_field)).getText().toString();
 
         if (isValidEmail(email) && password != null) {
+
+            mProgressDialog.setTitle("Logging In");
+            mProgressDialog.setMessage("Please wait while we get your account.");
+            mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.show();
+
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                mProgressDialog.dismiss();
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("login activity", "signInWithEmail:success *******");
                                 Intent activity = new Intent(LoginActivity.this, MainActivity.class);
@@ -55,6 +68,7 @@ public class LoginActivity extends Activity {
                                 finish();
 
                             } else {
+                                mProgressDialog.dismiss();
                                 // If sign in fails, display a message to the user.
                                 Log.w("login activity", "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed. Please enter valid username/password",
@@ -70,15 +84,14 @@ public class LoginActivity extends Activity {
 
 
     public void signUp(View v){
-        //Intent activity = new Intent(this,CheckEmailActivity.class);
-        //startActivity(activity);
-        //finish
+        Intent activity = new Intent(this,CheckEmailActivity.class);
+        startActivity(activity);
         Log.d("login activity"," Need an account click successful");
 
     }
 
 
-    public static boolean isValidEmail(CharSequence target) {
+    static boolean isValidEmail(CharSequence target) {
         /* ***
          * Little helper method for verifying if the password pattern matches
          * Author: Sandile Shongwe

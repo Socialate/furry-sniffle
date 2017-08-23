@@ -66,6 +66,9 @@ public class RegisterEmailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * this function creates a new user account using email and paassword on firebase
+     */
     private void startRegister() {
 
         String email = mEmail.getText().toString().trim();
@@ -88,7 +91,7 @@ public class RegisterEmailActivity extends AppCompatActivity {
                         mProgressDialog.dismiss();
 
                         Intent createProfileIntent = new Intent(RegisterEmailActivity.this, CreateProfileActivity.class);
-                        createProfileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        createProfileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(createProfileIntent);
                         finish();
 

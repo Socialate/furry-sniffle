@@ -97,6 +97,10 @@ public class CreateProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * this function creates a profile for the newly created account making
+     * sure we have a profile picture, username and the full name of the user.
+     */
     private void startSetupAccount() {
 
 
