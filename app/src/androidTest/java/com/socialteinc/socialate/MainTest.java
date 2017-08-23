@@ -22,6 +22,6 @@ public class MainTest {
     @Test
     public void MainLaunchTest(){
 
-        onView(withId(R.id.mainPageToolBar)).check(matches(isDisplayed()));
+        onView(withId(R.id.activity_main)).check(matches(isDisplayed()));
     }
 }
