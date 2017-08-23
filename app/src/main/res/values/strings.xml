@@ -15,4 +15,12 @@
     <string name="profile_setup">Profile Setup</string>
     <string name="failed_account">Failed to Create Account, Try Again.</string>
     <string name="setup_your_new_profile">Setup Your New Profile</string>
+    <string name="email">Email</string>
+    <string name="sign_in">sign in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="socialate">SOCIALATE</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="click_here">Click here.</string>
 </resources>
