@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Socialate</string>
-    <string name="description">Description</string>
-    <string name="physical_address">Physical Address</string>
-    <string name="name_of_the_place">Name of the place</string>
-    <string name="name_of_the_owner_optional">Name of the owner(optional)</string>
-    <string name="textview">TextView</string>
+    <string name="email_registration">Email Registration</string>
+    <string name="next">next</string>
+    <string name="email_address">Email Address</string>
+    <string name="email_taken">Email address is taken</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_password">Create Password</string>
+    <string name="password_short">Password is too short</string>
+    <string name="full_name">Full Name</string>
+    <string name="display_name">Display Name</string>
+    <string name="choose_profile_picture">Choose Profile Picture</string>
     <string name="submit">Submit</string>
-    <string name="picture_of_area">Picture Of Area</string>
-    <string name="upload_picture">Upload Picture</string>
-    <string name="entertainment_area_details">Entertainment Area Details</string>
-    <string name="add_new_entertainment_area">Add New Entertainment Area</string>
+    <string name="profile_setup">Profile Setup</string>
+    <string name="failed_account">Failed to Create Account, Try Again.</string>
+    <string name="setup_your_new_profile">Setup Your New Profile</string>
+    <string name="email">Email</string>
+    <string name="sign_in">sign in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="socialate">SOCIALATE</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="click_here">Click here.</string>
+    <string name="add_entertainment_spot">Add Entertainment Spot</string>
+    <string name="logout">Logout</string>
 </resources>
