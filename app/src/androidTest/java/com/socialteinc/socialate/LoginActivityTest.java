@@ -1,6 +1,7 @@
 package com.socialteinc.socialate;
 
 
+import android.support.test.espresso.intent.Intents;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -11,6 +12,8 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -40,16 +43,29 @@ public class LoginActivityTest {
         onView(withId(R.id.password_field)).perform(typeText("furry"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
 
-        Thread.sleep(3000);
-        onView(withText("Authentication failed. Please enter valid username/password")).inRoot(withDecorView(not(is(main.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+//        Thread.sleep(3000);
+//        onView(withText("Authentication failed. Please enter valid username/password")).inRoot(withDecorView(not(is(main.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
 
     }
 
     @Test
-    public void logintesting(){
+    public void logintesting() throws InterruptedException {
+//        Intents.init();
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
+
+//        Thread.sleep(6000);
+//        intended(hasComponent(MainActivity.class.getName()));
+//        Intents.release();
+    }
+
+    @Test
+    public void signUptesting(){
+        Intents.init();
+        onView(withId(R.id.creatAccountTextView)).perform(click());
+        intended(hasComponent(CheckEmailActivity.class.getName()));
+        Intents.release();
 
     }
 
