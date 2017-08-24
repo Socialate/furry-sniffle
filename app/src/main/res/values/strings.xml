@@ -31,4 +31,6 @@
     <string name="name_of_owner_optional">Name of Owner(optional)</string>
     <string name="physical_address">Physical Address</string>
     <string name="description">Description</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="err_msg_password">Enter the password</string>
 </resources>

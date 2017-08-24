@@ -4,6 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
+                                             android:id="@+id/loginConstraintLayout"
                                              tools:context="com.socialteinc.socialate.LoginActivity">
 
 
@@ -11,10 +12,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
-            android:id="@+id/textInputLayout" tools:ignore="MissingConstraints"
+            android:id="@+id/loginEmailTextInputLayout" tools:ignore="MissingConstraints"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout1" android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/loginPasswordTextInputLayout" android:layout_marginRight="8dp"
             android:layout_marginStart="8dp" android:layout_marginEnd="8dp">
 
         <EditText
@@ -27,9 +28,9 @@
 
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textInputLayout1"
+            android:id="@+id/loginPasswordTextInputLayout"
             android:layout_marginLeft="8dp" app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/SinginButton"
             android:layout_marginRight="8dp" app:layout_constraintRight_toRightOf="parent"
@@ -63,7 +64,7 @@
             app:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" android:textSize="30sp" app:layout_constraintHorizontal_bias="0.501"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/loginEmailTextInputLayout"
             android:text="@string/socialate" android:id="@+id/appNameTextView" android:textColor="@color/colorPrimaryText"/>
     <LinearLayout
             android:orientation="horizontal"
