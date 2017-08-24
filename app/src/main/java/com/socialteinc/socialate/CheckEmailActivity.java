@@ -4,18 +4,23 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.ProviderQueryResult;
+
+import static com.socialteinc.socialate.LoginActivity.isValidEmail;
 
 public class CheckEmailActivity extends AppCompatActivity {
 
@@ -24,9 +29,11 @@ public class CheckEmailActivity extends AppCompatActivity {
 
     // References variables
     private EditText mEmailEditText;
+    private TextInputLayout mTextInputLayout;
     private Button mNextButton;
     private Toolbar mToolbar;
     private ProgressDialog mProgressDialog;
+    private ConstraintLayout mConstraintLayout;
 
 
     @Override
@@ -36,9 +43,13 @@ public class CheckEmailActivity extends AppCompatActivity {
 
         // Initialize references to views
         mEmailEditText = findViewById(R.id.emailEditText);
+        mTextInputLayout = findViewById(R.id.checkEmailTextInputLayout);
         mNextButton = findViewById(R.id.nextButton);
         mToolbar = findViewById(R.id.checkEmailToolbar);
         mProgressDialog = new ProgressDialog(this);
+        mConstraintLayout = findViewById(R.id.checkEmailConstraintLayout);
+
+        mEmailEditText.addTextChangedListener(new MyTextWatcher());
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
@@ -49,14 +60,15 @@ public class CheckEmailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(!validateEmail()){return;}
                 String email = mEmailEditText.getText().toString();
-                if(!TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    mProgressDialog.setTitle("Checking Email Address");
-                    mProgressDialog.setMessage("Please wait while we check email.");
-                    mProgressDialog.setCanceledOnTouchOutside(false);
-                    mProgressDialog.show();
-                    checkAccountEmailExistsInFirebase(email);
-                }
+
+                mProgressDialog.setTitle("Checking Email Address");
+                mProgressDialog.setMessage("Please wait while we check email.");
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.show();
+                checkAccountEmailExistsInFirebase(email);
+
             }
         });
     }
@@ -80,7 +92,7 @@ public class CheckEmailActivity extends AppCompatActivity {
 
                 }else{
                     mProgressDialog.dismiss();
-                    Toast.makeText(CheckEmailActivity.this, "Account with Email Address Exists", Toast.LENGTH_LONG).show();
+                    Snackbar.make(mConstraintLayout, "Account with Email Address Already Exists.", Snackbar.LENGTH_LONG ).show();
                 }
             }
         });
@@ -97,5 +109,31 @@ public class CheckEmailActivity extends AppCompatActivity {
         emailRegisterIntent.putExtra("signUpEmailAddress", email);
         emailRegisterIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(emailRegisterIntent);
+    }
+
+    private boolean validateEmail() {
+        String email = mEmailEditText.getText().toString().trim();
+
+        if (email.isEmpty() || !isValidEmail(email)) {
+            mTextInputLayout.setError(getString(R.string.err_msg_email));
+            return false;
+        } else {
+            mTextInputLayout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            validateEmail();
+        }
     }
 }
