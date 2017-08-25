@@ -20,8 +20,8 @@ public class CheckEmailTest {
     public ActivityTestRule<CheckEmailActivity> rule = new ActivityTestRule<>(CheckEmailActivity.class);
 
     @Test
-    public void checkEmailLaunchTest(){
-
+    public void checkEmailLaunchTest() throws InterruptedException {
+        Thread.sleep(2000);
         onView(withId(R.id.emailEditText)).check(matches(isDisplayed()));
     }
 
