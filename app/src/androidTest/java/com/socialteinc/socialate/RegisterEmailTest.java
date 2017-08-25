@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
@@ -46,6 +45,6 @@ public class RegisterEmailTest {
 
         /* Your activity is initialized and ready to go. */
         onView(withId(R.id.loginPasswordEditText)).perform(typeText(mPassword)); //(ViewAction) closeSoftKeyboard());
-        onView(withId(R.id.createAccountButton)).perform(click());
+       // onView(withId(R.id.createAccountButton)).perform(click());
     }
 }
