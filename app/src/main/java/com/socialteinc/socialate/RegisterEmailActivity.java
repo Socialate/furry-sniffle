@@ -51,7 +51,7 @@ public class RegisterEmailActivity extends AppCompatActivity {
         mCreateAccountButton = findViewById(R.id.createAccountButton);
         mToolbar = findViewById(R.id.registerEmailToolbar);
         mTextInputLayout = findViewById(R.id.registerPasswordTextInputLayout);
-        mConstraintLayout = findViewById(R.id.checkEmailConstraintLayout);
+        mConstraintLayout = findViewById(R.id.registerEmailConstraintLayout);
 
         mPassword.addTextChangedListener(new MyTextWatcher());
 

@@ -1,9 +1,12 @@
 package com.socialteinc.socialate;
 
+import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(AndroidJUnit4.class)
 public class EntertainmentClassTest {
 
     /**
@@ -12,7 +15,7 @@ public class EntertainmentClassTest {
     @Test
     public void testEntertainment() {
         System.out.println("constructorEntertainment");
-        Entertainment instance = new Entertainment(null,null,null,null,null,null,null,null,null);
+        Entertainment instance = new Entertainment(null,null,null,null,null,null,null,null,null,null);
         assertEquals(instance.getName(), null);
         assertEquals(instance.getAddress(), null);
         assertEquals(instance.getDescription(), null);
