@@ -27,6 +27,30 @@ public class EntertainmentClassTest {
         assertEquals(instance.getEstablishmentCategory(), null);
     }
     /**
+     * Test of setOwner method, of class Entertainment.
+     */
+    @Test
+    public void testSetOwner() {
+        System.out.println("setOwner");
+        String name = "james";
+        Entertainment instance = new Entertainment();
+        instance.setOwner(name);
+        assertEquals(instance.getOwner(), name);
+    }
+
+    /**
+     * Test of getOwner method, of class Entertainment.
+     */
+    @Test
+    public void testGetOwner() {
+        System.out.println("getOwner");
+        Entertainment instance = new Entertainment();
+        String expResult = "james";
+        instance.setOwner("james");
+        String result = instance.getOwner();
+        assertEquals(expResult, result);
+    }
+    /**
      * Test of setName method, of class Entertainment.
      */
     @Test
