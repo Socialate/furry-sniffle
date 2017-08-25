@@ -45,7 +45,7 @@ public class RegisterEmailTest {
         rule.launchActivity(intent);
 
         /* Your activity is initialized and ready to go. */
-        onView(withId(R.id.registerPasswordTextInputLayout)).perform(typeText(mPassword)); //(ViewAction) closeSoftKeyboard());
+        onView(withId(R.id.loginPasswordEditText)).perform(typeText(mPassword)); //(ViewAction) closeSoftKeyboard());
         onView(withId(R.id.createAccountButton)).perform(click());
     }
 }
