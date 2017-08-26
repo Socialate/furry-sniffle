@@ -38,9 +38,13 @@ public class LoginActivityTest {
 
     @Test
     public void logintesting() throws InterruptedException {
+        Intents.init();
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
+        Thread.sleep(3000);
+        intended(hasComponent(MainActivity.class.getName()));
+        Intents.release();
 
     }
 
