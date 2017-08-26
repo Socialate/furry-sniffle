@@ -42,7 +42,7 @@ public class LoginActivityTest {
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         intended(hasComponent(MainActivity.class.getName()));
         Intents.release();
 
