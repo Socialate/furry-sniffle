@@ -45,9 +45,9 @@ public class CheckEmailActivityTest {
         onView(withId(R.id.nextButton)).perform(click());
     }
 
-    @Test
+    /*@Test
     public void ValidEmailTest(){
         onView(withId(R.id.emailEditText)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.nextButton)).perform(click());
-    }
+    }*/
 }
