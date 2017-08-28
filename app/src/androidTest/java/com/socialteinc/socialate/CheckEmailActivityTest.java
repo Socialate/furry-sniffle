@@ -35,7 +35,7 @@ public class CheckEmailActivityTest {
 
     @Test
     public void ValidEmailTest() throws InterruptedException {
-        onView(withId(R.id.emailEditText)).perform(typeText("validemail@gmail.com"));
+        onView(withId(R.id.emailEditText)).perform(typeText("valid12@gmail.com"));
         onView(withId(R.id.nextButton)).perform(click());
     }
 }
