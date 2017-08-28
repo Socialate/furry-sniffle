@@ -20,6 +20,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.ProviderQueryResult;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.socialteinc.socialate.LoginActivity.isValidEmail;
 
 public class CheckEmailActivity extends AppCompatActivity {
@@ -122,6 +125,16 @@ public class CheckEmailActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    static boolean isValidEmail(CharSequence target) {
+        /* ***
+         * Little helper method for verifying if the password pattern matches
+         * ***/
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        final Matcher matcher = pattern.matcher(target);
+        return matcher.matches() && target != null ;
     }
 
     private class MyTextWatcher implements TextWatcher {

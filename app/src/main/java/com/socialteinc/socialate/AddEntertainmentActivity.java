@@ -130,6 +130,10 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         final String description_val = mEntertainmentDescriptionEditText.getText().toString();
         final String address_val = mEntertainmentAddress.getText().toString();
 
+        if(imageUri == null){
+           imageUri = Uri.parse("android.resourse://com.socialteinc.socialate/drawable/eventplaceholder.jpg");
+        }
+
         if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(address_val) && !TextUtils.isEmpty(description_val) &&  imageUri != null){
 
             Log.d("MyAPP","started Upload");
