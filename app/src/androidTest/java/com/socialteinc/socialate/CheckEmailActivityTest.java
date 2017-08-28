@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -46,7 +47,7 @@ public class CheckEmailActivityTest {
 
     @Test
     public void ValidEmailTest(){
-        onView(withId(R.id.emailEditText)).perform(typeText("musar@gmail.com"));
+        onView(withId(R.id.emailEditText)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.nextButton)).perform(click());
     }
 }
