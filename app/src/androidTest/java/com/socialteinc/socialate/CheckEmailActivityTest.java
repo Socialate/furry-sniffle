@@ -23,8 +23,9 @@ public class CheckEmailActivityTest {
     public ActivityTestRule<CheckEmailActivity> mActivityRule = new ActivityTestRule<>(
             CheckEmailActivity.class);
 
-    /** This is a test for CheckEmailActivity, which automates the form filling
-        and clicks the button
+    /**
+     * This is a test for Checking if the username has already being taken or not,
+     * if username doesn't exist, you'll be allowed to create a password
     **/
     @Test
     public void InvalidEmailTest() throws InterruptedException {
