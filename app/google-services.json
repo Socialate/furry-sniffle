@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "487212412896",
+    "firebase_url": "https://socialate-728af.firebaseio.com",
+    "project_id": "socialate-728af",
+    "storage_bucket": "socialate-728af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487212412896:android:3193aaff0037c782",
+        "android_client_info": {
+          "package_name": "com.socialteinc.socialate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487212412896-vl2emuciugv2qrlcvphov750b8dt95vv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJICRZvdbAS3el9lREsPalNU3P7vM8HNM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
