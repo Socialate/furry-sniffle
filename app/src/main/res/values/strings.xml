@@ -20,7 +20,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="socialate">SOCIALATE</string>
-    <string name="need_an_account">Need an account?</string>
+    <string name="need_an_account">Need an account? </string>
     <string name="click_here">Click here.</string>
     <string name="add_entertainment_spot">Add Entertainment Spot</string>
     <string name="logout">Logout</string>
@@ -34,4 +34,6 @@
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>
     <string name="error_password_length">Passwords must be at least 8 characters in length</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>

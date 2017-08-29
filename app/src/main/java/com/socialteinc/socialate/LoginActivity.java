@@ -132,6 +132,12 @@ public class LoginActivity extends Activity {
 
     }
 
+    public void resetPassword(View v){
+        Intent activity = new Intent(this,ResetPasswordActivity.class);
+        startActivity(activity);
+        Log.d("login activity"," reset password click successful");
+
+    }
     static boolean isValidEmail(CharSequence target) {
         /* ***
          * Little helper method for verifying if the password pattern matches
