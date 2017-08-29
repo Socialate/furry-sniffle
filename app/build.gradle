@@ -49,6 +49,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:exifinterface:26.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.0.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
@@ -61,6 +62,8 @@ dependencies {
     compile 'com.google.firebase:firebase-database:11.2.0'
     compile 'com.google.firebase:firebase-storage:11.2.0'
     compile 'com.firebaseui:firebase-ui-database:2.0.1'
+    compile 'com.android.support:cardview-v7:26.0.1'
+    compile 'com.android.support:recyclerview-v7:26.0.1'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
 }

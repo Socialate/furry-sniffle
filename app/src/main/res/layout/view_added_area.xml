@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:orientation="vertical"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@color/common_google_signin_btn_text_dark_default">
+
+    <include
+            layout="@layout/app_bar_layout"
+            android:id="@+id/ViewAddedAreaToolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.0" card_view:cardBackgroundColor="@color/colorPrimary"
+            android:paddingLeft="15dp" android:paddingRight="15dp" android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" android:layout_marginStart="5dp" android:layout_marginEnd="5dp"
+            android:paddingTop="15dp" card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="58dp">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" tools:layout_editor_absoluteY="8dp"
+                tools:layout_editor_absoluteX="8dp">
+
+            <TextView
+                    android:text="@string/Owner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaOwner"
+                    android:layout_marginRight="8dp"
+                    card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
+                    card_view:layout_constraintLeft_toLeftOf="parent" card_view:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginTop="7dp" card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaDesc"
+                    android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryText"/>
+            <ImageView
+                    app:srcCompat="@drawable/eventplaceholder"
+                    android:contentDescription="@string/image_of_added_area"
+                    android:id="@+id/ViewAddedAreaImageView"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaTitle"
+                    android:layout_width="400dp" android:layout_marginRight="0dp"
+                    card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="0dp"
+                    card_view:layout_constraintLeft_toLeftOf="parent" card_view:layout_constraintHorizontal_bias="0.06"
+                    android:scaleType="centerCrop" android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp" android:layout_marginEnd="0dp" android:adjustViewBounds="true"
+                    android:cropToPadding="true"/>
+            <TextView
+                    android:text="Address: "
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaAddress"
+                    android:layout_marginRight="8dp"
+                    card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
+                    card_view:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" card_view:layout_constraintHorizontal_bias="0.0"
+                    android:textColor="@color/colorPrimaryText" android:typeface="sans"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaImageView"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text="@string/smoke_and_grill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaTitle"
+                    android:layout_marginRight="8dp"
+                    card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:background="@android:color/transparent"
+                    android:textSize="24sp"
+                    card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
+                    android:textStyle="bold"/>
+            <TextView
+                    android:text="@string/addedAreaDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaDesc"
+                    android:layout_marginRight="8dp"
+                    card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
+                    card_view:layout_constraintLeft_toLeftOf="parent" card_view:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaAddress"
+                    android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryText"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
