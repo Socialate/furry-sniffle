@@ -34,13 +34,43 @@
                 tools:layout_editor_absoluteX="8dp">
 
             <TextView
+                    android:text=""
+                    android:layout_width="273dp"
+                    android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaOwnerText"
+                    android:layout_marginRight="2dp"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintLeft_toRightOf="@+id/ViewAddedAreaOwner"
+                    android:layout_marginLeft="2dp" card_view:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaDescText"
+                    android:textColor="@color/colorPrimaryText"/>
+            <TextView
+                    android:text=""
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaDescText"
+                    android:layout_marginTop="8dp"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaAddressText"
+                    card_view:layout_constraintLeft_toRightOf="@+id/ViewAddedAreaDesc" android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp" card_view:layout_constraintRight_toRightOf="parent"
+                    card_view:layout_constraintHorizontal_bias="0.0" android:textColor="@color/colorPrimaryText"/>
+            <TextView
+                    android:text=""
+                    android:layout_width="282dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ViewAddedAreaAddressText" android:layout_marginRight="2dp"
+                    app:layout_constraintRight_toRightOf="parent" android:layout_marginTop="8dp"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaImageView"
+                    card_view:layout_constraintLeft_toRightOf="@+id/ViewAddedAreaAddress"
+                    android:layout_marginLeft="2dp" tools:layout_editor_absoluteY="316dp"
+                    tools:layout_editor_absoluteX="66dp" android:textColor="@color/colorPrimaryText"/>
+            <TextView
                     android:text="@string/Owner"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaOwner"
                     android:layout_marginRight="8dp"
                     card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
                     card_view:layout_constraintLeft_toLeftOf="parent" card_view:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginTop="7dp" card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaDesc"
+                    android:layout_marginTop="8dp" card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaDescText"
                     android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:textStyle="bold"
                     android:textColor="@color/colorPrimaryText"/>
             <ImageView
@@ -56,8 +86,8 @@
                     android:layout_marginStart="0dp" android:layout_marginEnd="0dp" android:adjustViewBounds="true"
                     android:cropToPadding="true"/>
             <TextView
-                    android:text="Address: "
-                    android:layout_width="0dp"
+                    android:text="@string/address"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaAddress"
                     android:layout_marginRight="8dp"
                     card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
@@ -66,7 +96,7 @@
                     android:textColor="@color/colorPrimaryText" android:typeface="sans"
                     android:layout_marginTop="8dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaImageView"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" tools:layout_editor_absoluteY="317dp"/>
             <TextView
                     android:text="@string/smoke_and_grill"
                     android:layout_width="wrap_content"
@@ -82,13 +112,13 @@
                     android:textStyle="bold"/>
             <TextView
                     android:text="@string/addedAreaDescription"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/ViewAddedAreaDesc"
                     android:layout_marginRight="8dp"
                     card_view:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
                     card_view:layout_constraintLeft_toLeftOf="parent" card_view:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaAddress"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ViewAddedAreaAddressText"
                     android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:textStyle="bold"
                     android:textColor="@color/colorPrimaryText"/>
         </android.support.constraint.ConstraintLayout>
