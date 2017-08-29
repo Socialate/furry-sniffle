@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -22,7 +21,7 @@ public class ResetPasswordTest{
     public void checkEmailExistsTest() throws InterruptedException {
 
         onView(withId(R.id.resetEmailEditText)).perform(typeText("valid@socialate.com"), closeSoftKeyboard());
-        Thread.sleep(1000);
-        onView(withId(R.id.resetPasswordButton)).perform(click());
+//        Thread.sleep(1000);
+//        onView(withId(R.id.resetPasswordButton)).perform(click());
     }
 }
