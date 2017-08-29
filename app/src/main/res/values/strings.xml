@@ -34,4 +34,5 @@
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>
     <string name="error_password_length">Passwords must be at least 8 characters in length</string>
+    <string name="image_for_the_entertainment_spot">Image for the entertainment spot</string>
 </resources>
