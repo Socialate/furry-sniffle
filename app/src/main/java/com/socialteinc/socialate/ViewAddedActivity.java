@@ -38,7 +38,7 @@ public class ViewAddedActivity extends AppCompatActivity {
         super.onStart();
 
         ((TextView)(findViewById(R.id.ViewAddedAreaTitle))).setText(title_val);
-        ((TextView)(findViewById(R.id.ViewAddedAreaAddressText))).setText(address_val);
+        ((TextView)(findViewById(R.id.ViewAddedAreaAddressText))).setText(address_val.trim());
         ((TextView)(findViewById(R.id.ViewAddedAreaDescText))).setText(description_val);
         ((ImageView)findViewById(R.id.ViewAddedAreaImageView)).setImageURI(ImageURi);
 
