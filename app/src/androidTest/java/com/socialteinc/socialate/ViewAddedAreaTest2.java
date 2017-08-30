@@ -48,7 +48,7 @@ public class ViewAddedAreaTest2 {
     public void ViewAreaBackButtonTest(){
         onView(withText("Entertainment Area")).perform(longClick());
         onView(withContentDescription(R.string.abc_action_bar_up_description)).check(matches(isDisplayed()));
-        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
+        //onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
 
     }
 }
