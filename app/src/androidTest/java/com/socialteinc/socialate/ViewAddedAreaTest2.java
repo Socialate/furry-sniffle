@@ -11,9 +11,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static org.hamcrest.Matchers.not;
 
 public class ViewAddedAreaTest2 {
@@ -42,4 +44,11 @@ public class ViewAddedAreaTest2 {
         onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(not(isDisplayed())));
     }
 
+    @Test
+    public void ViewAreaBackButtonTest(){
+        onView(withText("Entertainment Area")).perform(longClick());
+        onView(withContentDescription(R.string.abc_action_bar_up_description)).check(matches(isDisplayed()));
+        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
+
+    }
 }

@@ -12,10 +12,6 @@ import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -40,24 +36,8 @@ public class ViewAddedAreaTest1 {
                     return intent;
                 }
             };
-
     @Test
-    public void ViewAreaTest(){
-       // onView(withId(R.id.ViewAddedAreaOwner)).check(matches(isDisplayed()));
-       // onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
-       // onView(withId(R.id.ViewAddedAreaTitle)).check(matches(isDisplayed()));
-       // onView(withId(R.id.ViewAddedAreaAddress)).check(matches(isDisplayed()));
-      //  onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
-      //  onView(withId(R.id.ViewAddedAreaDesc)).check(matches(isDisplayed()));
-      //  onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
-       // onView(withId(R.id.ViewAddedAreaImageView)).check(matches(isDisplayed()));
+    public void test(){
+
     }
-
-    /*@Test
-    public void ViewAreaBackButtonTest(){
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        onView(withId(android.R.id.home)).perform(click());
-    }*/
-
-
 }
