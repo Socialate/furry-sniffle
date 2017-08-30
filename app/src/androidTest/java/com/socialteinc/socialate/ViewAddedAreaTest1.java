@@ -45,8 +45,8 @@ public class ViewAddedAreaTest1 {
             };
 
     @Test
-    public void ViewAreaBackButtonTest(){
-       onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(not(isDisplayed())));
+    public void ViewAreaOwenerTest(){
+       onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
 
     }
 
