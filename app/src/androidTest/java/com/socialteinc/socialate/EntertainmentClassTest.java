@@ -14,8 +14,6 @@ public class EntertainmentClassTest {
     /**
      * Test of constructor Entertainment method, of class Entertainment.
      */
-    @Rule
-    public ActivityTestRule<AddEntertainmentActivity> addEnt = new ActivityTestRule<>(AddEntertainmentActivity.class);
 
     @Test
     public void testEntertainment() {
