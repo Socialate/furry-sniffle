@@ -19,10 +19,14 @@ public class ResetPasswordTest{
  public ActivityTestRule<ResetPasswordActivity> rule = new ActivityTestRule<>(ResetPasswordActivity.class);
 
     @Test
-    public void checkEmailExistsTest() throws InterruptedException {
+    public void checkEmailExistsTest(){
 
         onView(withId(R.id.resetEmailEditText)).perform(typeText("valid@socialate.com"), closeSoftKeyboard());
-//        Thread.sleep(1000);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.resetPasswordButton)).perform(click());
     }
 }
