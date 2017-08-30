@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * This function launches add entertainment activity to create a new spot
