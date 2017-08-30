@@ -176,27 +176,14 @@ public class AddEntertainmentActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         mProgressDialog.dismiss();
                                         //handling layout of the successfully added area
-                                        setContentView(R.layout.view_added_area);
-                                        mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
-                                        setSupportActionBar(mToolbar);
-                                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                                        getSupportActionBar().setTitle("Entertainment Area");
-                                        ((TextView)(findViewById(R.id.ViewAddedAreaTitle))).setText(title_val);
-                                        ((TextView)(findViewById(R.id.ViewAddedAreaAddressText))).setText(address_val);
-                                        ((TextView)(findViewById(R.id.ViewAddedAreaDescText))).setText(description_val);
-                                        ((ImageView)findViewById(R.id.ViewAddedAreaImageView)).setImageURI(imageUri);
-                                        if(owner_val.equals("")){
-                                            ((findViewById(R.id.ViewAddedAreaOwner))).setVisibility(View.GONE);
-                                            ((findViewById(R.id.ViewAddedAreaOwnerText))).setVisibility(View.GONE);
-                                        }
-                                        else{
-
-                                            ((TextView)(findViewById(R.id.ViewAddedAreaOwnerText))).setText(owner_val);
-                                        }
-
-
-
-                                        //finish();
+                                        Intent intent = new Intent(getBaseContext(), ViewAddedActivity.class);
+                                        intent.putExtra("description_val", description_val);
+                                        intent.putExtra("address_val", address_val);
+                                        intent.putExtra("title_val", title_val);
+                                        intent.putExtra("owner_val", owner_val);
+                                        intent.putExtra("imageUri", imageUri.toString());
+                                        startActivity(intent);
+                                        finish();
                                     } else {
                                         mProgressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Failed to create Entertainment spot. Try Again!", Toast.LENGTH_SHORT).show();
