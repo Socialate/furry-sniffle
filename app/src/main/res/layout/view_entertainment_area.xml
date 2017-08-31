@@ -54,7 +54,7 @@
                     android:layout_marginRight="2dp" card_view:layout_constraintRight_toRightOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.0" android:textColor="@color/colorPrimaryText"/>
             <TextView
-                    android:text="fefefff"
+                    android:text="@string/francis_tinashe_mudavanhu"
                     android:layout_width="275dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/ViewAddedAreaAddressText" android:layout_marginRight="2dp"

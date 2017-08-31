@@ -149,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-//                        Intent eventIntent = new Intent(MainActivity.this, EventActivity.class);
-//                        eventIntent.putExtra("event_key", entertainmentKey);
-//                        startActivity(eventIntent);
+                        Intent eventIntent = new Intent(MainActivity.this, ViewEntertainmentActivity.class);
+                        eventIntent.putExtra("entertainmentKey", entertainmentKey);
+                        startActivity(eventIntent);
                     }
                 });
             }

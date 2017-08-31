@@ -176,13 +176,8 @@ public class AddEntertainmentActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         mProgressDialog.dismiss();
                                         //handling layout of the successfully added area
-                                        Intent intent = new Intent(getBaseContext(), ViewAddedActivity.class);
-                                        intent.putExtra("description_val", description_val);
-                                        intent.putExtra("address_val", address_val);
-                                        intent.putExtra("title_val", title_val);
-                                        intent.putExtra("owner_val", owner_val);
-                                        intent.putExtra("imageUri", imageUri.toString());
-                                        startActivity(intent);
+                                        Intent mainIntent = new Intent(AddEntertainmentActivity.this, ViewEntertainmentActivity.class);
+                                        startActivity(mainIntent);
                                         finish();
                                     } else {
                                         mProgressDialog.dismiss();

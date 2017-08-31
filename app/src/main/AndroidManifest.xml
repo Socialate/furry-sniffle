@@ -42,7 +42,10 @@
         <activity
                 android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
                 android:theme="@style/Base.Theme.AppCompat"/>
-        <activity android:name=".ViewAddedActivity">
+        <activity android:name=".ViewEntertainmentActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".MainActivity"/>
         </activity>
     </application>
 
