@@ -138,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
             onAddEntertainment();
             return true;
         }
+
+        if(id == R.id.action_view_edit_profile){
+            onEditProfile();
+        }
+
         if(id == R.id.action_logout){
             onLogout();
             return true;
@@ -151,6 +156,14 @@ public class MainActivity extends AppCompatActivity {
     private void onAddEntertainment(){
         Intent addEntertainmentIntent = new Intent(this, AddEntertainmentActivity.class);
         startActivity(addEntertainmentIntent);
+    }
+
+    /**
+     * This function launches view-edit profile activity to enable users to view and edit their profiles
+     */
+    private void onEditProfile(){
+        Intent viewEditProfileIntent = new Intent(this,ViewEditProfileActivity.class);
+        startActivity(viewEditProfileIntent);
     }
 
     /**
