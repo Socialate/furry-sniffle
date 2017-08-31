@@ -14,12 +14,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,16 +227,27 @@ public class MainActivity extends AppCompatActivity {
             event_title.setText(title);
         }
 
-        public void setOwner(String author){
+        void setOwner(String author){
             TextView event_author = mView.findViewById(R.id.ownerTextView);
             event_author.setText(author);
         }
 
-        public void setPhotoUrl(String image){
+        void setPhotoUrl(String image){
             ImageView event_image = mView.findViewById(R.id.photoImageView);
-            Glide.with(event_image.getContext())
+            final ProgressBar progressBar = mView.findViewById(R.id.imageProgressBar);
+            Picasso.with(event_image.getContext())
                     .load(image)
-                    .into(event_image);
+                    .into(event_image, new Callback() {
+                @Override
+                public void onSuccess() {
+                    progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
         }
     }
 

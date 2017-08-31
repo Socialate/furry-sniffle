@@ -23,8 +23,7 @@ import com.google.firebase.auth.ProviderQueryResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.socialteinc.socialate.LoginActivity.isValidEmail;
-
+@SuppressWarnings("ALL")
 public class CheckEmailActivity extends AppCompatActivity {
 
     private static final String TAG = CheckEmailActivity
@@ -56,6 +55,7 @@ public class CheckEmailActivity extends AppCompatActivity {
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Email Registration");
 
