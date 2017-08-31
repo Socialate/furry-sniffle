@@ -18,7 +18,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     // References variables
     private ImageView mEntertainmentImage;
     private TextView mEntertainmentOwner;
-    private TextView mEntertainmentTitle;
     private TextView mEntertainmentDescription;
     private TextView mEntertainmentAddress;
     private Toolbar mToolbar;
@@ -43,7 +42,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         // Initialize references to views
         mEntertainmentImage = findViewById(R.id.ViewAddedAreaImageView);
         mEntertainmentOwner = findViewById(R.id.ViewAddedAreaOwnerText);
-        mEntertainmentTitle = findViewById(R.id.ViewAddedAreaTitle);
         mEntertainmentDescription = findViewById(R.id.ViewAddedAreaDescText);
         mEntertainmentAddress = findViewById(R.id.ViewAddedAreaAddressText);
 
@@ -55,7 +53,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Entertainment Area");
 
         mEventsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
 
@@ -71,8 +68,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 String author = (String) dataSnapshot.child("author").getValue();
 
                 if(owner.equals("")){
-                    ((findViewById(R.id.ViewAddedAreaOwner))).setVisibility(View.GONE);
-                    ((findViewById(R.id.ViewAddedAreaOwnerText))).setVisibility(View.GONE);
+                    ((findViewById(R.id.ownerLinearlayout))).setVisibility(View.GONE);
                 }
                 else{
 
@@ -80,7 +76,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 }
 
                 mEntertainmentOwner.setText(owner);
-                mEntertainmentTitle.setText(name);
+                getSupportActionBar().setTitle(name);
                 mEntertainmentDescription.setText(description);
                 mEntertainmentAddress.setText(address);
 

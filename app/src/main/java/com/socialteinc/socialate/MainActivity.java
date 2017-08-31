@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     // References variables
     private RecyclerView mEntertainmentSpotRecyclerView;
-    private ProgressBar mProgressBar;
     private Toolbar mToolbar;
 
     // Firebase instance variables
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize references to views
         mToolbar = findViewById(R.id.mainPageToolBar);
-        mProgressBar = findViewById(R.id.progressBar);
         mEntertainmentSpotRecyclerView = findViewById(R.id.entertainmentSpotRecyclerView);
 
         setSupportActionBar(mToolbar);
@@ -58,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize  RecyclerView
         mEntertainmentSpotRecyclerView.setHasFixedSize(true);
         mEntertainmentSpotRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Initialize progress bar
-        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
         // Initialize Firebase components
         FirebaseApp.initializeApp(this);

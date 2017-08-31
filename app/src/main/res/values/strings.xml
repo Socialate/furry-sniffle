@@ -43,4 +43,9 @@
     <string name="image_of_added_area">Image Of Added Area</string>
     <string name="address">Address:</string>
     <string name="address1">Address:</string>
+    <string name="entetainment_spot_owner">Entetainment spot owner</string>
+    <string name="entertainment_spot_address">Entertainment spot Address</string>
+    <string name="fake_address">23 Tiger Lane, Roarstate, Myburg</string>
+    <string name="entertainment_spot_description">Entertainment spot description</string>
+    <string name="fake_description">The place where beasts are born and raised</string>
 </resources>
