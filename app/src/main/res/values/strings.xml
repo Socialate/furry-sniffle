@@ -37,4 +37,10 @@
     <string name="image_for_the_entertainment_spot">Image for the entertainment spot</string>
     <string name="francis_tinashe_mudavanhu">Francis Tinashe Mudavanhu</string>
     <string name="mansa_night_club">Mansa Night Club</string>
+    <string name="Owner">Owner:</string>
+    <string name="addedAreaDescription">Description:</string>
+    <string name="smoke_and_grill">Smoke and Grill</string>
+    <string name="image_of_added_area">Image Of Added Area</string>
+    <string name="address">Address:</string>
+    <string name="address1">Address:</string>
 </resources>
