@@ -27,6 +27,7 @@ public class ViewEntertainmentActivityTest {
 
     @Test
     public void onCreateTest() throws InterruptedException {
+        Thread.sleep(5000);
     }
 
 }
