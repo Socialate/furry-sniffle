@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -85,16 +84,40 @@ public class ViewEditProfileActivity extends AppCompatActivity {
     private void viewProfile(){
         // Get user details from the database
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
-        String DisplayName = mFirebaseAuth.getCurrentUser().getDisplayName();
+        final String[] user_display = new String[2];
         String Name =  mUsersDatabaseReference.child(user_id).child("name").toString();
         String email = mFirebaseAuth.getCurrentUser().getEmail();
-        Uri picture = mFirebaseAuth.getCurrentUser().getPhotoUrl();
+        //Uri picture = mFirebaseAuth.getCurrentUser().getPhotoUrl();
+
+        //getProfilePicture.setImageURI(picture);
+
+        mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users").child(user_id);
+
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+
+                // details fetched from database
+                user_display[0] = user.DisplayName;
+                user_display[1] = user.Name;
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        mUsersDatabaseReference.addValueEventListener(listener);
 
         // Display user details on the app
-        getDisplayName.setText(DisplayName);
+        getDisplayName.setText(user_display[0]);
         getEmail.setText(email);
-        getFullName.setText(Name);
-        getProfilePicture.setImageURI(picture);
+        getFullName.setText(user_display[1]);
+        System.out.println("Display name: "+user_display[0]);
+        System.out.println("Full Name   : "+Name);
+
     }
 
     /**

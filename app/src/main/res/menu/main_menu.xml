@@ -11,7 +11,7 @@
         android:id="@+id/action_view_edit_profile"
         android:icon="@mipmap/ic_add_white_24dp"
         android:title="@string/view_profile"
-        app:showAsAction="ifRoom"/>
+        />
 
     <item
         android:id="@+id/action_logout"
