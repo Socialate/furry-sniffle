@@ -67,6 +67,8 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-database:2.0.1'
     compile 'com.firebase:geofire-android:2.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
 }

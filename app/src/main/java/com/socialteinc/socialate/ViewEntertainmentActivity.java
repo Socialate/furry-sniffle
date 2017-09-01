@@ -27,6 +27,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private DatabaseReference mEventsDatabaseReference;
 
     private String mEntertainmentKey;
+    private String mEntertainmentName;
 
 
     @Override
@@ -36,6 +37,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         // entertainment key
         Intent intent = getIntent();
+        mEntertainmentName = intent.getStringExtra("entertainmentName");
         mEntertainmentKey = intent.getStringExtra("entertainmentKey");
         Log.d(TAG, "onCreate: "+ mEntertainmentKey);
 
@@ -53,6 +55,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(mEntertainmentName);
 
         mEventsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
 
@@ -76,7 +79,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 }
 
                 mEntertainmentOwner.setText(owner);
-                getSupportActionBar().setTitle(name);
                 mEntertainmentDescription.setText(description);
                 mEntertainmentAddress.setText(address);
 

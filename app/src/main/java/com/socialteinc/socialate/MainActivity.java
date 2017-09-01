@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             protected void populateViewHolder(EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
 
                 final String entertainmentKey = getRef(position).getKey();
+                final String entertainmentName = model.getName();
 
                 viewHolder.setName(model.getName());
                 viewHolder.setOwner(model.getAuthor());
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         Intent eventIntent = new Intent(MainActivity.this, ViewEntertainmentActivity.class);
+                        eventIntent.putExtra("entertainmentName", entertainmentName);
                         eventIntent.putExtra("entertainmentKey", entertainmentKey);
                         startActivity(eventIntent);
                     }

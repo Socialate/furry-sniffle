@@ -20,6 +20,8 @@ public class ViewEntertainmentActivityTest {
                     .getTargetContext();
             Intent result = new Intent(targetContext, ViewEntertainmentActivity.class);
             String entertainmentKey = "-KsoZRktbnUQhBp8_dV-";
+            String entertainmentName = "Tiger";
+            result.putExtra("entertainmentName", entertainmentName);
             result.putExtra("entertainmentKey", entertainmentKey);
             return result;
         }
