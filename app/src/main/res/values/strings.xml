@@ -38,4 +38,7 @@
     <string name="full_string_app_name">full name</string>
     <string name="emailDisplay">Email</string>
     <string name="view_profile">View Profile</string>
+    <string name="edit_your_profile">Edit Your Profile</string>
+    <string name="change_profile_picture">Change Profile Picture</string>
+    <string name="submit_changes">submit changes</string>
 </resources>
