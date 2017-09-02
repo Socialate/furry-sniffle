@@ -57,7 +57,7 @@ public class ViewEditProfileActivityTest {
         Thread.sleep(5000);
     }
 
-    @Test
+    /*@Test
     public void testViewProfile() {
         goOffline();
         //onView(withId(R.id.action_view_edit_profile)).perform(click());
@@ -65,7 +65,7 @@ public class ViewEditProfileActivityTest {
         onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.emailTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
-    }
+    }*/
 
     /*
     @Test
