@@ -41,4 +41,12 @@
     <string name="edit_your_profile">Edit Your Profile</string>
     <string name="change_profile_picture">Change Profile Picture</string>
     <string name="submit_changes">submit changes</string>
+    <string name="change_photo">Change Photo</string>
+    <string name="full_name1">Full name1</string>
+    <string name="display_name1">Display Name1</string>
+    <string name="describe_yourself">Describe yourself, aaaaaaaaaaa</string>
+    <string name="private_information">PRIVATE INFORMATION</string>
+    <string name="email_address1">Email address1</string>
+    <string name="cell_phone_number">Cell Phone number</string>
+    <string name="select_gender">Select gender</string>
 </resources>
