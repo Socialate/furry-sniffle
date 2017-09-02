@@ -49,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         mEntertainmentSpotRecyclerView = findViewById(R.id.entertainmentSpotRecyclerView);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setTitle("Socialate");
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+        }
 
 
         // Initialize  RecyclerView
