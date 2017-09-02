@@ -79,7 +79,29 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
 
         // Display current user profile details
-        viewProfile();
+        mUsersDatabaseReference.child(mUsersKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String user_display = (String) dataSnapshot.child("displayName").getValue();
+                String user_name = (String) dataSnapshot.child("name").getValue();
+                String user_image = (String) dataSnapshot.child("profileImage").getValue();
+                String user_email = mFirebaseAuth.getCurrentUser().getEmail();
+
+                getDisplayName.setText(user_display);
+                getEmail.setText( user_email);
+                getFullName.setText(user_name);
+
+                //System.out.println(user_image);
+
+                Picasso.with(getApplicationContext())
+                        .load(user_image)
+                        .into(getProfilePicture);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         // Click button to edit profile picture
         EditButton.setOnClickListener(new View.OnClickListener() {
@@ -88,61 +110,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 gotoEditAccount();
             }
         });
-
-    }
-
-    /**
-     * This method displays all the profile details of the current user
-     */
-    private void viewProfile(){
-        // Get user details from the database
-        //final String user_id = mFirebaseAuth.getCurrentUser().getUid();
-       final String[] user_display = new String[3];
-       // String Name =  mUsersDatabaseReference.child(user_id).child("name").toString();
-        //String email = mFirebaseAuth.getCurrentUser().getEmail();
-        //Uri picture = mFirebaseAuth.getCurrentUser().getPhotoUrl();
-
-        //getProfilePicture.setImageURI(picture);
-
-       // mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users").child(user_id);
-
-        mUsersDatabaseReference.child(mUsersKey).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-               /* User user = dataSnapshot.getValue(User.class);
-
-                // details fetched from database
-                user_display[0] = user.DisplayName;
-                user_display[1] = user.Name;*/
-                user_display[0] = (String) dataSnapshot.child("displayName").getValue();
-                user_display[1] = (String) dataSnapshot.child("name").getValue();
-                String user_image = (String) dataSnapshot.child("photoUrl").getValue();
-                user_display[2] = mFirebaseAuth.getCurrentUser().getEmail();
-
-
-                getDisplayName.setText(user_display[0]);
-                getEmail.setText( user_display[1]);
-                getFullName.setText(user_display[2]);
-
-                Picasso.with(getApplicationContext())
-                        .load(user_image)
-                        .into(getProfilePicture);
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-       // mUsersDatabaseReference.addValueEventListener(listener);
-
-        // Display user details on the app
-
-
-        //System.out.println("Display name: "+);
-        //System.out.println("Full Name   : "+Name);
 
     }
 
