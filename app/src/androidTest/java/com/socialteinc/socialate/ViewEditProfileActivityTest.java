@@ -29,16 +29,10 @@ import static junit.framework.Assert.assertEquals;
 public class ViewEditProfileActivityTest {
     @Rule
     public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<ViewEditProfileActivity>(ViewEditProfileActivity.class){
-
-
-     //   FirebaseAuth mmm;
-
-    //@Before
-
-
         @Override
         protected Intent getActivityIntent() {
-            goOffline();
+            //goOffline();
+            getMock();
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
             Intent result = new Intent(targetContext, ViewEditProfileActivity.class);
@@ -50,35 +44,43 @@ public class ViewEditProfileActivityTest {
         }
     };
 
+    FirebaseAuth mAuth;
+
+    public FirebaseAuth getMock() {
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword("joe@gmail.com","sandile");
+        return mAuth;
+    }
+
     @Test
     public void onCreateTest() throws InterruptedException {
         Thread.sleep(5000);
     }
 
-    /*@Test
+    @Test
     public void testViewProfile() {
-        ViewEditProfileActivity instance = new ViewEditProfileActivity();
-        //instance.
-        Assert.assertEquals(true, matches(isDisplayed()));
-
-
-        /*onView(withId(R.id.action_view_edit_profile)).perform(click());
-
+        goOffline();
+        //onView(withId(R.id.action_view_edit_profile)).perform(click());
         onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.emailTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
-        */
-       /* ViewInteraction val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed()));
-        ViewInteraction val2 = onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed()));
-        ViewInteraction val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed()));
-        ViewInteraction val4 = onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
+    }
+
+    /*
+    @Test
+    public void testViewLogic(){
+        getMock();
+        String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
+        String val2 = onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed())).toString();
+        String val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed())).toString();
+        //String val4 = onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed())).toString();
 
         assertEquals(true,val);
         assertEquals(true,val2);
         assertEquals(true,val3);
-        assertEquals(true,val4);*/
-
+        //assertEquals(true,val4);
+    }*/
 
 
 }
