@@ -48,4 +48,5 @@
     <string name="fake_address">23 Tiger Lane, Roarstate, Myburg</string>
     <string name="entertainment_spot_description">Entertainment spot description</string>
     <string name="fake_description">The place where beasts are born and raised</string>
+    <string name="favorite_icon">favorite icon</string>
 </resources>
