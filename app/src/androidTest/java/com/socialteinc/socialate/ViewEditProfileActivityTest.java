@@ -9,6 +9,9 @@ import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
+import com.squareup.picasso.Picasso;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -44,11 +47,20 @@ public class ViewEditProfileActivityTest {
         }
     };
 
-    FirebaseAuth mAuth;
+    private FirebaseDatabase mFireBaseDatabase;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mUsersDatabaseReference;
+    private String mUsersKey;
 
     public FirebaseAuth getMock() {
         mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("joe@gmail.com","sandile");
+        String User = FirebaseAuth.getInstance().getCurrentUser().getProviderId();
+        mAuth.signInWithCustomToken(User);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return mAuth;
     }
 
@@ -57,29 +69,33 @@ public class ViewEditProfileActivityTest {
         Thread.sleep(5000);
     }
 
-    /*@Test
+    @Test
     public void testViewProfile() {
-        goOffline();
+        getMock();
         //onView(withId(R.id.action_view_edit_profile)).perform(click());
         onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.emailTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
-    }*/
+    }
 
-    /*
-    @Test
+
+    /*@Test
     public void testViewLogic(){
         getMock();
-        String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
-        String val2 = onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed())).toString();
-        String val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed())).toString();
-        //String val4 = onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed())).toString();
+        final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
+        final String val2 = onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed())).toString();
+        final String val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed())).toString();
+        //final String val4 = onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed())).toString();
 
-        assertEquals(true,val);
-        assertEquals(true,val2);
-        assertEquals(true,val3);
-        //assertEquals(true,val4);
+        String user_email = mAuth.getCurrentUser().getEmail();
+        assertEquals(val, user_email);
+
+        //assertEquals(true,val);
+        // assertEquals(user_name,val2);
+        //assertEquals(user_email,val3);
+        //assertEquals(true ,user_image);
+
     }*/
 
 
