@@ -47,10 +47,10 @@ public class ViewEditProfileActivityTest {
         }
     };
 
-    private FirebaseDatabase mFireBaseDatabase;
+    //private FirebaseDatabase mFireBaseDatabase;
     private FirebaseAuth mAuth;
-    private DatabaseReference mUsersDatabaseReference;
-    private String mUsersKey;
+    //private DatabaseReference mUsersDatabaseReference;
+    //private String mUsersKey;
 
     public FirebaseAuth getMock() {
         mAuth = FirebaseAuth.getInstance();
@@ -72,15 +72,14 @@ public class ViewEditProfileActivityTest {
     @Test
     public void testViewProfile() {
         getMock();
-        //onView(withId(R.id.action_view_edit_profile)).perform(click());
         onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.emailTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
+        //onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
     }
 
 
-    /*@Test
+    @Test
     public void testViewLogic(){
         getMock();
         final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
@@ -96,7 +95,7 @@ public class ViewEditProfileActivityTest {
         //assertEquals(user_email,val3);
         //assertEquals(true ,user_image);
 
-    }*/
+    }
 
 
 }
