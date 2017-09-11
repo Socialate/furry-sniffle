@@ -51,4 +51,8 @@
     <string name="select_gender">Select gender</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="image_of_added_area">image_of_added_area</string>
+    <string name="submit_changes1">Submit Changes</string>
+    <string name="send_changes">send changes</string>
+    <string name="submit_change">Submit</string>
 </resources>
