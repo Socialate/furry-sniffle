@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
@@ -22,13 +20,14 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     private String TAG =ViewEditProfileActivity.class.getSimpleName();
 
-    private CircleImageView getProfilePicture;
+    private ImageView getProfilePicture;
     private TextView addPicture;
-    private EditText getDisplayName;
-    private EditText getFullName;
-    private EditText getEmail;
+    private TextView getDisplayName;
+    private TextView getFullName;
+    private TextView getEmail;
     private EditText getDescrip;
     private EditText phone;
+    private Button EditButton;
     private Button  send;
     private AutoCompleteTextView gender;
     private Toolbar mToolbar;
@@ -50,10 +49,10 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_edit_profile1);
 
-        // entertainment key
+        /* entertainment key
         Intent intent = getIntent();
         mUsersKey = intent.getStringExtra("usersKey");
-        Log.d(TAG, "onCreate: "+ mUsersKey);
+        Log.d(TAG, "onCreate: "+ mUsersKey);*/
 
 
         // Initialize Firebase components
@@ -66,12 +65,19 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         mUsersKey = mFirebaseAuth.getCurrentUser().getUid();
 
         // Initialize references to views
-        mToolbar = findViewById(R.id.viewProfileToolbar1);
+        /*mToolbar = findViewById(R.id.ProfileToolbar);
+        getProfilePicture = findViewById(R.id.profileImageView);
+        getDisplayName = findViewById(R.id.DisplayNameTextView);
+        getFullName = findViewById(R.id.FullNameTextView);
+        getEmail = findViewById(R.id.emailTextView);*/
+
+        mToolbar = findViewById(R.id.ProfileToolbar1);
         getProfilePicture = findViewById(R.id.imageView);
         addPicture = findViewById(R.id.addImageTextView);
         getDisplayName = findViewById(R.id.displayNameEditText);
         getFullName = findViewById(R.id.fullNameEditText);
         getEmail = findViewById(R.id.emailEditText);
+        EditButton = findViewById(R.id.submitChangesButton);
         //getDescrip = findViewById(R.id.)
         //phone = findViewById(R.id.phone)
         //gender = findViewById(R.id.gender)
@@ -110,12 +116,12 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         });
 
         // Click button to edit profile picture
-       /* EditButton.setOnClickListener(new View.OnClickListener() {
+        EditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoEditAccount();
             }
-        });*/
+        });
 
     }
 

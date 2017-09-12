@@ -6,7 +6,7 @@
 
     <include
             layout="@layout/app_bar_layout"
-            android:id="@+id/viewProfileToolbar1" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/ProfileToolbar1" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent" android:layout_width="0dp"
@@ -18,7 +18,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewProfileToolbar1" app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintTop_toBottomOf="@+id/ProfileToolbar1" app:layout_constraintVertical_bias="1.0">
 
 
         <android.support.constraint.ConstraintLayout
@@ -59,8 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="textStart" android:inputType="textPersonName"
-                        android:text="@string/full_name1"
-                        tools:ignore="LabelFor"/>
+                        tools:ignore="LabelFor" android:hint="Full name"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -73,8 +72,8 @@
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text" android:text="@string/display_name1"
-                        android:id="@+id/displayNameEditText" tools:ignore="LabelFor"/>
+                        android:inputType="text"
+                        android:id="@+id/displayNameEditText" tools:ignore="LabelFor" android:hint="Display name"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -88,8 +87,8 @@
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/describe_yourself" android:inputType="textMultiLine"
-                        android:id="@+id/describeEditText" tools:ignore="LabelFor"/>
+                        android:inputType="textMultiLine"
+                        android:id="@+id/describeEditText" tools:ignore="LabelFor" android:hint="Describe yourself"/>
             </android.support.design.widget.TextInputLayout>
             <TextView
                     android:text="@string/private_information"
@@ -111,8 +110,8 @@
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress" android:text="@string/email_address1"
-                        tools:ignore="LabelFor" android:id="@+id/emailEditText"/>
+                        android:inputType="textEmailAddress"
+                        tools:ignore="LabelFor" android:id="@+id/emailEditText" android:singleLine="true"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -126,8 +125,8 @@
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone" android:text="@string/cell_phone_number" tools:ignore="LabelFor"
-                        android:id="@+id/phoneEditText"/>
+                        android:inputType="phone" tools:ignore="LabelFor"
+                        android:id="@+id/phoneEditText" android:hint="Phone number"/>
             </android.support.design.widget.TextInputLayout>
             <AutoCompleteTextView
                     android:text="@string/select_gender"
@@ -136,7 +135,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" android:layout_marginRight="8dp"
                     app:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
                     app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp" tools:ignore="LabelFor"/>
+                    android:layout_marginEnd="8dp" tools:ignore="LabelFor" android:layout_marginTop="2dp"
+                    app:layout_constraintHorizontal_bias="0.0"/>
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
