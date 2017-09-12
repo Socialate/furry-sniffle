@@ -128,22 +128,27 @@
                         android:inputType="phone" tools:ignore="LabelFor"
                         android:id="@+id/phoneEditText" android:hint="Phone number"/>
             </android.support.design.widget.TextInputLayout>
-            <AutoCompleteTextView
-                    android:text="@string/select_gender"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" android:id="@+id/genderTextView"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" android:layout_marginRight="8dp"
-                    app:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
-                    app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp" tools:ignore="LabelFor" android:layout_marginTop="2dp"
-                    app:layout_constraintHorizontal_bias="0.0"/>
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/submitChangesButton" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/genderTextView" android:layout_marginRight="8dp"
+                    android:id="@+id/submitChangesButton"
+                    android:layout_marginRight="8dp"
                     app:layout_constraintRight_toRightOf="parent" android:background="@color/colorPrimary"
-                    tools:ignore="HardcodedText,RtlHardcoded" android:text="Submit "/>
+                    tools:ignore="HardcodedText,RtlHardcoded" android:text="Submit "
+                    tools:layout_editor_absoluteY="656dp" android:layout_marginEnd="8dp"/>
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" android:layout_marginRight="8dp"
+                    app:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent">
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Home address"/>
+            </android.support.design.widget.TextInputLayout>
 
 
         </android.support.constraint.ConstraintLayout>
