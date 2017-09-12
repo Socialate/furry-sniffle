@@ -59,7 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="textStart" android:inputType="textPersonName"
-                        tools:ignore="LabelFor" android:hint="Full name"/>
+                        tools:ignore="LabelFor" android:hint="@string/full_name2"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -73,7 +73,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:id="@+id/displayNameEditText" tools:ignore="LabelFor" android:hint="Display name"/>
+                        android:id="@+id/displayNameEditText" tools:ignore="LabelFor" android:hint="@string/display_name2"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -88,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
-                        android:id="@+id/describeEditText" tools:ignore="LabelFor" android:hint="Describe yourself"/>
+                        android:id="@+id/describeEditText" tools:ignore="LabelFor" android:hint="@string/describe_yourself1"/>
             </android.support.design.widget.TextInputLayout>
             <TextView
                     android:text="@string/private_information"
@@ -111,7 +111,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
-                        tools:ignore="LabelFor" android:id="@+id/emailEditText" android:singleLine="true"/>
+                        tools:ignore="LabelFor" android:id="@+id/emailEditText" android:maxLines="1"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -126,7 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="phone" tools:ignore="LabelFor"
-                        android:id="@+id/phoneEditText" android:hint="Phone number"/>
+                        android:id="@+id/phoneEditText" android:hint="@string/phone_number"/>
             </android.support.design.widget.TextInputLayout>
             <Button
                     android:layout_width="0dp"
@@ -135,7 +135,7 @@
                     android:layout_marginRight="8dp"
                     app:layout_constraintRight_toRightOf="parent" android:background="@color/colorPrimary"
                     tools:ignore="HardcodedText,RtlHardcoded" android:text="Submit "
-                    android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@+id/radioButton" android:layout_marginLeft="8dp"
                     app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"/>
             <android.support.design.widget.TextInputLayout
@@ -150,17 +150,19 @@
                 <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Home address"/>
+                        android:hint="@string/home_address" android:id="@+id/homeAddressEditText"
+                        android:inputType="textMultiLine"/>
             </android.support.design.widget.TextInputLayout>
             <RadioButton
-                    android:text="Male"
+                    android:text="@string/male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/radioButton"
                     android:layout_marginTop="17dp"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout10" android:layout_marginRight="115dp"
-                    app:layout_constraintRight_toRightOf="parent" android:layout_marginEnd="115dp"/>
+                    app:layout_constraintRight_toRightOf="parent" android:layout_marginEnd="115dp"
+                    tools:ignore="RtlHardcoded"/>
             <RadioButton
-                    android:text="Female"
+                    android:text="@string/female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/radioButton4" app:layout_constraintRight_toLeftOf="@+id/radioButton"
@@ -168,7 +170,7 @@
                     app:layout_constraintLeft_toLeftOf="parent" android:layout_marginTop="17dp"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout10"
                     app:layout_constraintHorizontal_bias="0.571" android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp" tools:ignore="RtlHardcoded"/>
 
 
         </android.support.constraint.ConstraintLayout>

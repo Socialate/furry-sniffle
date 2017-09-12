@@ -55,4 +55,11 @@
     <string name="submit_changes1">Submit Changes</string>
     <string name="send_changes">send changes</string>
     <string name="submit_change">Submit</string>
+    <string name="full_name2">Full name</string>
+    <string name="display_name2">Display name</string>
+    <string name="describe_yourself1">Describe yourself</string>
+    <string name="phone_number">Phone number</string>
+    <string name="home_address">Home address</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 </resources>
