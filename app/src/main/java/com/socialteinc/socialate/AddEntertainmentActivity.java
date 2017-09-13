@@ -205,7 +205,6 @@ public class AddEntertainmentActivity extends AppCompatActivity {
     }
 
     private String imageNameGenerator(){
-
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
