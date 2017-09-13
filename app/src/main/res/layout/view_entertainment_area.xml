@@ -128,6 +128,22 @@
                             android:textColor="@color/colorPrimaryText"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
+                <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
+                                                              android:layout_height="wrap_content"
+                                                              android:orientation="horizontal"
+                                                              android:padding="12dp">
+
+                    <TextView
+                            android:layout_gravity="center_vertical"
+                            android:padding="12dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_weight="9"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/comment"
+                            android:textColor="@color/colorPrimaryText" android:text="Comment"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
             </android.support.v7.widget.LinearLayoutCompat>
         </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
