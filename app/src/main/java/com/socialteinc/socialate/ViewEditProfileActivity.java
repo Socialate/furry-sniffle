@@ -2,27 +2,42 @@ package com.socialteinc.socialate;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class ViewEditProfileActivity extends AppCompatActivity {
 
     private String TAG =ViewEditProfileActivity.class.getSimpleName();
+    private static final String ANONYMOUS = "anonymous";
 
     private ProgressDialog mProgressDialog;
     private Toolbar mToolbar;
     private ImageView getProfilePicture;
+    private Uri imageUri;
     private RadioButton getFGender;
     private RadioButton getMGender;
     private TextView addPicture;
@@ -38,10 +53,13 @@ public class ViewEditProfileActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFireBaseDatabase;
-    private DatabaseReference mUsersDatabaseReference;
+    private DatabaseReference mUserDatabaseReference;
+    private DatabaseReference mProfileDatabaseReference;
     private FirebaseStorage mFirebaseStorage;
     private StorageReference mStorageReference;
 
+    private static final int GALLERY_REQUEST_CODE = 1;
+    private String mAuthor;
     private String mUsersKey;
 
     @Override
@@ -53,6 +71,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mUsersKey = intent.getStringExtra("usersKey");
         Log.d(TAG, "onCreate: "+ mUsersKey);*/
+        mAuthor = ANONYMOUS;
 
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
@@ -60,7 +79,10 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
+        mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
+        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+        mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
+
         mUsersKey = mFirebaseAuth.getCurrentUser().getUid();
 
         // Initialize references to views
@@ -86,7 +108,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
 
         // Display current user profile details
-        mUsersDatabaseReference.child(mUsersKey).addValueEventListener(new ValueEventListener() {
+        mUserDatabaseReference.child(mUsersKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -108,11 +130,28 @@ public class ViewEditProfileActivity extends AppCompatActivity {
             }
         });
 
-        // Click button to edit profile picture
+        //Click textview to select a new image
+        addPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST_CODE);
+
+            }
+        });
+        // Submit button create Entertainment
         EditButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                gotoEditAccount();
+            public void onClick(View view) {
+                mProgressDialog.setTitle("Updating Profile");
+                mProgressDialog.setMessage("Please wait...");
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.show();
+
+                // update account changes on click
+                updateAccount();
             }
         });
 
@@ -121,7 +160,78 @@ public class ViewEditProfileActivity extends AppCompatActivity {
     /**
      *
      */
-    private void gotoEditAccount(){
+    private void updateAccount(){
+        final String user_id = mFirebaseAuth.getCurrentUser().getUid();
+        final String full_name = getFullName.getText().toString();
+        final String display_name = getDisplayName.getText().toString();
+        final String email = getEmail.getText().toString();
+        final String description = getDescrip.getText().toString();
+        final String phone_number = getPhone.getText().toString();
+        final String home_address = getHome_address.getText().toString();
+        final boolean gender_m = getMGender.isChecked();
+        final boolean gender_f = getFGender.isChecked();
 
+        if(imageUri == null){
+            imageUri = Uri.parse("android.resourse://com.socialteinc.socialate/drawable/eventplaceholder.jpg");
+        }
+
+        if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(full_name) && !TextUtils.isEmpty(display_name) && !TextUtils.isEmpty(email) &&  imageUri != null) {
+
+            Log.d("MyAPP", "started Upload");
+            StorageReference filepath = mStorageReference.child(user_id);
+
+            filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d("MyAPP","Upload is successful");
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                    mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
+                    mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
+                    
+                    assert downloadUrl != null;
+                    mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
+                    mProgressDialog.dismiss();
+
+                    Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mainIntent);
+                    finish();
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    mProgressDialog.dismiss();
+                    Log.d("MyAPP","Upload failed");
+                    Toast.makeText(ViewEditProfileActivity.this, "Failed to update your profile, please try again.", Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+            Uri ImageUri = data.getData();
+            CropImage.activity(ImageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1,1)
+                    .start(this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imageUri = result.getUri();
+                getProfilePicture.setImageURI(imageUri);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(ViewEditProfileActivity.this, "Failed to get profile picture, please try again.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
