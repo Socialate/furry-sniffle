@@ -30,13 +30,11 @@ import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewEditProfileActivityTest {
-
     @Rule
     public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<ViewEditProfileActivity>(ViewEditProfileActivity.class){
         @Override
         protected Intent getActivityIntent() {
-            goOffline();
-            getMock();
+            //goOffline();
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
             Intent result = new Intent(targetContext, ViewEditProfileActivity.class);
@@ -48,52 +46,56 @@ public class ViewEditProfileActivityTest {
         }
     };
 
-    //private FirebaseDatabase mFireBaseDatabase;
-    private FirebaseAuth mAuth;
-    //private DatabaseReference mUsersDatabaseReference;
-    //private String mUsersKey;
-
-    public FirebaseAuth getMock() {
-        mAuth = FirebaseAuth.getInstance();
-        String User = FirebaseAuth.getInstance().getCurrentUser().getProviderId();
-        mAuth.signInWithCustomToken(User);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return mAuth;
-    }
-
     @Test
     public void onCreateTest() throws InterruptedException {
         Thread.sleep(5000);
     }
 
+    /*
+    //private FirebaseDatabase mFireBaseDatabase;
+    private FirebaseAuth mAuth;
+    //private DatabaseReference mUsersDatabaseReference;
+    //private String mUsersKey;
+
+    public FirebaseAuth getMock() throws InterruptedException {
+        mAuth = FirebaseAuth.getInstance();
+        String User = FirebaseAuth.getInstance().getCurrentUser().getProviderId();
+        mAuth.signInWithCustomToken(User);
+
+        Thread.sleep(5000);
+
+        return mAuth;
+    }
+
     @Test
     public void testViewProfile() throws InterruptedException {
         getMock();
-        /*
         Thread.sleep(6000);
-        onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.emailTextView)).check(matches(isDisplayed()));
-        //onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));*/
+        onView(withId(R.id.fullNameEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.emailEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.maleRadioButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.femaleRadioButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.homeAddressEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.phoneEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
+        onView(withId(R.id.imageView)).check(matches(isDisplayed()));
+        onView(withId(R.id.ProfileToolbar1)).check(matches(isDisplayed()));
+        //onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
     }
 
 
     @Test
     public void testViewLogic() throws InterruptedException {
         getMock();
-        /*
-        Thread.sleep(5000);
         final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
         final String val2 = onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed())).toString();
-        final String val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed())).toString();*/
+        final String val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed())).toString();
         //final String val4 = onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed())).toString();
 
-        //String user_email = mAuth.getCurrentUser().getEmail();
-        //assertEquals(val, user_email);
+        String user_email = mAuth.getCurrentUser().getEmail();
+        assertEquals(val, user_email);
 
         //assertEquals(true,val);
         // assertEquals(user_name,val2);
@@ -101,6 +103,6 @@ public class ViewEditProfileActivityTest {
         //assertEquals(true ,user_image);
 
     }
-
+    */
 
 }
