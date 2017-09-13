@@ -35,7 +35,11 @@ public class ViewEditProfileActivityTest {
         @Override
         protected Intent getActivityIntent() {
             //goOffline();
-            getMock();
+            try {
+                getMock();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
             Intent result = new Intent(targetContext, ViewEditProfileActivity.class);
@@ -52,15 +56,13 @@ public class ViewEditProfileActivityTest {
     //private DatabaseReference mUsersDatabaseReference;
     //private String mUsersKey;
 
-    public FirebaseAuth getMock() {
+    public FirebaseAuth getMock() throws InterruptedException {
         mAuth = FirebaseAuth.getInstance();
         String User = FirebaseAuth.getInstance().getCurrentUser().getProviderId();
         mAuth.signInWithCustomToken(User);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        Thread.sleep(5000);
+
         return mAuth;
     }
 
@@ -70,17 +72,26 @@ public class ViewEditProfileActivityTest {
     }
 
     @Test
-    public void testViewProfile() {
+    public void testViewProfile() throws InterruptedException {
         getMock();
-        onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.emailTextView)).check(matches(isDisplayed()));
+        Thread.sleep(6000);
+        onView(withId(R.id.fullNameEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.emailEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.maleRadioButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.femaleRadioButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.homeAddressEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.phoneEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
+        onView(withId(R.id.imageView)).check(matches(isDisplayed()));
+        onView(withId(R.id.ProfileToolbar1)).check(matches(isDisplayed()));
         //onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
     }
 
 
     @Test
-    public void testViewLogic(){
+    public void testViewLogic() throws InterruptedException {
         getMock();
         final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
         final String val2 = onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed())).toString();

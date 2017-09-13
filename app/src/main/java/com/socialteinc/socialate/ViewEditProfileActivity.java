@@ -222,7 +222,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
                     Log.d("MyAPP","Upload failed");
                     Toast.makeText(ViewEditProfileActivity.this, "Failed to update your profile, please try again.", Toast.LENGTH_LONG).show();
-
                 }
             });
         }
