@@ -30,13 +30,13 @@ import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewEditProfileActivityTest {
-    /*
+
     @Rule
     public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<ViewEditProfileActivity>(ViewEditProfileActivity.class){
         @Override
         protected Intent getActivityIntent() {
-            //goOffline();
-            getMock();
+            goOffline();
+            //getMock();
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
             Intent result = new Intent(targetContext, ViewEditProfileActivity.class);
@@ -98,5 +98,5 @@ public class ViewEditProfileActivityTest {
 
     }
 
-*/
+
 }
