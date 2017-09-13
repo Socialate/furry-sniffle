@@ -35,11 +35,6 @@ public class ViewEditProfileActivityTest {
         @Override
         protected Intent getActivityIntent() {
             //goOffline();
-            try {
-                getMock();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
             Intent result = new Intent(targetContext, ViewEditProfileActivity.class);
@@ -51,6 +46,12 @@ public class ViewEditProfileActivityTest {
         }
     };
 
+    @Test
+    public void onCreateTest() throws InterruptedException {
+        Thread.sleep(5000);
+    }
+
+    /*
     //private FirebaseDatabase mFireBaseDatabase;
     private FirebaseAuth mAuth;
     //private DatabaseReference mUsersDatabaseReference;
@@ -64,11 +65,6 @@ public class ViewEditProfileActivityTest {
         Thread.sleep(5000);
 
         return mAuth;
-    }
-
-    @Test
-    public void onCreateTest() throws InterruptedException {
-        Thread.sleep(5000);
     }
 
     @Test
@@ -107,6 +103,6 @@ public class ViewEditProfileActivityTest {
         //assertEquals(true ,user_image);
 
     }
-
+    */
 
 }
