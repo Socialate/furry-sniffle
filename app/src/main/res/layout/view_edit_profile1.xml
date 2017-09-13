@@ -136,7 +136,7 @@
                     app:layout_constraintRight_toRightOf="parent" android:background="@color/colorPrimary"
                     tools:ignore="HardcodedText,RtlHardcoded" android:text="Submit "
                     android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/radioButton" android:layout_marginLeft="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/maleRadioButton" android:layout_marginLeft="8dp"
                     app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"/>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -156,7 +156,7 @@
             <RadioButton
                     android:text="@string/male"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/radioButton"
+                    android:layout_height="wrap_content" android:id="@+id/maleRadioButton"
                     android:layout_marginTop="17dp"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout10" android:layout_marginRight="115dp"
                     app:layout_constraintRight_toRightOf="parent" android:layout_marginEnd="115dp"
@@ -165,7 +165,7 @@
                     android:text="@string/female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radioButton4" app:layout_constraintRight_toLeftOf="@+id/radioButton"
+                    android:id="@+id/femaleRadioButton" app:layout_constraintRight_toLeftOf="@+id/maleRadioButton"
                     android:layout_marginRight="16dp" android:layout_marginLeft="8dp"
                     app:layout_constraintLeft_toLeftOf="parent" android:layout_marginTop="17dp"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout10"

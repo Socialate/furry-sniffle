@@ -20,17 +20,19 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     private String TAG =ViewEditProfileActivity.class.getSimpleName();
 
+    private ProgressDialog mProgressDialog;
+    private Toolbar mToolbar;
     private ImageView getProfilePicture;
+    private RadioButton getFGender;
+    private RadioButton getMGender;
     private TextView addPicture;
     private TextView getDisplayName;
     private TextView getFullName;
     private TextView getEmail;
     private EditText getDescrip;
-    private EditText phone;
+    private EditText getPhone;
+    private EditText getHome_address;
     private Button EditButton;
-    private Button  send;
-    private AutoCompleteTextView gender;
-    private Toolbar mToolbar;
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -42,8 +44,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     private String mUsersKey;
 
-    private ProgressDialog mProgressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +53,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mUsersKey = intent.getStringExtra("usersKey");
         Log.d(TAG, "onCreate: "+ mUsersKey);*/
-
 
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
@@ -65,12 +64,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         mUsersKey = mFirebaseAuth.getCurrentUser().getUid();
 
         // Initialize references to views
-        /*mToolbar = findViewById(R.id.ProfileToolbar);
-        getProfilePicture = findViewById(R.id.profileImageView);
-        getDisplayName = findViewById(R.id.DisplayNameTextView);
-        getFullName = findViewById(R.id.FullNameTextView);
-        getEmail = findViewById(R.id.emailTextView);*/
-
         mToolbar = findViewById(R.id.ProfileToolbar1);
         getProfilePicture = findViewById(R.id.imageView);
         addPicture = findViewById(R.id.addImageTextView);
@@ -78,9 +71,11 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         getFullName = findViewById(R.id.fullNameEditText);
         getEmail = findViewById(R.id.emailEditText);
         EditButton = findViewById(R.id.submitChangesButton);
-        //getDescrip = findViewById(R.id.)
-        //phone = findViewById(R.id.phone)
-        //gender = findViewById(R.id.gender)
+        getDescrip =findViewById(R.id.describeEditText);
+        getPhone = findViewById(R.id.phoneEditText);
+        getHome_address = findViewById(R.id.homeAddressEditText);
+        getFGender = findViewById(R.id.femaleRadioButton);
+        getMGender = findViewById(R.id.maleRadioButton);
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
@@ -103,8 +98,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 getDisplayName.setText(user_display);
                 getEmail.setText(user_email);
                 getFullName.setText(user_name);
-
-                //System.out.println(user_image);
 
                 Picasso.with(getApplicationContext())
                         .load(user_image)
