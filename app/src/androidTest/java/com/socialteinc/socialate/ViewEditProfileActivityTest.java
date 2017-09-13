@@ -30,6 +30,7 @@ import static junit.framework.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewEditProfileActivityTest {
+    /*
     @Rule
     public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<ViewEditProfileActivity>(ViewEditProfileActivity.class){
         @Override
@@ -97,5 +98,5 @@ public class ViewEditProfileActivityTest {
 
     }
 
-
+*/
 }
