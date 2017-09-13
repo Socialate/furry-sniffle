@@ -58,14 +58,12 @@ public class ViewEditProfileActivityTest {
     }
 
 
-    private FirebaseDatabase mFireBaseDatabase;
+    /*private FirebaseDatabase mFireBaseDatabase;
     private FirebaseAuth mAuth;
     private DatabaseReference mUsersDatabaseReference;
     private String mUsersKey;
 
     public FirebaseAuth getMock() throws InterruptedException {
-        FirebaseDatabase.getInstance().goOnline();
-        FirebaseAuth.getInstance().signInAnonymously();
 
         //mUsersKey = mAuth.getCurrentUser().getUid();
 
@@ -73,14 +71,14 @@ public class ViewEditProfileActivityTest {
         //mAuth.signInWithCustomToken(User);
         //Thread.sleep(6000);
 
-        /*final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
+        final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
         String user_email = mAuth.getCurrentUser().getEmail();
-        assertEquals(val, user_email);*/
+        assertEquals(val, user_email);
 
         return mAuth;
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void testViewProfile() throws InterruptedException {
         //getMock();
         //FirebaseDatabase.getInstance().goOnline();
@@ -100,8 +98,11 @@ public class ViewEditProfileActivityTest {
 
         assertEquals(true, CheckEmailActivity.isValidEmail("socialate@gmail.com"));
         assertEquals(true, CheckEmailActivity.isValidEmail("1234@gmail.com"));
+        assertEquals(false, LoginActivity.isValidEmail("yakka"));
+        assertEquals(true, LoginActivity.isValidEmail("sandile.cyber@gmail.com"));
+        assertEquals(true, LoginActivity.isValidEmail("12@gmail.com"));
 
-    }
+    }*/
 
     /*
     @Test
