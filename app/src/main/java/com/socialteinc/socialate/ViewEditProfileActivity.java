@@ -108,7 +108,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
 
         // Display current user profile details
-        mUserDatabaseReference.child(mUsersKey).addValueEventListener(new ValueEventListener() {
+        mProfileDatabaseReference.child(mUsersKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -141,7 +141,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
             }
         });
-        // Submit button create Entertainment
+        // Submit button for updating profile
         EditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,7 +188,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
                     mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
                     mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
-                    
+
                     assert downloadUrl != null;
                     mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
                     mProgressDialog.dismiss();
