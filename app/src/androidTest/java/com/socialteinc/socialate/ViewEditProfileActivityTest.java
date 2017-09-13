@@ -11,6 +11,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
+import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,10 +24,13 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.google.firebase.database.DatabaseReference.goOffline;
+import static com.google.firebase.database.DatabaseReference.goOnline;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewEditProfileActivityTest {
@@ -34,6 +38,8 @@ public class ViewEditProfileActivityTest {
     public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<ViewEditProfileActivity>(ViewEditProfileActivity.class){
         @Override
         protected Intent getActivityIntent() {
+            FirebaseDatabase.getInstance().goOnline();
+            FirebaseAuth.getInstance().signInAnonymously();
             //goOffline();
             Context targetContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext();
@@ -48,44 +54,53 @@ public class ViewEditProfileActivityTest {
 
     @Test
     public void onCreateTest() throws InterruptedException {
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
     }
 
-    /*
-    //private FirebaseDatabase mFireBaseDatabase;
+
+    private FirebaseDatabase mFireBaseDatabase;
     private FirebaseAuth mAuth;
-    //private DatabaseReference mUsersDatabaseReference;
-    //private String mUsersKey;
+    private DatabaseReference mUsersDatabaseReference;
+    private String mUsersKey;
 
     public FirebaseAuth getMock() throws InterruptedException {
-        mAuth = FirebaseAuth.getInstance();
-        String User = FirebaseAuth.getInstance().getCurrentUser().getProviderId();
-        mAuth.signInWithCustomToken(User);
+        FirebaseDatabase.getInstance().goOnline();
+        FirebaseAuth.getInstance().signInAnonymously();
 
-        Thread.sleep(5000);
+        //mUsersKey = mAuth.getCurrentUser().getUid();
+
+        //String User = mAuth.getCurrentUser().getProviderId().toString();
+        //mAuth.signInWithCustomToken(User);
+        //Thread.sleep(6000);
+
+        /*final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
+        String user_email = mAuth.getCurrentUser().getEmail();
+        assertEquals(val, user_email);*/
 
         return mAuth;
     }
 
     @Test
     public void testViewProfile() throws InterruptedException {
-        getMock();
-        Thread.sleep(6000);
+        //getMock();
+        FirebaseDatabase.getInstance().goOnline();
+        FirebaseAuth.getInstance().signInAnonymously();
+        //Thread.sleep(6000);
+        onView(withId(R.id.ProfileToolbar1)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.emailEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
-        onView(withId(R.id.maleRadioButton)).check(matches(isDisplayed()));
-        onView(withId(R.id.femaleRadioButton)).check(matches(isDisplayed()));
+        //onView(withId(R.id.maleRadioButton)).check(matches(isChecked()));
+        //onView(withId(R.id.femaleRadioButton)).check(matches(isChecked()));
         onView(withId(R.id.homeAddressEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.phoneEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView)).check(matches(isDisplayed()));
-        onView(withId(R.id.ProfileToolbar1)).check(matches(isDisplayed()));
-        //onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed()));
+
     }
 
-
+    /*
     @Test
     public void testViewLogic() throws InterruptedException {
         getMock();

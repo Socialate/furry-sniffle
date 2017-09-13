@@ -168,9 +168,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     }
 
-    /**
-     *
-     */
     private void updateAccount(){
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
         final String full_name = getFullName.getText().toString();
