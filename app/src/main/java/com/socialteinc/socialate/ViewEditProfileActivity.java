@@ -115,11 +115,22 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 String user_display = (String) dataSnapshot.child("displayName").getValue();
                 String user_name = (String) dataSnapshot.child("name").getValue();
                 String user_image = (String) dataSnapshot.child("profileImage").getValue();
+                String user_descrip = (String) dataSnapshot.child("description").getValue();
+                String user_phone = (String) dataSnapshot.child("phone number").getValue();
+                String user_address = (String) dataSnapshot.child("physical address").getValue();
+                String user_gender = (String) dataSnapshot.child("Gender").getValue();
+                //imageUri = (Uri) dataSnapshot.child("profileImage").getValue();
                 String user_email = mFirebaseAuth.getCurrentUser().getEmail();
 
                 getDisplayName.setText(user_display);
                 getEmail.setText(user_email);
                 getFullName.setText(user_name);
+                getDescrip.setText(user_descrip);
+                getHome_address.setText(user_address);
+                getPhone.setText(user_phone);
+                if(user_gender.matches("Male") == true) getMGender.setChecked(true);
+                if(user_gender.matches("Female") == true) getFGender.setChecked(true);
+
 
                 Picasso.with(getApplicationContext())
                         .load(user_image)
@@ -188,6 +199,11 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
                     mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
                     mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
+                    mProfileDatabaseReference.child(user_id).child("description").setValue(description);
+                    mProfileDatabaseReference.child(user_id).child("phone number").setValue(phone_number);
+                    mProfileDatabaseReference.child(user_id).child("physical address").setValue(home_address);
+                    if(gender_m == true && gender_f == false) mProfileDatabaseReference.child(user_id).child("Gender").setValue("Male");
+                    if(gender_m == false && gender_f == true) mProfileDatabaseReference.child(user_id).child("Gender").setValue("Female");
 
                     assert downloadUrl != null;
                     mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
