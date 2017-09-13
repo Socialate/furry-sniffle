@@ -29,6 +29,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import java.text.DateFormat;
 import java.util.Date;
 
+import static com.socialteinc.socialate.LoginActivity.isValidEmail;
+
 public class ViewEditProfileActivity extends AppCompatActivity {
 
     private String TAG =ViewEditProfileActivity.class.getSimpleName();
@@ -246,4 +248,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

@@ -111,7 +111,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
-                        tools:ignore="LabelFor" android:id="@+id/emailEditText" android:maxLines="1"/>
+                        tools:ignore="LabelFor" android:id="@+id/emailEditText" android:maxLines="1"
+                        android:hint="Email address can't be changed"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"

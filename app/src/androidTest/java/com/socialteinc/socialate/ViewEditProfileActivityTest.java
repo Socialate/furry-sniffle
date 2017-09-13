@@ -83,8 +83,8 @@ public class ViewEditProfileActivityTest {
     @Test
     public void testViewProfile() throws InterruptedException {
         //getMock();
-        FirebaseDatabase.getInstance().goOnline();
-        FirebaseAuth.getInstance().signInAnonymously();
+        //FirebaseDatabase.getInstance().goOnline();
+        //FirebaseAuth.getInstance().signInAnonymously();
         //Thread.sleep(6000);
         onView(withId(R.id.ProfileToolbar1)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameEditText)).check(matches(isDisplayed()));
@@ -97,6 +97,9 @@ public class ViewEditProfileActivityTest {
         onView(withId(R.id.phoneEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView)).check(matches(isDisplayed()));
+
+        assertEquals(true, CheckEmailActivity.isValidEmail("socialate@gmail.com"));
+        assertEquals(true, CheckEmailActivity.isValidEmail("1234@gmail.com"));
 
     }
 
