@@ -35,6 +35,18 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class ViewEditProfileActivityTest {
     @Rule
+    public ActivityTestRule<ViewEditProfileActivity> main = new ActivityTestRule<>(ViewEditProfileActivity.class);
+
+    @Test
+    public void viewTest(){
+        onView(withId(R.id.fullNameEditText)).perform(typeText("James"), closeSoftKeyboard());
+        onView(withId(R.id.displayNameEditText)).perform(typeText("James"), closeSoftKeyboard());
+        onView(withId(R.id.phoneEditText)).perform(typeText("112"), closeSoftKeyboard());
+        onView(withId(R.id.describeEditText)).perform(typeText("James"), closeSoftKeyboard());
+        onView(withId(R.id.homeAddressEditText)).perform(typeText("James"), closeSoftKeyboard());
+
+    }
+    /*
     public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<ViewEditProfileActivity>(ViewEditProfileActivity.class){
         @Override
         protected Intent getActivityIntent() {
@@ -52,10 +64,10 @@ public class ViewEditProfileActivityTest {
         }
     };
 
-    @Test
-    public void onCreateTest() throws InterruptedException {
+    //@Test
+    //public void onCreateTest() throws InterruptedException {
         //Thread.sleep(5000);
-    }
+    //}
 
 
     /*private FirebaseDatabase mFireBaseDatabase;

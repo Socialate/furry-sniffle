@@ -28,7 +28,11 @@ android {
 
           abortOnError false
 
-      }
+    }
+
+    defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
 }
 
 coveralls {
