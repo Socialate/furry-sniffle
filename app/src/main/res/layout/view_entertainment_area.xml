@@ -40,7 +40,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView 
+    <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
@@ -133,15 +133,19 @@
                                                               android:orientation="horizontal"
                                                               android:padding="12dp">
 
-                    <TextView
+                    <EditText
                             android:layout_gravity="center_vertical"
                             android:padding="12dp"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:layout_weight="9"
-                            android:layout_width="0dp"
+                            android:layout_width="520dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/comment"
-                            android:textColor="@color/colorPrimaryText" android:text="Comment"/>
+                            android:id="@+id/commentEditText"
+                            android:textColor="@color/colorPrimaryText" android:hint="Comment"/>
+                    <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:id="@+id/commentButton"
+                            android:text="Comment"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
             </android.support.v7.widget.LinearLayoutCompat>
