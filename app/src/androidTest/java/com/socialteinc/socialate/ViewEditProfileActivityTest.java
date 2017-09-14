@@ -1,4 +1,4 @@
-package com.socialteinc.socialate;
+/*package com.socialteinc.socialate;
 
 
 import android.content.Context;
@@ -37,7 +37,7 @@ public class ViewEditProfileActivityTest {
     @Rule
     public ActivityTestRule<ViewEditProfileActivity> main = new ActivityTestRule<>(ViewEditProfileActivity.class);
 
-    @Test
+   /* @Test
     public void viewTest(){
         onView(withId(R.id.fullNameEditText)).perform(typeText("James"), closeSoftKeyboard());
         onView(withId(R.id.displayNameEditText)).perform(typeText("James"), closeSoftKeyboard());
@@ -45,7 +45,7 @@ public class ViewEditProfileActivityTest {
         onView(withId(R.id.describeEditText)).perform(typeText("James"), closeSoftKeyboard());
         onView(withId(R.id.homeAddressEditText)).perform(typeText("James"), closeSoftKeyboard());
 
-    }
+    }*/
     /*
     public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<ViewEditProfileActivity>(ViewEditProfileActivity.class){
         @Override
@@ -136,4 +136,4 @@ public class ViewEditProfileActivityTest {
     }
     */
 
-}
+//}

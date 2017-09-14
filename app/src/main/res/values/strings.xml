@@ -62,4 +62,9 @@
     <string name="home_address">Home address</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    
+    <array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </array>
 </resources>

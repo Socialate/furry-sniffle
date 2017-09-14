@@ -40,6 +40,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private ImageView getProfilePicture;
     private Uri imageUri;
+    private Spinner gender;
     private RadioButton getFGender;
     private RadioButton getMGender;
     private TextView addPicture;
@@ -98,6 +99,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         getDescrip =findViewById(R.id.describeEditText);
         getPhone = findViewById(R.id.phoneEditText);
         getHome_address = findViewById(R.id.homeAddressEditText);
+        gender = findViewById(R.id.spinnerGender);
         getFGender = findViewById(R.id.femaleRadioButton);
         getMGender = findViewById(R.id.maleRadioButton);
 
