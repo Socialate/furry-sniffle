@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.socialteinc.socialate">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
             android:allowBackup="true"
@@ -13,6 +13,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -25,30 +26,32 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
+
         <activity android:name=".AddEntertainmentActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".MainActivity"/>
+                    android:value=".MainActivity" />
         </activity>
         <activity android:name=".CheckEmailActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".LoginActivity"/>
+                    android:value=".LoginActivity" />
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".RegisterEmailActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".CheckEmailActivity"/>
+                    android:value=".CheckEmailActivity" />
         </activity>
         <activity android:name=".CreateProfileActivity">
         </activity>
-
-        <activity
-                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                android:theme="@style/Base.Theme.AppCompat"/>
-
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                  android:theme="@style/Base.Theme.AppCompat"/><activity android:name=".ViewEntertainmentActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".MainActivity"/>
+        </activity>
     </application>
 
 </manifest>
