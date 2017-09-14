@@ -40,9 +40,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private ImageView getProfilePicture;
     private Uri imageUri;
-    private Spinner gender;
-    private RadioButton getFGender;
-    private RadioButton getMGender;
+    private Spinner getGender;
     private TextView addPicture;
     private TextView getDisplayName;
     private TextView getFullName;
@@ -99,9 +97,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         getDescrip =findViewById(R.id.describeEditText);
         getPhone = findViewById(R.id.phoneEditText);
         getHome_address = findViewById(R.id.homeAddressEditText);
-        gender = findViewById(R.id.spinnerGender);
-        getFGender = findViewById(R.id.femaleRadioButton);
-        getMGender = findViewById(R.id.maleRadioButton);
+        getGender = findViewById(R.id.spinnerGender);
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
@@ -122,7 +118,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 String user_descrip = (String) dataSnapshot.child("description").getValue();
                 String user_phone = (String) dataSnapshot.child("phone number").getValue();
                 String user_address = (String) dataSnapshot.child("physical address").getValue();
-                String user_gender = (String) dataSnapshot.child("Gender").getValue();
+                String user_gender = (String) dataSnapshot.child("gender").getValue();
                 //imageUri = (Uri) dataSnapshot.child("profileImage").getValue();
                 String user_email = mFirebaseAuth.getCurrentUser().getEmail();
 
@@ -132,9 +128,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 getDescrip.setText(user_descrip);
                 getHome_address.setText(user_address);
                 getPhone.setText(user_phone);
-                if(user_gender.matches("Male") == true) getMGender.setChecked(true);
-                if(user_gender.matches("Female") == true) getFGender.setChecked(true);
-
+                getGender.setSelection(((ArrayAdapter<String>)getGender.getAdapter()).getPosition(user_gender));
 
                 Picasso.with(getApplicationContext())
                         .load(user_image)
@@ -180,8 +174,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         final String description = getDescrip.getText().toString();
         final String phone_number = getPhone.getText().toString();
         final String home_address = getHome_address.getText().toString();
-        final boolean gender_m = getMGender.isChecked();
-        final boolean gender_f = getFGender.isChecked();
+        final String gender_selected = getGender.getSelectedItem().toString();
 
         if(imageUri == null){
             imageUri = Uri.parse("android.resourse://com.socialteinc.socialate/drawable/eventplaceholder.jpg");
@@ -203,8 +196,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                     mProfileDatabaseReference.child(user_id).child("description").setValue(description);
                     mProfileDatabaseReference.child(user_id).child("phone number").setValue(phone_number);
                     mProfileDatabaseReference.child(user_id).child("physical address").setValue(home_address);
-                    if(gender_m == true && gender_f == false) mProfileDatabaseReference.child(user_id).child("Gender").setValue("Male");
-                    if(gender_m == false && gender_f == true) mProfileDatabaseReference.child(user_id).child("Gender").setValue("Female");
+                    mProfileDatabaseReference.child(user_id).child("gender").setValue(gender_selected);
 
                     assert downloadUrl != null;
                     mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
