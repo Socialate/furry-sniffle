@@ -11,10 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
@@ -24,12 +22,6 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import java.text.DateFormat;
-import java.util.Date;
-
-import static com.socialteinc.socialate.LoginActivity.isValidEmail;
 
 public class ViewEditProfileActivity extends AppCompatActivity {
 
