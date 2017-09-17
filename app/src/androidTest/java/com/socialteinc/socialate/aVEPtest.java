@@ -32,7 +32,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
 
-public class VEPtest {
+public class aVEPtest {
     private FirebaseAuth mAuth;
 
    //@Rule
@@ -58,7 +58,6 @@ public class VEPtest {
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
         mAuth.signInWithEmailAndPassword("joe@gmail.com", "sandile");
-        Thread.sleep(3000);
         onView(withId(R.id.textInputLayout5)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameEditText)).perform(ViewActions.typeText("Furry Sniffle"), ViewActions.closeSoftKeyboard()).check(matches(isDisplayed()));
 
