@@ -38,14 +38,14 @@ public class aVEPtest {
    //@Rule
    public ActivityTestRule<ViewEditProfileActivity> main = new ActivityTestRule<>(ViewEditProfileActivity.class);
     Activity m;
-    @Before
+    //@Before
     public void login() throws InterruptedException {
         mAuth = FirebaseAuth.getInstance();
         System.out.println(" fffffffffffffffff "+ mAuth);
         mAuth.signOut();
         System.out.println(" fffffffffffffffff "+ mAuth);
         mAuth.signInWithEmailAndPassword("joe@gmail.com", "sandile");
-        Thread.sleep(9000);
+        Thread.sleep(2500);
         System.out.println(" fffffffffffffffff "+ mAuth.getCurrentUser());
         Intent activity = new Intent(String.valueOf(MainActivity.class));
         m = main.launchActivity(activity);
@@ -55,6 +55,7 @@ public class aVEPtest {
 
     @Test
     public void UiTest() throws InterruptedException {
+        login();
         onView(withId(R.id.textInputLayout5)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameEditText)).perform(ViewActions.clearText());
         onView(withId(R.id.fullNameEditText)).perform(ViewActions.typeText("Furry Sniffle"), ViewActions.closeSoftKeyboard()).check(matches(isDisplayed()));
