@@ -56,12 +56,15 @@ public class aVEPtest {
     @Test
     public void UiTest() throws InterruptedException {
         onView(withId(R.id.textInputLayout5)).check(matches(isDisplayed()));
+        onView(withId(R.id.fullNameEditText)).perform(ViewActions.clearText());
         onView(withId(R.id.fullNameEditText)).perform(ViewActions.typeText("Furry Sniffle"), ViewActions.closeSoftKeyboard()).check(matches(isDisplayed()));
 
         onView(withId(R.id.textInputLayout6)).check(matches(isDisplayed()));
+        onView(withId(R.id.displayNameEditText)).perform(ViewActions.clearText());
         onView(withId(R.id.displayNameEditText)).perform(ViewActions.typeText("Socialate"), ViewActions.closeSoftKeyboard()).check(matches(isDisplayed()));
 
         onView(withId(R.id.textInputLayout7)).check(matches(isDisplayed()));
+        onView(withId(R.id.describeEditText)).perform(ViewActions.clearText());
         onView(withId(R.id.describeEditText)).perform(ViewActions.typeText("I'm a geolocation service"), ViewActions.closeSoftKeyboard()).check(matches(isDisplayed()));
 
 
