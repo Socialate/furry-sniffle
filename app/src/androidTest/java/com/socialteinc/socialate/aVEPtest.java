@@ -49,15 +49,12 @@ public class aVEPtest {
         System.out.println(" fffffffffffffffff "+ mAuth.getCurrentUser());
         Intent activity = new Intent(String.valueOf(MainActivity.class));
         m = main.launchActivity(activity);
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
     }
 
     @Test
     public void UiTest() throws InterruptedException {
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signOut();
-        mAuth.signInWithEmailAndPassword("joe@gmail.com", "sandile");
         onView(withId(R.id.textInputLayout5)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameEditText)).perform(ViewActions.typeText("Furry Sniffle"), ViewActions.closeSoftKeyboard()).check(matches(isDisplayed()));
 
