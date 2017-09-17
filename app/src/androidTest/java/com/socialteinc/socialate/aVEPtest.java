@@ -45,7 +45,7 @@ public class aVEPtest {
         mAuth.signOut();
         System.out.println(" fffffffffffffffff "+ mAuth);
         mAuth.signInWithEmailAndPassword("joe@gmail.com", "sandile");
-        Thread.sleep(6000);
+        Thread.sleep(9000);
         System.out.println(" fffffffffffffffff "+ mAuth.getCurrentUser());
         Intent activity = new Intent(String.valueOf(MainActivity.class));
         m = main.launchActivity(activity);
