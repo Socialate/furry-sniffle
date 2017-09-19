@@ -1,13 +1,16 @@
 package com.socialteinc.socialate;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import com.squareup.picasso.Picasso;
 
@@ -21,13 +24,19 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private TextView mEntertainmentDescription;
     private TextView mEntertainmentAddress;
     private Toolbar mToolbar;
+    private FloatingActionButton mLikeButton;
+    private Boolean mProcessLike = false;
+
 
     // Firebase instance variables
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mEventsDatabaseReference;
+    private DatabaseReference mLikesDatabaseReference;
+
 
     private String mEntertainmentKey;
     private String mEntertainmentName;
+    private FirebaseAuth mFirebaseAuth;
 
 
     @Override
@@ -46,16 +55,43 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mEntertainmentOwner = findViewById(R.id.ViewAddedAreaOwnerText);
         mEntertainmentDescription = findViewById(R.id.ViewAddedAreaDescText);
         mEntertainmentAddress = findViewById(R.id.ViewAddedAreaAddressText);
+        mLikeButton = findViewById(R.id.likeFloatingActionButton);
+
 
         // Initialize firebase
         mFireBaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
+        mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
 
         mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(mEntertainmentName);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(mEntertainmentName);
+        }
+
+        mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                assert mFirebaseAuth.getCurrentUser() != null;
+                if(dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()){
+                    mLikeButton.setImageResource(R.drawable.ic_fav);
+                    mLikeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorWhite)));
+
+                }else {
+                    mLikeButton.setImageResource(R.drawable.ic_white_fav);
+                    mLikeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         mEventsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
 
@@ -70,6 +106,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 String uid = (String) dataSnapshot.child("uid").getValue();
                 String author = (String) dataSnapshot.child("author").getValue();
 
+                assert owner != null;
                 if(owner.equals("")){
                     ((findViewById(R.id.ownerLinearlayout))).setVisibility(View.GONE);
                 }
@@ -93,6 +130,35 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
+        mLikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processLike();
+            }
+        });
+    }
+
+    private void processLike() {
+        mProcessLike = true;
+        mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (mProcessLike && mFirebaseAuth.getCurrentUser() != null) {
+                    if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
+                        mLikesDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue("liked");
+                        mProcessLike = false;
+                    } else {
+                        mLikesDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
+                        mProcessLike = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 }

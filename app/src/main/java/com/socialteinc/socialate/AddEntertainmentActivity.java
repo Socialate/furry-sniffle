@@ -86,9 +86,11 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Entertainment Area");
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Entertainment Area");
+        }
 
 
         // Initialize progress bar
