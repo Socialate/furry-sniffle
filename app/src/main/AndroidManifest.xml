@@ -46,14 +46,12 @@
         <activity android:name=".CreateProfileActivity">
         </activity>
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                  android:theme="@style/Base.Theme.AppCompat"/><activity android:name=".ViewEntertainmentActivity">
+                  android:theme="@style/Base.Theme.AppCompat"/>
+        <activity android:name=".ViewEntertainmentActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
-        <activity
-                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                android:theme="@style/Base.Theme.AppCompat"/>
         <activity android:name=".ResetPasswordActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"

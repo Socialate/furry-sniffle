@@ -34,8 +34,6 @@
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>
     <string name="error_password_length">Passwords must be at least 8 characters in length</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="forgot_password">Forgot Password?</string>
     <string name="name_display">Display Name</string>
     <string name="full_string_app_name">full name</string>
     <string name="emailDisplay">Email</string>
@@ -64,7 +62,6 @@
     <string name="home_address">Home address</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-
     <array name="gender">
         <item>Male</item>
         <item>Female</item>
@@ -83,4 +80,6 @@
     <string name="entertainment_spot_description">Entertainment spot description</string>
     <string name="fake_description">The place where beasts are born and raised</string>
     <string name="favorite_icon">favorite icon</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>
