@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+@SuppressWarnings("ConstantConditions")
 public class RegisterEmailActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterEmailActivity.class.getSimpleName();
@@ -84,7 +85,7 @@ public class RegisterEmailActivity extends AppCompatActivity {
         String email = mEmail.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(email) && !validatePassword()){
+        if(!TextUtils.isEmpty(email) && validatePassword()){
 
             mProgressDialog.setTitle("Creating Account");
             mProgressDialog.setMessage("Please wait while we create your account.");

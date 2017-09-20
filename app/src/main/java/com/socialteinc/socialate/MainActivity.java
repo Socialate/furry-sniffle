@@ -1,31 +1,44 @@
 package com.socialteinc.socialate;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     // References variables
+    private RecyclerView mEntertainmentSpotRecyclerView;
     private Toolbar mToolbar;
 
     // Firebase instance variables
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mUsersDatabaseReference;
+    private DatabaseReference mEventsDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,19 +46,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize references to views
         mToolbar = findViewById(R.id.mainPageToolBar);
+        mEntertainmentSpotRecyclerView = findViewById(R.id.entertainmentSpotRecyclerView);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle("Socialate");
+
+
+        // Initialize  RecyclerView
+        mEntertainmentSpotRecyclerView.setHasFixedSize(true);
+        mEntertainmentSpotRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize Firebase components
         FirebaseApp.initializeApp(this);
         mFireBaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
+        mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
 
         mUsersDatabaseReference.keepSynced(true);
+        mEventsDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -103,6 +124,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+
+        FirebaseRecyclerAdapter<Entertainment, EntertainmentSpotAdapterViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Entertainment, EntertainmentSpotAdapterViewHolder>(
+                Entertainment.class,
+                R.layout.item_event,
+                EntertainmentSpotAdapterViewHolder.class,
+                mEventsDatabaseReference
+        ) {
+            @Override
+            protected void populateViewHolder(EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
+
+                final String entertainmentKey = getRef(position).getKey();
+                final String entertainmentName = model.getName();
+
+                viewHolder.setName(model.getName());
+                viewHolder.setOwner(model.getAuthor());
+                viewHolder.setPhotoUrl(model.getPhotoUrl());
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent eventIntent = new Intent(MainActivity.this, ViewEntertainmentActivity.class);
+                        eventIntent.putExtra("entertainmentName", entertainmentName);
+                        eventIntent.putExtra("entertainmentKey", entertainmentKey);
+                        startActivity(eventIntent);
+                    }
+                });
+            }
+        };
+
+        mEntertainmentSpotRecyclerView.setAdapter(firebaseRecyclerAdapter);
+
     }
 
     @Override
@@ -145,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
      * This function launches add entertainment activity to create a new spot
      */
@@ -157,5 +211,45 @@ public class MainActivity extends AppCompatActivity {
      * this function logs users out of firebase and the app.
      */
     private void onLogout() { mFirebaseAuth.signOut(); }
+
+    public static class EntertainmentSpotAdapterViewHolder extends RecyclerView.ViewHolder{
+
+        View mView;
+
+        public EntertainmentSpotAdapterViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setName(String title){
+            TextView event_title = mView.findViewById(R.id.titleTextView);
+            event_title.setText(title);
+        }
+
+        void setOwner(String author){
+            TextView event_author = mView.findViewById(R.id.ownerTextView);
+            event_author.setText(author);
+        }
+
+        void setPhotoUrl(String image){
+            ImageView event_image = mView.findViewById(R.id.photoImageView);
+            final ProgressBar progressBar = mView.findViewById(R.id.imageProgressBar);
+            Picasso.with(event_image.getContext())
+                    .load(image)
+                    .into(event_image, new Callback() {
+                @Override
+                public void onSuccess() {
+                    progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
+        }
+    }
+
+
 
 }

@@ -10,10 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -83,11 +80,13 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         mEntertainmentAddress = findViewById(R.id.entertainmentAddressEditText);
         mChooseImageButton = findViewById(R.id.chooseImageButton);
         mSubmitButton = findViewById(R.id.addEntertainmentAreaButton);
-        mToolbar = findViewById(R.id.addEntertainmentToolbar);
+        mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Entertainment Area");
+
+
 
         // Initialize progress bar
         mProgressDialog = new ProgressDialog(this);
@@ -176,6 +175,9 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
                                     if(task.isSuccessful()){
                                         mProgressDialog.dismiss();
+                                        //handling layout of the successfully added area
+                                        Intent mainIntent = new Intent(AddEntertainmentActivity.this, MainActivity.class);
+                                        startActivity(mainIntent);
                                         finish();
                                     } else {
                                         mProgressDialog.dismiss();

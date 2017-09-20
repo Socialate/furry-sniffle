@@ -1,6 +1,8 @@
 package com.socialteinc.socialate;
 
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -12,6 +14,7 @@ public class EntertainmentClassTest {
     /**
      * Test of constructor Entertainment method, of class Entertainment.
      */
+
     @Test
     public void testEntertainment() {
         System.out.println("constructorEntertainment");
@@ -274,4 +277,5 @@ public class EntertainmentClassTest {
         String result = instance.getEstablishmentCategory();
         assertEquals(expResult, result);
     }
+
 }

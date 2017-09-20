@@ -34,6 +34,20 @@
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>
     <string name="error_password_length">Passwords must be at least 8 characters in length</string>
+    <string name="image_for_the_entertainment_spot">Image for the entertainment spot</string>
+    <string name="francis_tinashe_mudavanhu">Francis Tinashe Mudavanhu</string>
+    <string name="mansa_night_club">Mansa Night Club</string>
+    <string name="Owner">Owner:</string>
+    <string name="addedAreaDescription">Description:</string>
+    <string name="smoke_and_grill">Smoke and Grill</string>
+    <string name="image_of_added_area">Image Of Added Area</string>
+    <string name="address">Address:</string>
+    <string name="address1">Address:</string>
+    <string name="entetainment_spot_owner">Entetainment spot owner</string>
+    <string name="entertainment_spot_address">Entertainment spot Address</string>
+    <string name="fake_address">23 Tiger Lane, Roarstate, Myburg</string>
+    <string name="entertainment_spot_description">Entertainment spot description</string>
+    <string name="fake_description">The place where beasts are born and raised</string>
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password">Forgot Password?</string>
 </resources>
