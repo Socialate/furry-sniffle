@@ -40,7 +40,7 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="6dp"
-                android:text="@string/mansa_night_club"/>
+                android:text="@string/mansa_night_club" android:textSize="24sp"/>
 
         <TextView
                 android:id="@+id/ownerTextView"
@@ -51,7 +51,8 @@
                 android:paddingEnd="8dp"
                 android:paddingBottom="6dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/francis_tinashe_mudavanhu"/>
+                android:text="@string/francis_tinashe_mudavanhu" android:textSize="24sp"
+                android:focusableInTouchMode="true" android:contextClickable="true"/>
 
         <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"

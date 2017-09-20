@@ -193,6 +193,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                     assert downloadUrl != null;
                     mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
                     mProgressDialog.dismiss();
+                    Toast.makeText(ViewEditProfileActivity.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
 
                     Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final String mEntertainmentKey = getRef(position).getKey();
                 final String mEntertainmentName = model.getName();
+                final String mEntertainmentUploader = model.getAuthor();
 
                 viewHolder.setName(model.getName());
                 viewHolder.setOwner(model.getAuthor());
@@ -158,6 +159,17 @@ public class MainActivity extends AppCompatActivity {
                         eventIntent.putExtra("entertainmentName", mEntertainmentName);
                         eventIntent.putExtra("entertainmentKey", mEntertainmentKey);
                         startActivity(eventIntent);
+                    }
+                });
+
+                //Click textview to view profile of the user who uploaded the area
+                viewHolder.mEntertainmentOwner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
+                        profileViewIntent.putExtra("entertainmentUploader", mEntertainmentUploader);
+                        profileViewIntent.putExtra("entertainmentKey", mEntertainmentKey);
+                        startActivity(profileViewIntent);
                     }
                 });
 
@@ -267,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
         View mView;
         ImageView mLikeButton;
         TextView mEntertainmentLikes;
+        TextView mEntertainmentOwner; //
         FirebaseDatabase mFirebaseDatabase;
         FirebaseAuth mFirebaseAuth;
         DatabaseReference mLikesDatabaseReference;
@@ -275,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
             mView = itemView;
             mLikeButton = mView.findViewById(R.id.likeButton);
+            mEntertainmentOwner = mView.findViewById(R.id.ownerTextView); //
             mEntertainmentLikes = mView.findViewById(R.id.likeCounterTextView);
             mFirebaseDatabase = FirebaseDatabase.getInstance();
             mFirebaseAuth = FirebaseAuth.getInstance();

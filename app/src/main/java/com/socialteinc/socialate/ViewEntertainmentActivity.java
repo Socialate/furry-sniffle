@@ -136,6 +136,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 processLike();
             }
         });
+
     }
 
     private void processLike() {
