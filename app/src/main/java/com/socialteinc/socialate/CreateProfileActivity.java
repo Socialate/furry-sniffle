@@ -67,7 +67,9 @@ public class CreateProfileActivity extends AppCompatActivity {
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Profile Setup");
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Profile Setup");
+        }
 
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
@@ -80,11 +82,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         mProfilePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent galleryIntent = new Intent();
-                galleryIntent.setType("image/*");
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST_CODE);
+                galleryIntent();
             }
         });
 
@@ -97,13 +95,20 @@ public class CreateProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void galleryIntent() {
+        Intent galleryIntent = new Intent();
+        galleryIntent.setType("image/*");
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST_CODE);
+    }
+
     /**
      * this function creates a profile for the newly created account making
      * sure we have a profile picture, username and the full name of the user.
      */
     private void startSetupAccount() {
 
-
+        assert mFirebaseAuth.getCurrentUser() != null;
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
         final String displayName = mDisplayNameEditText.getText().toString().trim();
         final String name = mFullNameEditText.getText().toString().trim();
