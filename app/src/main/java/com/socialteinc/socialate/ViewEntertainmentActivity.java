@@ -103,19 +103,19 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 String description = (String) dataSnapshot.child("description").getValue();
                 String address = (String) dataSnapshot.child("address").getValue();
                 String photoUrl = (String) dataSnapshot.child("photoUrl").getValue();
-                String uid = (String) dataSnapshot.child("uid").getValue();
+                final String uid = (String) dataSnapshot.child("uid").getValue();
                 String author = (String) dataSnapshot.child("author").getValue();
 
-                assert owner != null;
-                if(owner.equals("")){
-                    ((findViewById(R.id.ownerLinearlayout))).setVisibility(View.GONE);
-                }
-                else{
+                mEntertainmentOwner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
+                        profileViewIntent.putExtra("entertainmentUploader", uid);
+                        startActivity(profileViewIntent);
+                    }
+                });
 
-                    mEntertainmentOwner.setText(owner);
-                }
-
-                mEntertainmentOwner.setText(owner);
+                mEntertainmentOwner.setText(author);
                 mEntertainmentDescription.setText(description);
                 mEntertainmentAddress.setText(address);
 

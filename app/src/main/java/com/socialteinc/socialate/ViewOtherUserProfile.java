@@ -5,14 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class ViewOtherUserProfile extends AppCompatActivity{
@@ -25,7 +29,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
     private TextView getDisplayName;
     private TextView getFullName;
     private EditText getDescrip;
-    private String getOwnerName;
+    private String ownerUID;
     private String mUsersKey;
 
     // Firebase instance variables
@@ -42,9 +46,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
 
         // get identifier key
         Intent intent = getIntent();
-        mUsersKey = intent.getStringExtra("entertainmentKey");
-        getOwnerName = intent.getStringExtra("entertainmentUploader");
-        Log.d(TAG, "onCreate: "+ mUsersKey);
+        ownerUID = intent.getStringExtra("entertainmentUploader");
 
         // Initialize references to views
         mToolbar = findViewById(R.id.ProfileToolbar2);
@@ -52,7 +54,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         getDisplayName = findViewById(R.id.displayNameEditText2);
         getFullName = findViewById(R.id.fullNameEditText2);
         getDescrip = findViewById(R.id.describeEditText2);
-        //getOwnerName = findViewById(R.id.ownerTextView);
+        //ownerUID = findViewById(R.id.ownerTextView);
 
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
@@ -73,7 +75,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         mProgressDialog = new ProgressDialog(this);
 
         // Display current user profile details
-        mProfileDatabaseReference.child(mUsersKey).addValueEventListener(new ValueEventListener() {
+        mProfileDatabaseReference.child(ownerUID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                 final String mEntertainmentKey = getRef(position).getKey();
                 final String mEntertainmentName = model.getName();
-                final String mEntertainmentUploader = model.getAuthor();
+                final String mEntertainmentUploader = model.getUID();
 
                 viewHolder.setName(model.getName());
                 viewHolder.setOwner(model.getAuthor());
@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
                         profileViewIntent.putExtra("entertainmentUploader", mEntertainmentUploader);
-                        profileViewIntent.putExtra("entertainmentKey", mEntertainmentKey);
                         startActivity(profileViewIntent);
                     }
                 });
@@ -341,8 +340,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         void setOwner(String author){
-            TextView event_author = mView.findViewById(R.id.ownerTextView);
-            event_author.setText(author);
+            mEntertainmentOwner.setText(author);
         }
 
         void setPhotoUrl(String image){
