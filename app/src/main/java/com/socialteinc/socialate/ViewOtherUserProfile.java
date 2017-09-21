@@ -51,9 +51,9 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // Initialize references to views
         mToolbar = findViewById(R.id.ProfileToolbar2);
         getProfilePicture = findViewById(R.id.imageView2);
-        getDisplayName = findViewById(R.id.displayNameEditText2);
-        getFullName = findViewById(R.id.fullNameEditText2);
-        getDescrip = findViewById(R.id.describeEditText2);
+        getDisplayName = findViewById(R.id.displayNameTextView);
+        getFullName = findViewById(R.id.fullNameTextView);
+        getDescrip = findViewById(R.id.describeEditText);
         //ownerUID = findViewById(R.id.ownerTextView);
 
         // Initialize Firebase components
