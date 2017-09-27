@@ -2,6 +2,7 @@ package com.socialteinc.socialate;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class ViewEntertainmentActivity extends AppCompatActivity {
@@ -19,7 +25,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private String TAG =ViewEntertainmentActivity.class.getSimpleName();
 
     // References variables
-    private ImageView mEntertainmentImage;
+    private ImageView mEntertainmentImage, mNavigationImage;
     private TextView mEntertainmentOwner;
     private TextView mEntertainmentDescription;
     private TextView mEntertainmentAddress;
@@ -52,6 +58,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         // Initialize references to views
         mEntertainmentImage = findViewById(R.id.ViewAddedAreaImageView);
+        mNavigationImage = findViewById(R.id.navigationImageView);
         mEntertainmentOwner = findViewById(R.id.ViewAddedAreaOwnerText);
         mEntertainmentDescription = findViewById(R.id.ViewAddedAreaDescText);
         mEntertainmentAddress = findViewById(R.id.ViewAddedAreaAddressText);
@@ -130,6 +137,13 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
+        mNavigationImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchMap();
+            }
+        });
+
         mLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,6 +151,13 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void launchMap() {
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+ mEntertainmentAddress.getText().toString());
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
     }
 
     private void processLike() {

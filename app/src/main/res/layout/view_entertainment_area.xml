@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <android.support.design.widget.AppBarLayout layout="@layout/app_bar_layout"
@@ -85,11 +85,14 @@
                                                               android:orientation="horizontal"
                                                               android:padding="12dp">
 
-                    <ImageView android:layout_width="0dp"
-                               android:layout_height="wrap_content"
-                               android:contentDescription="@string/entertainment_spot_address"
-                               android:src="@mipmap/ic_address"
-                               android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/navigationImageView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/entertainment_spot_address"
+                        android:paddingTop="8dp"
+                        android:src="@drawable/ic_address" />
 
                     <TextView
                             android:layout_gravity="center_vertical"
@@ -126,23 +129,6 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/ViewAddedAreaDescText"
                             android:textColor="@color/colorPrimaryText"/>
-
-                </android.support.v7.widget.LinearLayoutCompat>
-                <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
-                                                              android:layout_height="wrap_content"
-                                                              android:orientation="horizontal"
-                                                              android:padding="12dp">
-
-                    <TextView
-                            android:layout_gravity="center_vertical"
-                            android:padding="12dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:layout_weight="9"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/comment"
-                            android:textColor="@color/colorPrimaryText" android:text="Comment"
-                            tools:ignore="HardcodedText"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
             </android.support.v7.widget.LinearLayoutCompat>
