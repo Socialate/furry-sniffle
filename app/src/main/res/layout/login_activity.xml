@@ -48,6 +48,7 @@
                 android:id="@+id/password_field" android:inputType="textPassword"
                 android:textColor="@color/colorPrimaryText"/>
     </android.support.design.widget.TextInputLayout>
+
     <Button
             android:text="@string/login"
             android:background="@color/colorPrimary"
@@ -60,8 +61,8 @@
             android:layout_marginLeft="8dp" app:layout_constraintLeft_toLeftOf="parent" android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout1"/>
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/orTextView" />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,6 +74,38 @@
             android:text="@string/socialate" android:id="@+id/appNameTextView" android:textColor="@color/colorPrimaryText"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/loginEmailTextInputLayout"/>
 
+    <TextView
+        android:id="@+id/orTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/com_facebook_smart_device_instructions_or"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintBottom_toTopOf="@+id/facebookButton"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebookButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="11dp"
+        android:paddingBottom="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/googleButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
@@ -81,7 +114,7 @@
             app:layout_constraintRight_toRightOf="parent" android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintHorizontal_bias="0.0"
             android:id="@+id/linearLayout1" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="28dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
     >
         <TextView
                 android:text="@string/forgot_password"
@@ -96,6 +129,19 @@
                 android:textSize="18sp" android:textAlignment="textEnd" android:layout_weight="0.08"
                 android:onClick="signUp"/>
     </LinearLayout>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical|center"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout1" />
 
 
 </android.support.constraint.ConstraintLayout>
