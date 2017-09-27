@@ -176,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             } else {
                 // Google Sign In failed.
-                Toast.makeText(RegisterActivity.this, "Login failed.",
+                Toast.makeText(RegisterActivity.this, "Sign up failed.",
                         Toast.LENGTH_SHORT).show();
 
             }
