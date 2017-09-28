@@ -19,13 +19,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data android:name="android.app.default_searchable"
+                       android:value=".SearchableActivity" />
         </activity>
         <activity android:name=".ViewEditProfileActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
-
         <activity android:name=".AddEntertainmentActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -36,7 +37,6 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
-
         <activity android:name=".CheckEmailActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -51,8 +51,9 @@
         </activity>
         <activity android:name=".CreateProfileActivity">
         </activity>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                  android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                android:theme="@style/Base.Theme.AppCompat"/>
         <activity android:name=".ViewEntertainmentActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -62,6 +63,16 @@
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".LoginActivity"/>
+        </activity>
+        <activity
+                android:name=".SearchableActivity"
+                android:label="@string/title_activity_searchable"
+                android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable"/>
         </activity>
     </application>
 

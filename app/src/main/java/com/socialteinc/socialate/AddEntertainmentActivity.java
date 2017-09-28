@@ -229,8 +229,8 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
             imageUri = data.getData();
             bitmap = getThumbnailBitmap(imageUri.getPath(),1000);
-            //mEntertainmentImageView.setImageURI(imageUri);
-            mEntertainmentImageView.setImageBitmap(bitmap);
+            mEntertainmentImageView.setImageURI(imageUri);
+            //mEntertainmentImageView.setImageBitmap(bitmap);
         }else {
             Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
             mProgressDialog.dismiss();

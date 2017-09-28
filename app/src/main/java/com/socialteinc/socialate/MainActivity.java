@@ -1,12 +1,15 @@
 package com.socialteinc.socialate;
 
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -88,11 +91,14 @@ public class MainActivity extends AppCompatActivity {
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                     finish();
+
                 }
             }
         };
 
         checkProfileExist();
+
+
     }
 
     /**
@@ -228,17 +234,21 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if(id == R.id.action_add_entertainment){
-            onAddEntertainment();
-            return true;
-        }
 
         if(id == R.id.action_view_edit_profile){
             onEditProfile();
@@ -248,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
             onLogout();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -255,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This function launches add entertainment activity to create a new spot
      */
-    private void onAddEntertainment(){
+    public void onAddEntertainment(View v){
         Intent addEntertainmentIntent = new Intent(this, AddEntertainmentActivity.class);
         startActivity(addEntertainmentIntent);
     }
