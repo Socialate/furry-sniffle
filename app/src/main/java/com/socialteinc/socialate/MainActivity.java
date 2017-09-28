@@ -35,8 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mEventsDatabaseReference;
+    private DatabaseReference mLikesDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+
+    private Boolean mProcessLike = false;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -49,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
         mEntertainmentSpotRecyclerView = findViewById(R.id.entertainmentSpotRecyclerView);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setTitle("Socialate");
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+        }
 
 
         // Initialize  RecyclerView
@@ -64,9 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
+        mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
 
         mUsersDatabaseReference.keepSynced(true);
         mEventsDatabaseReference.keepSynced(true);
+        mLikesDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -134,28 +141,69 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
 
-                final String entertainmentKey = getRef(position).getKey();
-                final String entertainmentName = model.getName();
+                final String mEntertainmentKey = getRef(position).getKey();
+                final String mEntertainmentName = model.getName();
+                final String mEntertainmentUploader = model.getUID();
 
                 viewHolder.setName(model.getName());
                 viewHolder.setOwner(model.getAuthor());
                 viewHolder.setPhotoUrl(model.getPhotoUrl());
+                viewHolder.setLikeButton(mEntertainmentKey);
+                viewHolder.setLikeNumber(mEntertainmentKey);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         Intent eventIntent = new Intent(MainActivity.this, ViewEntertainmentActivity.class);
-                        eventIntent.putExtra("entertainmentName", entertainmentName);
-                        eventIntent.putExtra("entertainmentKey", entertainmentKey);
+                        eventIntent.putExtra("entertainmentName", mEntertainmentName);
+                        eventIntent.putExtra("entertainmentKey", mEntertainmentKey);
                         startActivity(eventIntent);
                     }
                 });
+
+                //Click textview to view profile of the user who uploaded the area
+                viewHolder.mEntertainmentOwner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
+                        profileViewIntent.putExtra("entertainmentUploader", mEntertainmentUploader);
+                        startActivity(profileViewIntent);
+                    }
+                });
+
+                viewHolder.mLikeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mProcessLike = true;
+                        mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessLike && mFirebaseAuth.getCurrentUser() != null) {
+                                    if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
+                                        mLikesDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue("liked");
+                                        mProcessLike = false;
+                                    } else {
+                                        mLikesDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
+                                        mProcessLike = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
+
+
+
             }
         };
 
         mEntertainmentSpotRecyclerView.setAdapter(firebaseRecyclerAdapter);
-
     }
 
     @Override
@@ -191,6 +239,11 @@ public class MainActivity extends AppCompatActivity {
             onAddEntertainment();
             return true;
         }
+
+        if(id == R.id.action_view_edit_profile){
+            onEditProfile();
+        }
+
         if(id == R.id.action_logout){
             onLogout();
             return true;
@@ -208,6 +261,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * This function launches view-edit profile activity to enable users to view and edit their profiles
+     */
+    private void onEditProfile(){
+        Intent viewEditProfileIntent = new Intent(this,ViewEditProfileActivity.class);
+        startActivity(viewEditProfileIntent);
+    }
+
+    /**
      * this function logs users out of firebase and the app.
      */
     private void onLogout() { mFirebaseAuth.signOut(); }
@@ -215,10 +276,62 @@ public class MainActivity extends AppCompatActivity {
     public static class EntertainmentSpotAdapterViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
+        ImageView mLikeButton;
+        TextView mEntertainmentLikes;
+        TextView mEntertainmentOwner; //
+        FirebaseDatabase mFirebaseDatabase;
+        FirebaseAuth mFirebaseAuth;
+        DatabaseReference mLikesDatabaseReference;
 
         public EntertainmentSpotAdapterViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
+            mLikeButton = mView.findViewById(R.id.likeButton);
+            mEntertainmentOwner = mView.findViewById(R.id.ownerTextView); //
+            mEntertainmentLikes = mView.findViewById(R.id.likeCounterTextView);
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mLikesDatabaseReference = mFirebaseDatabase.getReference().child("Likes");
+            mLikesDatabaseReference.keepSynced(true);
+        }
+
+        void setLikeButton(final String mEntertainmentKey){
+
+            mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    assert mFirebaseAuth.getCurrentUser() != null;
+                    if(dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()){
+                        mLikeButton.setImageResource(R.drawable.ic_fav);
+
+                    }else {
+                        mLikeButton.setImageResource(R.drawable.ic_fav_border);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        void setLikeNumber(final String mEntertainmentKey){
+
+            mLikesDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mEntertainmentLikes.setText(String.valueOf((int) dataSnapshot.getChildrenCount()));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
         public void setName(String title){
@@ -227,8 +340,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         void setOwner(String author){
-            TextView event_author = mView.findViewById(R.id.ownerTextView);
-            event_author.setText(author);
+            mEntertainmentOwner.setText(author);
         }
 
         void setPhotoUrl(String image){

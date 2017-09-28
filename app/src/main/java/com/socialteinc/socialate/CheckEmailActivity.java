@@ -23,7 +23,7 @@ import com.google.firebase.auth.ProviderQueryResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("ALL")
+
 public class CheckEmailActivity extends AppCompatActivity {
 
     private static final String TAG = CheckEmailActivity
@@ -55,9 +55,11 @@ public class CheckEmailActivity extends AppCompatActivity {
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
-        //noinspection ConstantConditions
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Email Registration");
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Email Registration");
+        }
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override

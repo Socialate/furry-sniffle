@@ -2,6 +2,8 @@ package com.socialteinc.socialate;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +23,7 @@ import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import pub.devrel.easypermissions.EasyPermissions;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -83,23 +86,32 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Entertainment Area");
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Entertainment Area");
+        }
 
 
         // Initialize progress bar
         mProgressDialog = new ProgressDialog(this);
 
         //Choose image button select image
+        final String[] galleryPermissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
         mChooseImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent galleryIntent = new Intent();
-                galleryIntent.setType("image/*");
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST_CODE);
+                if (EasyPermissions.hasPermissions(AddEntertainmentActivity.this, galleryPermissions)) {
+                    Intent galleryIntent = new Intent();
+                    galleryIntent.setType("image/*");
+                    galleryIntent.setAction(Intent.ACTION_PICK);
+                    startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST_CODE);
+                } else {
+                    EasyPermissions.requestPermissions(AddEntertainmentActivity.this, "Access for storage",
+                            101, galleryPermissions);
+                }
+
 
             }
         });
@@ -205,7 +217,6 @@ public class AddEntertainmentActivity extends AppCompatActivity {
     }
 
     private String imageNameGenerator(){
-
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
@@ -213,15 +224,34 @@ public class AddEntertainmentActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Bitmap bitmap;
         if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
 
             imageUri = data.getData();
-            mEntertainmentImageView.setImageURI(imageUri);
+            bitmap = getThumbnailBitmap(imageUri.getPath(),1000);
+            //mEntertainmentImageView.setImageURI(imageUri);
+            mEntertainmentImageView.setImageBitmap(bitmap);
         }else {
             Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
             mProgressDialog.dismiss();
 
         }
+    }
+
+    //This function downscales the image size
+    private Bitmap getThumbnailBitmap(final String path, final int thumbnailSize) {
+        Bitmap bitmap;
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, bounds);
+        if ((bounds.outWidth == -1) || (bounds.outHeight == -1)) {
+            bitmap = null;
+        }
+        int originalSize = (bounds.outHeight > bounds.outWidth) ? bounds.outHeight
+                : bounds.outWidth;
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = originalSize / thumbnailSize;
+        bitmap = BitmapFactory.decodeFile(path, opts);
+        return bitmap;
     }
 }

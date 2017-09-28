@@ -13,8 +13,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
-          abortOnError false
-      }
+        abortOnError false
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -26,9 +26,13 @@ android {
     }
     lintOptions {
 
-          abortOnError false
+        abortOnError false
 
-      }
+    }
+
+    defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
 }
 
 coveralls {
@@ -48,8 +52,16 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'pub.devrel:easypermissions:0.2.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
 
+    compile 'com.google.firebase:firebase-core:11.2.0'
+    compile 'com.google.firebase:firebase-database:11.2.0'
+    compile 'com.google.firebase:firebase-storage:11.2.0'
     compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:palette-v7:26.0.1'
+    compile 'com.android.support:exifinterface:26.0.1'
     compile 'com.android.support:exifinterface:26.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.0.1'
@@ -60,10 +72,10 @@ dependencies {
     compile 'com.google.firebase:firebase-core:11.2.0'
     compile 'com.google.firebase:firebase-storage:11.2.0'
     compile 'com.google.firebase:firebase-database:11.2.0'
-    compile 'com.google.firebase:firebase-core:11.2.0'
     compile 'com.google.firebase:firebase-auth:11.2.0'
     compile 'com.google.firebase:firebase-database:11.2.0'
     compile 'com.google.firebase:firebase-storage:11.2.0'
+    compile 'com.firebaseui:firebase-ui-storage:0.6.0'
     compile 'com.firebaseui:firebase-ui-database:2.0.1'
     compile 'com.firebase:geofire-android:2.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -71,6 +83,13 @@ dependencies {
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //androidTestCompile 'com.android.support:support-annotations:25.3.1'
+    //androidTestCompile 'com.android.support.test:runner:0.5'
+    //androidTestCompile 'com.android.support.test:rules:0.5'
+    // Optional -- UI testing with UI Automator
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

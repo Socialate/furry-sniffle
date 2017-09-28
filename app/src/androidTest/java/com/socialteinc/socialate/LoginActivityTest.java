@@ -37,17 +37,26 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void logintesting() throws InterruptedException {
+    public void loginTesting() throws InterruptedException {
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
     }
 
     @Test
-    public void signUptesting(){
+    public void signUpTesting(){
         Intents.init();
         onView(withId(R.id.creatAccountTextView)).perform(click());
         intended(hasComponent(CheckEmailActivity.class.getName()));
+        Intents.release();
+
+    }
+
+    @Test
+    public void resetPasswordTesting(){
+        Intents.init();
+        onView(withId(R.id.resetPasswordTextView)).perform(click());
+        intended(hasComponent(ResetPasswordActivity.class.getName()));
         Intents.release();
 
     }

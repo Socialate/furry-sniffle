@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-@SuppressWarnings("ConstantConditions")
 public class RegisterEmailActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterEmailActivity.class.getSimpleName();
@@ -58,8 +57,11 @@ public class RegisterEmailActivity extends AppCompatActivity {
 
         //Initialise toolbar
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Email Registration");
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Email Registration");
+        }
+
 
         mEmail.setText(email);
 
