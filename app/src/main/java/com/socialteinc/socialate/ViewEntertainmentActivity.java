@@ -185,12 +185,15 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
 
                         mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(comment);
+                        mCommentEditText.setText("");
+                        Toast.makeText(ViewEntertainmentActivity.this,
+                                "Successful", Toast.LENGTH_LONG).show();
                         //mCommentEditText.clearComposingText();
 
-                    } else {
+                    } /*else {
                         Toast.makeText(ViewEntertainmentActivity.this,
                                 "Write a comment in the text box then press the send button", Toast.LENGTH_LONG).show();
-                    }
+                    }*/
                 }
             }
 
