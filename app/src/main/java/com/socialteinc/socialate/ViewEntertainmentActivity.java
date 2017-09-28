@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import com.squareup.picasso.Picasso;
@@ -25,6 +28,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private TextView mEntertainmentAddress;
     private Toolbar mToolbar;
     private FloatingActionButton mLikeButton;
+    private EditText mCommentButton;
     private Boolean mProcessLike = false;
 
 
@@ -32,6 +36,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mEventsDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
+    private DatabaseReference mCommentsDatabaseReference;
 
 
     private String mEntertainmentKey;
@@ -56,6 +61,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mEntertainmentDescription = findViewById(R.id.ViewAddedAreaDescText);
         mEntertainmentAddress = findViewById(R.id.ViewAddedAreaAddressText);
         mLikeButton = findViewById(R.id.likeFloatingActionButton);
+        mCommentButton = findViewById(R.id.commentEditText);
 
 
         // Initialize firebase
@@ -63,6 +69,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
+        mCommentsDatabaseReference = mFireBaseDatabase.getReference().child("Comments");
 
         mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
 
@@ -137,6 +144,13 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
+        mCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processComment();
+            }
+        });
+
     }
 
     private void processLike() {
@@ -151,6 +165,30 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     } else {
                         mLikesDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
                         mProcessLike = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void processComment(){
+        final String comment = mCommentButton.getText().toString();
+        mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!TextUtils.isEmpty(comment) && mFirebaseAuth.getCurrentUser() != null) {
+                    if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
+                        mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(comment);
+
+                    } else {
+                        Toast.makeText(ViewEntertainmentActivity.this,
+                                "Write a comment in the text box then press the send button", Toast.LENGTH_LONG).show();
                     }
                 }
             }

@@ -2,7 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -133,17 +133,17 @@
                                                               android:padding="12dp"
                                                               android:orientation="horizontal">
 
-                    <android.support.v4.widget.CircleImageView android:layout_width="0dp"
-                                                               android:layout_height="wrap_content"
-                                                               android:id="@+id/commentorImage"
-                                                               android:layout_weight="1"/>
-
                     <EditText android:layout_width="0dp"
                               android:layout_height="wrap_content"
-                              android:layout_weight="9"
+                              android:layout_weight="8"
                               android:padding="12dp" android:inputType="textMultiLine"
                               android:id="@+id/commentEditText"
-                              android:hint="Write a comment..."/>
+                              android:hint="@string/write_a_comment"/>
+
+                    <ImageView android:layout_width="0dp" android:layout_height="wrap_content"
+                               android:layout_weight="2"
+                               android:id="@+id/sendButton"/>
+
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
