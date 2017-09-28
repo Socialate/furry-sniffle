@@ -9,10 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import com.squareup.picasso.Picasso;
@@ -28,7 +25,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private TextView mEntertainmentAddress;
     private Toolbar mToolbar;
     private FloatingActionButton mLikeButton;
-    private EditText mCommentButton;
+    private EditText mCommentEditText;
+    private ImageButton mCommentButton;
     private Boolean mProcessLike = false;
 
 
@@ -61,7 +59,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mEntertainmentDescription = findViewById(R.id.ViewAddedAreaDescText);
         mEntertainmentAddress = findViewById(R.id.ViewAddedAreaAddressText);
         mLikeButton = findViewById(R.id.likeFloatingActionButton);
-        mCommentButton = findViewById(R.id.commentEditText);
+        mCommentEditText = findViewById(R.id.commentEditText);
+        mCommentButton = findViewById(R.id.commentImageButton);
 
 
         // Initialize firebase
@@ -178,13 +177,15 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     }
 
     private void processComment(){
-        final String comment = mCommentButton.getText().toString();
+        final String comment = mCommentEditText.getText().toString();
         mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!TextUtils.isEmpty(comment) && mFirebaseAuth.getCurrentUser() != null) {
+                if (!TextUtils.isEmpty(comment) && (mFirebaseAuth.getCurrentUser() != null)) {
                     if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
+
                         mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(comment);
+                        //mCommentEditText.clearComposingText();
 
                     } else {
                         Toast.makeText(ViewEntertainmentActivity.this,

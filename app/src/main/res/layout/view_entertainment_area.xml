@@ -140,10 +140,12 @@
                               android:id="@+id/commentEditText"
                               android:hint="@string/write_a_comment"/>
 
-                    <ImageView android:layout_width="0dp" android:layout_height="match_parent"
-                               android:layout_weight="2"
-                               android:id="@+id/sendButton" app:srcCompat="@drawable/ic_send_black_18dp"
-                               android:clickable="true"/>
+                    <ImageButton android:layout_width="0dp"
+                                 android:layout_height="match_parent"
+                                 android:layout_weight="2"
+                                 app:srcCompat="@android:drawable/ic_menu_send"
+                                 android:elevation="0dp" android:tint="@color/colorPrimaryLight"
+                                 android:scaleType="fitCenter" android:id="@+id/commentImageButton"/>
 
 
                 </android.support.v7.widget.LinearLayoutCompat>
