@@ -3,6 +3,7 @@ package com.socialteinc.socialate;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -34,14 +37,20 @@ public class SearchableActivity extends AppCompatActivity {
     private ArrayList<DataSnapshot> arr;
     private DataSnapshot[] dataset;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_searchable);
-        Toolbar toolbar = findViewById(R.id.main_app_bar);
+        Toolbar toolbar = findViewById(R.id.mainPageToolBar);
         setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Search Results");
 
+        }
 
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
@@ -69,12 +78,25 @@ public class SearchableActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void doMySearch(String search_string) {
 
-        DatabaseReference mFirebaseDatabaseReference = mFireBaseDatabase.getReference();
-        Query query = mFirebaseDatabaseReference.child("Entertainments").orderByChild("name").equalTo(search_string);
-
+      DatabaseReference mFirebaseDatabaseReference = mFireBaseDatabase.getReference();
+      Query query =  mFirebaseDatabaseReference.child("Entertainments").orderByChild("name")
+                .startAt(search_string)
+                .endAt(search_string+"\uf8ff");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -83,13 +105,18 @@ public class SearchableActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     arr.add(postSnapshot);
                 }
-
-                dataset = new DataSnapshot[arr.size()];
-                for(int i =  0; i < arr.size();i++){
-                    dataset[i] = arr.get(i);
+                if(arr.size() == 0){
+                    Snackbar sb = Snackbar.make(findViewById(R.id.search_acivity), "No results found", Snackbar.LENGTH_LONG);
+                    View v = sb.getView();
+                    v.setBackgroundColor(R.color.colorPrimaryLight);
+                }else {
+                    dataset = new DataSnapshot[arr.size()];
+                    for (int i = 0; i < arr.size(); i++) {
+                        dataset[i] = arr.get(i);
+                    }
+                    mAdapter = new MyAdapter(dataset);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
-                mAdapter = new MyAdapter(dataset);
-                mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
@@ -112,7 +139,6 @@ public class SearchableActivity extends AppCompatActivity {
         public class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             public CardView cardview;
-
 
             public ViewHolder(CardView v) {
                 super(v);
@@ -148,19 +174,20 @@ public class SearchableActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-           // holder.mTextView.setText(mDataset[position]);
-            ((TextView)holder.cardview.findViewById(R.id.titleTextView)).setText((String)mDataset[position].child("name").getValue());
-            ((TextView)holder.cardview.findViewById(R.id.ownerTextView)).setText((String)mDataset[position].child("author").getValue());
-            setPhotoUrl((String)mDataset[position].child("photoUrl").getValue(), holder);
-            setLikeNumber(mDataset[position].getKey(), (TextView)holder.cardview.findViewById(R.id.likeCounterTextView));
+            // holder.mTextView.setText(mDataset[position]);
+            ((TextView) holder.cardview.findViewById(R.id.titleTextView)).setText((position + 1) + ". " + mDataset[position].child("name").getValue());
+            ((TextView) holder.cardview.findViewById(R.id.ownerTextView)).setText((String) mDataset[position].child("author").getValue());
+            setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
+            setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCounterTextView));
             final int pos = position;
+            final ImageView[] imageView = new ImageView[1];
             holder.cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     Intent eventIntent = new Intent(SearchableActivity.this, ViewEntertainmentActivity.class);
-                    eventIntent.putExtra("entertainmentName", (String)mDataset[pos].child("name").getValue());
-                    eventIntent.putExtra("entertainmentKey",mDataset[pos].getKey());
+                    eventIntent.putExtra("entertainmentName", (String) mDataset[pos].child("name").getValue());
+                    eventIntent.putExtra("entertainmentKey", mDataset[pos].getKey());
                     startActivity(eventIntent);
                 }
             });
@@ -204,6 +231,7 @@ public class SearchableActivity extends AppCompatActivity {
             });
 
         }
+
     }
 }
 

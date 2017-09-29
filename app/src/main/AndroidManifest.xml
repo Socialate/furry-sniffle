@@ -66,6 +66,7 @@
         </activity>
         <activity
                 android:name=".SearchableActivity"
+                android:launchMode="singleTop"
                 android:label="@string/title_activity_searchable"
                 android:theme="@style/AppTheme">
             <intent-filter>
