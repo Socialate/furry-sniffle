@@ -128,6 +128,49 @@
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
+                <android.support.v7.widget.CardView android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_margin="16dp"
+                                                    android:elevation="5dp"
+                                                    app:cardUseCompatPadding="true">
+
+                    <android.support.constraint.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="20dp">
+
+                        <MultiAutoCompleteTextView
+                                android:id="@+id/commentMultiAutoCompleteTextView"
+                                android:text="MultiAutoCompleteTextView ajfgajhgfjgahdfg"
+                                android:layout_width="236dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="8dp"
+                                android:focusable="false"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintLeft_toRightOf="@+id/imageView3" android:layout_marginLeft="5dp"
+                                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="2dp"
+                                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                                android:textAlignment="textStart"/>
+                        <TextView
+                                android:id="@+id/textView4"
+                                android:text="Musa Rikhotso"
+                                android:layout_width="0dp"
+                                android:layout_height="17dp"
+                                app:layout_constraintLeft_toRightOf="@+id/imageView3" android:layout_marginLeft="5dp"
+                                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="2dp"
+                                android:layout_marginRight="8dp" app:layout_constraintRight_toRightOf="parent"
+                                android:textAlignment="textStart" android:textStyle="bold"
+                                app:layout_constraintHorizontal_bias="0.0"/>
+                        <ImageView
+                                android:id="@+id/imageView3"
+                                android:layout_height="70dp" app:srcCompat="@drawable/default_avatar"
+                                android:layout_marginLeft="2dp" app:layout_constraintLeft_toLeftOf="parent"
+                                android:layout_width="70dp" app:layout_constraintTop_toTopOf="parent"
+                                android:layout_marginTop="2dp"
+                        />
+                    </android.support.constraint.ConstraintLayout>
+                </android.support.v7.widget.CardView>
+
                 <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               android:padding="12dp"
@@ -146,8 +189,8 @@
                                  app:srcCompat="@android:drawable/ic_menu_send"
                                  android:elevation="0dp" android:tint="@color/colorWhite"
                                  android:scaleType="fitCenter" android:id="@+id/commentImageButton"
-                                 android:backgroundTint="@color/colorPrimaryLight"/>
-
+                                 android:backgroundTint="@color/colorPrimaryLight" android:contentDescription=""
+                                 tools:ignore="ContentDescription"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
