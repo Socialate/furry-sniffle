@@ -77,7 +77,7 @@ public class SearchableTest {
          onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
          onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
          onView(withId(R.id.SinginButton)).perform(click());
-         Thread.sleep(2000);
+         Thread.sleep(4000);
          onView((withId(R.id.search_btn))).check(matches(isDisplayed()));
          onView(allOf(withId(R.id.search_btn), withEffectiveVisibility(VISIBLE))).perform(click());
          onView((withHint("Search for a spot"))).perform(ViewActions.typeText("Bikini"), pressImeActionButton());
