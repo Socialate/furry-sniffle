@@ -3,6 +3,8 @@ package com.socialteinc.socialate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
@@ -11,7 +13,14 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +41,36 @@ import static org.hamcrest.Matchers.allOf;
 @RunWith(AndroidJUnit4.class)
 public class SearchableTest {
 
+    FirebaseAuth mAuth;
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void login(){
+        FirebaseApp.initializeApp(rule.getActivity());
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword("joe@gmail.com", "sandile")
+                .addOnCompleteListener(rule.getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+
+
+
+
+                        } else {
+
+                            // If sign in fails, display a message to the user.
+                            Log.w("login activity", "signInWithEmail:failure", task.getException());
+
+
+                        }
+                    }
+                });
+    }
+
+
 
      @Test
      public void searchTest() throws InterruptedException {
