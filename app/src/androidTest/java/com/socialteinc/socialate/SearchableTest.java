@@ -27,9 +27,9 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
@@ -74,6 +74,10 @@ public class SearchableTest {
 
      @Test
      public void searchTest() throws InterruptedException {
+         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
+         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
+         onView(withId(R.id.SinginButton)).perform(click());
+         Thread.sleep(2000);
          onView((withId(R.id.search_btn))).check(matches(isDisplayed()));
          onView(allOf(withId(R.id.search_btn), withEffectiveVisibility(VISIBLE))).perform(click());
          onView((withHint("Search for a spot"))).perform(ViewActions.typeText("Bikini"), pressImeActionButton());
