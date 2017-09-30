@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,9 +75,12 @@ public class SearchableTest {
 
      @Test
      public void searchTest() throws InterruptedException {
-         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
-         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
-         onView(withId(R.id.SinginButton)).perform(click());
+         FirebaseUser user = mAuth.getCurrentUser();
+         if(user == null) {
+             onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
+             onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
+             onView(withId(R.id.SinginButton)).perform(click());
+         }
          Thread.sleep(4000);
          onView((withId(R.id.search_btn))).check(matches(isDisplayed()));
          onView(allOf(withId(R.id.search_btn), withEffectiveVisibility(VISIBLE))).perform(click());

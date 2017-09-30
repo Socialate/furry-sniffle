@@ -54,10 +54,10 @@ public class LoginActivityTest {
 
     @Test
     public void resetPasswordTesting(){
-        Intents.init();
+
         onView(withId(R.id.resetPasswordTextView)).perform(click());
         intended(hasComponent(ResetPasswordActivity.class.getName()));
-        Intents.release();
+
 
     }
 
