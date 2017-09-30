@@ -53,11 +53,12 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void resetPasswordTesting(){
-
+    public void resetPasswordTesting() throws InterruptedException {
+        Intents.init();
+        Thread.sleep(1500);
         onView(withId(R.id.resetPasswordTextView)).perform(click());
         intended(hasComponent(ResetPasswordActivity.class.getName()));
-
+        Intents.release();
 
     }
 
