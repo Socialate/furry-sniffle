@@ -17,7 +17,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class ResetPasswordTest{
 
  @Rule
- public ActivityTestRule<ResetPasswordActivity> rule = new ActivityTestRule<>(ResetPasswordActivity.class);
+ public ActivityTestRule<SearchableActivity> rule = new ActivityTestRule<>(SearchableActivity.class);
 
     @Test
     public void checkEmailExistsTest(){

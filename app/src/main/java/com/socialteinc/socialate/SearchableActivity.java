@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -108,7 +109,8 @@ public class SearchableActivity extends AppCompatActivity {
                 if(arr.size() == 0){
                     Snackbar sb = Snackbar.make(findViewById(R.id.search_acivity), "No results found", Snackbar.LENGTH_LONG);
                     View v = sb.getView();
-                    v.setBackgroundColor(R.color.colorPrimaryLight);
+                    v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                    sb.show();
                 }else {
                     dataset = new DataSnapshot[arr.size()];
                     for (int i = 0; i < arr.size(); i++) {
