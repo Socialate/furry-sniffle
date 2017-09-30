@@ -17,10 +17,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class ResetPasswordTest{
 
  @Rule
- public ActivityTestRule<SearchableActivity> rule = new ActivityTestRule<>(SearchableActivity.class);
+ public ActivityTestRule<ResetPasswordActivity> rule = new ActivityTestRule<>(ResetPasswordActivity.class);
 
     @Test
-    public void checkEmailExistsTest(){
+    public void checkEmailExistsTest() throws InterruptedException {
 
         onView(withId(R.id.resetEmailEditText)).perform(typeText("valid@socialate.com"), closeSoftKeyboard());
 //        onView(withId(R.id.resetPasswordButton)).check(matches(isDisplayed()));

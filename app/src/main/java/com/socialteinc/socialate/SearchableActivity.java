@@ -53,7 +53,7 @@ public class SearchableActivity extends AppCompatActivity {
 
         }
 
-        mRecyclerView = findViewById(R.id.my_recycler_view);
+        mRecyclerView = findViewById(R.id.search_recyclerView);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
