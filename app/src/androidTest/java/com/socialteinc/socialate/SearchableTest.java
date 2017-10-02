@@ -56,22 +56,14 @@ public class SearchableTest {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
-
-
-
                         } else {
-
                             // If sign in fails, display a message to the user.
                             Log.w("login activity", "signInWithEmail:failure", task.getException());
-
 
                         }
                     }
                 });
     }
-
-
 
      @Test
      public void searchTest() throws InterruptedException {
@@ -81,8 +73,10 @@ public class SearchableTest {
              onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
              onView(withId(R.id.SinginButton)).perform(click());
          }
-         Thread.sleep(4000);
-         onView((withId(R.id.search_btn))).check(matches(isDisplayed()));
+
+         Thread.sleep(3500);
+         onView(withContentDescription("Search")).perform(ViewActions.click());
+         //onView((withId(R.id.search_btn))).check(matches(isDisplayed()));
          onView(allOf(withId(R.id.search_btn), withEffectiveVisibility(VISIBLE))).perform(click());
          onView((withHint("Search for a spot"))).perform(ViewActions.typeText("Bikini"), pressImeActionButton());
          Thread.sleep(2500);

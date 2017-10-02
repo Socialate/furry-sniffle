@@ -90,4 +90,5 @@
     <string name="app_label">Socialate</string>
     <string name="search_hint">Search for a spot</string>
     <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="search_desc">search option</string>
 </resources>
