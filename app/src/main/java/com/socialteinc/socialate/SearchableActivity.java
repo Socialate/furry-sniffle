@@ -92,7 +92,7 @@ public class SearchableActivity extends AppCompatActivity {
         }
     }
 
-    private void doMySearch(String search_string) {
+    public boolean doMySearch(String search_string) {
 
       DatabaseReference mFirebaseDatabaseReference = mFireBaseDatabase.getReference();
       Query query =  mFirebaseDatabaseReference.child("Entertainments").orderByChild("name")
@@ -128,6 +128,7 @@ public class SearchableActivity extends AppCompatActivity {
         };
 
         query.addValueEventListener(valueEventListener);
+        return true;
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
