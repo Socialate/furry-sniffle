@@ -2,6 +2,7 @@ package com.socialteinc.socialate;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -30,12 +31,14 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private FloatingActionButton mLikeButton;
     private EditText mCommentEditText;
     private ImageButton mCommentButton;
+    private String mAuthor;
     private Boolean mProcessLike = false;
 
 
     // Firebase instance variables
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mEventsDatabaseReference;
+    
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCommentsDatabaseReference;
 
@@ -210,30 +213,39 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     private void processComment(){
         final String comment = mCommentEditText.getText().toString();
-        mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!TextUtils.isEmpty(comment) && (mFirebaseAuth.getCurrentUser() != null)) {
-                    if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
 
-                        mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(comment);
-                        mCommentEditText.setText("");
-                        Toast.makeText(ViewEntertainmentActivity.this,
-                                "Successful", Toast.LENGTH_LONG).show();
-                        //mCommentEditText.clearComposingText();
+        if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(comment)){
 
-                    } /*else {
-                        Toast.makeText(ViewEntertainmentActivity.this,
-                                "Write a comment in the text box then press the send button", Toast.LENGTH_LONG).show();
-                    }*/
+            mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    mAuthor = (String) dataSnapshot.child("name").getValue();
+
+
+
+
+                    if ((mFirebaseAuth.getCurrentUser() != null)) {
+                        if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
+
+                            mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(comment);
+                            mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(mAuthor);
+                            mCommentEditText.setText("");
+                            Toast.makeText(ViewEntertainmentActivity.this,
+                                    "Successful", Toast.LENGTH_LONG).show();
+                        }
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+
+        }
+
+
 
     }
 }
