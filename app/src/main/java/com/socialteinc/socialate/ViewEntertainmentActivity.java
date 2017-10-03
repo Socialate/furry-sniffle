@@ -23,6 +23,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private TextView mEntertainmentOwner;
     private TextView mEntertainmentDescription;
     private TextView mEntertainmentAddress;
+    private TextView mCommentorName;
+    private AutoCompleteTextView mCommentTextView;
+    private ImageView mCommentorImage;
     private Toolbar mToolbar;
     private FloatingActionButton mLikeButton;
     private EditText mCommentEditText;
@@ -35,7 +38,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private DatabaseReference mEventsDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCommentsDatabaseReference;
-
 
     private String mEntertainmentKey;
     private String mEntertainmentName;
@@ -61,6 +63,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mLikeButton = findViewById(R.id.likeFloatingActionButton);
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
+        mCommentorName = findViewById(R.id.commentorNameTextView);
+        mCommentTextView = findViewById(R.id.commentMultiAutoCompleteTextView);
+        mCommentorImage = findViewById(R.id.commentorProfileImageView);
 
 
         // Initialize firebase
@@ -133,6 +138,33 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+
+        // Display current user comments
+        mCommentsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+               // String user_name = (String) dataSnapshot.child("name").getValue();
+                //String user_image = (String) dataSnapshot.child("profileImage").getValue();
+                String user_comment = (String) dataSnapshot.child("Comments").child(mFirebaseAuth.getCurrentUser().getUid()).getValue();
+
+                System.out.println("aaa: "+user_comment);
+                System.out.println("aaa: "+dataSnapshot.getValue());
+
+
+               // mCommentorName.setText(user_name);
+                mCommentTextView.setText(user_comment);
+
+                /*Picasso.with(getApplicationContext())
+                        .load(user_image)
+                        .into(mCommentorImage);*/
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
 
