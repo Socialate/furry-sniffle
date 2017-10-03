@@ -1,6 +1,7 @@
 package com.socialteinc.socialate;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private Boolean mProcessLike = false;
+
+    SharedPreferences msharedPref;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -95,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         };
 
         checkProfileExist();
+        msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int syncConnPref = msharedPref.getInt("bar_val", 50);
+        System.out.println("------------------"+ syncConnPref );
     }
 
     /**
@@ -259,13 +265,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void launchFrag() {
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new preferencesFrag())
+                .replace(android.R.id.content, new preferencesFrag(),"settings pref")
                 .commit();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        int syncConnPref = sharedPref.getInt("bar_val", 50);
-        System.out.println("------------------"+ syncConnPref );
     }
-
+    @Override
+    public void onBackPressed() {
+        Fragment p = getFragmentManager().findFragmentByTag("settings pref");
+        if ((p).isVisible()) {
+            getFragmentManager().beginTransaction().remove(p).commit();
+            int syncConnPref = msharedPref.getInt("bar_val", 50);
+            System.out.println("------------------** "+ syncConnPref );
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     /**
      * This function launches add entertainment activity to create a new spot

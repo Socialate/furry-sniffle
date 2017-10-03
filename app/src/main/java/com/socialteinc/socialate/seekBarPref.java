@@ -58,7 +58,7 @@ public class seekBarPref extends Preference implements SeekBar.OnSeekBarChangeLi
 
     public void setValue(int value) {
         if (shouldPersist()) {
-
+            System.out.println("******* persist value: " + value);
             persistInt(value);
 
         }
