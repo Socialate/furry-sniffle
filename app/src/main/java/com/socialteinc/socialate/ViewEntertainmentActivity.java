@@ -144,30 +144,38 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                         .load(photoUrl)
                         .into(mEntertainmentImage);
 
-
                 // Display current user comments
                 mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                            int i = 0;
+                            String[] image = new String[10];
+                            String[] comment = new String[10];
+                            String[] author = new String[10];
+
                             for(DataSnapshot user_comment : dataSnapshot.getChildren()){
 
                                 String eUID = (String) user_comment.child("entertainmentUID").getValue();
 
                                 if(mEntertainmentKey.equals(eUID) == true){
                                     //System.out.println("*** "+eUID+" = "+mEntertainmentKey);
-                                    String author = (String) user_comment.child("author").getValue();
-                                    String image = (String) user_comment.child("photoUrl").getValue();
-                                    String comment = (String) user_comment.child("comment").getValue();
+                                    author[i] =  (String) user_comment.child("author").getValue();
+                                    image[i] = (String) user_comment.child("photoUrl").getValue();
+                                    comment[i] = (String) user_comment.child("comment").getValue();
 
-                                    mCommentorName.setText(author);
-                                    mCommentTextView.setText(comment);
-
-                                    Picasso.with(getApplicationContext())
-                                            .load(image)
-                                            .into(mCommentorImage);
+                                    i++;
                                 }
                             }
-                        
+
+                            for(int n=0; n<author.length; n++){
+                                mCommentorName.setText(author[i]);
+                                mCommentTextView.setText(comment[i]);
+
+                                Picasso.with(getApplicationContext())
+                                        .load(image[i])
+                                        .into(mCommentorImage);
+                            }
+
                     }
 
                     @Override
@@ -183,7 +191,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             }
         });
-
 
 
         mLikeButton.setOnClickListener(new View.OnClickListener() {
