@@ -1,18 +1,38 @@
 package com.socialteinc.socialate;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.*;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,10 +48,12 @@ import pub.devrel.easypermissions.EasyPermissions;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class AddEntertainmentActivity extends AppCompatActivity {
+public class AddEntertainmentActivity extends AppCompatActivity /*implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener*/{
 
     private String TAG =AddEntertainmentActivity.class.getSimpleName();
     private static final String ANONYMOUS = "anonymous";
+    private final static int MY_PERMISSION_FINE_LOCATION=101;
 
 
     private ProgressDialog mProgressDialog;
@@ -53,9 +75,26 @@ public class AddEntertainmentActivity extends AppCompatActivity {
     private StorageReference mStorageReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private GeoFire mGeoFire;
 
     private static final int GALLERY_REQUEST_CODE = 1;
+    private static final int PLACE_PICKER_REQUEST=1;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 7172;
     private Toolbar mToolbar;
+    private WebView mAttributeText;
+    private LocationRequest mlocationRequest;
+    private GoogleApiClient mgoogleApiClient;
+    private int UPDATE_INTERVAL=5000; //SEC
+    private int FATEST_INTERVAL=5000; //SEC
+    private int DISPLACEMENT=10; //METERS
+
+    private boolean mRequestingLocationUpdates = false;
+    private LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +108,15 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         mFirebaseStorage =FirebaseStorage.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
+
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mEntertainmentsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
+        mGeoFire =new GeoFire(mFireBaseDatabase.getReference().child("GeoFire"));
+        String itemId = mEntertainmentsDatabaseReference.push().getKey();
+        Location me=new Location("me");
+
 
 
         // Initialize references to views
@@ -84,6 +128,8 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         mChooseImageButton = findViewById(R.id.chooseImageButton);
         mSubmitButton = findViewById(R.id.addEntertainmentAreaButton);
         mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
+       // mAttributeText=findViewById(R.id.wvAttribution);
+
 
         setSupportActionBar(mToolbar);
 
@@ -91,6 +137,35 @@ public class AddEntertainmentActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Entertainment Area");
         }
+
+        requestPermissions();
+
+        mEntertainmentAddress.setFocusable(false);
+        mEntertainmentAddress.setClickable(true);
+        mEntertainmentAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                try {
+                    Intent intent = builder.build(AddEntertainmentActivity.this);
+                    startActivityForResult(intent, PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        /*mEntertainmentAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayLocation();
+            }
+        });*/
+
+
 
 
         // Initialize progress bar
@@ -102,7 +177,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (EasyPermissions.hasPermissions(AddEntertainmentActivity.this, galleryPermissions)) {
+               /* if (EasyPermissions.hasPermissions(AddEntertainmentActivity.this, galleryPermissions)) {
                     Intent galleryIntent = new Intent();
                     galleryIntent.setType("image/*");
                     galleryIntent.setAction(Intent.ACTION_PICK);
@@ -110,11 +185,30 @@ public class AddEntertainmentActivity extends AppCompatActivity {
                 } else {
                     EasyPermissions.requestPermissions(AddEntertainmentActivity.this, "Access for storage",
                             101, galleryPermissions);
-                }
+                }*/
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST_CODE);
 
 
             }
         });
+
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //Run-time request permission
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            }, MY_PERMISSION_FINE_LOCATION);
+        } else {
+            if (checkPlayServices()) {
+                buildGoogleApiClient();
+                createLocationRequest();
+            }
+        }*/
+
         // Submit button create Entertainment
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,9 +226,97 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
     }
 
+    private void requestPermissions() {
+      if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+              && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSION_FINE_LOCATION:
+                if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(getApplicationContext(), "Socialate requires location to be granted", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                break;
+        }
+    }
+
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_FINE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (checkPlayServices())
+                        buildGoogleApiClient();
+                    createLocationRequest();
+                }
+                break;
+        }
+    }*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+      /*  Bitmap bitmap;
+        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+
+            imageUri = data.getData();
+            bitmap = getThumbnailBitmap(imageUri.getPath(),1000);
+            //mEntertainmentImageView.setImageURI(imageUri);
+            mEntertainmentImageView.setImageBitmap(bitmap);
+        }else {
+            Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
+            mProgressDialog.dismiss();
+
+        }*/
+
+        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+
+            imageUri = data.getData();
+            mEntertainmentImageView.setImageURI(imageUri);
+        }else {
+            Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
+            mProgressDialog.dismiss();
+
+        }
+
+        /*if (requestCode == PLACE_PICKER_REQUEST){
+            if (resultCode == RESULT_OK){
+                Place place = PlacePicker.getPlace(data, this);
+                if(place==null){
+                    Toast.makeText(getApplicationContext(), "No spot selected, please select a spot and try Again!", Toast.LENGTH_SHORT).show();
+                    mProgressDialog.dismiss();
+                }
+                mEntertainmentTitleEditText.setText(place.getName());
+                mEntertainmentAddress.setText(place.getAddress());
+                LatLng location=place.getLatLng();
+                mGeoFire.setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));
 
 
-    private void startPosting() {
+               // double latitude=place.getLatLng().latitude;
+                //mEntertainmentDescriptionEditText.setText((int) location.latitude);
+               /* if (place.getAttributions() == null) {
+                    mAttributeText.loadData("no attribution", "text/html; charset=utf-8", "UFT-8");
+                } else {
+                    mAttributeText.loadData(place.getAttributions().toString(), "text/html; charset=utf-8", "UFT-8");
+                }
+            }else {
+                Toast.makeText(getApplicationContext(), "Failed to get the place. Try Again!", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+
+            }
+        }*/
+    }
+
+
+        private void startPosting() {
 
         final String title_val = mEntertainmentTitleEditText.getText().toString();
         final String owner_val = mEntertainmentOwner.getText().toString();
@@ -221,7 +403,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap bitmap;
@@ -236,7 +418,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
 
         }
-    }
+    }*/
 
     //This function downscales the image size
     private Bitmap getThumbnailBitmap(final String path, final int thumbnailSize) {
@@ -254,4 +436,92 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         bitmap = BitmapFactory.decodeFile(path, opts);
         return bitmap;
     }
+
+
+    /*private void displayLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            double latitude = mLastLocation.getLatitude();
+            double longitude = mLastLocation.getLongitude();
+            mEntertainmentAddress.setText(latitude + " / " + longitude);
+        } else
+            mEntertainmentAddress.setText("Couldn't get the location. Make sure location is enable on the device");
+
+    }
+
+    private void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(FATEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
+
+    }
+
+    private synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+
+        //Fix first time run app if permission doesn't grant yet so can't get anything
+        mGoogleApiClient.connect();
+
+
+    }
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "This device is not supported", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private void startLocationUpdates() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
+    private void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,this);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        displayLocation();
+        if(mRequestingLocationUpdates)
+            startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        displayLocation();
+    }*/
+
+
 }
