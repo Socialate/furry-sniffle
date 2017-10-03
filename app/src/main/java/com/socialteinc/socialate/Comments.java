@@ -6,15 +6,17 @@ public class Comments {
     private String photoUrl;
     private String uid;
     private String author;
+    private String entertainmentUID;
 
     public Comments() {
     }
 
-    public Comments(String uid, String comment, String photoUrl, String author) {
+    public Comments(String uid, String comment, String photoUrl, String author, String entertainmentUID) {
         this.photoUrl = photoUrl;
         this.uid = uid;
         this.author = author;
         this.comment = comment;
+        this.entertainmentUID = entertainmentUID;
     }
 
 
@@ -49,5 +51,14 @@ public class Comments {
     public String getAuthor() {
         return author;
     }
+
+    public void setEntertainmentUID(String entertainmentUID) {
+        this.entertainmentUID = entertainmentUID;
+    }
+
+    public String getEntertainmentUID() {
+        return entertainmentUID;
+    }
+
 
 }

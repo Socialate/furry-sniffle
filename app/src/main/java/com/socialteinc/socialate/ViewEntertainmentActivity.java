@@ -219,27 +219,22 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 mAuthor = (String) dataSnapshot.child("name").getValue();
                 commentorProfileImage = (String) dataSnapshot.child("profileImage").getValue();
 
-                Comments user_comment = new Comments(user_id, comment, commentorProfileImage, mAuthor);
+                Comments user_comment = new Comments(user_id, comment, commentorProfileImage, mAuthor, mEntertainmentKey);
 
                 mCommentsDatabaseReference.push().setValue(user_comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
                         if(task.isSuccessful()){
-                            //mProgressDialog.dismiss();
-                            //handling layout of the successfully added area
                             mCommentEditText.setText("");
                             Toast.makeText(ViewEntertainmentActivity.this,
                                     "Successful", Toast.LENGTH_LONG).show();
 
-
                         } else {
-                            //mProgressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Network Error. Check your connection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
 
             }
 
@@ -248,28 +243,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             }
         });
-
-
-                   /* if (!TextUtils.isEmpty(comment) && (user_id != null)) {
-                       // if (!dataSnapshot.child(mEntertainmentKey).child(user_id).exists()) {
-                            mCommentsDatabaseReference.push().child("author").setValue(mAuthor);
-                            mCommentsDatabaseReference.push().child("comment").setValue(comment);
-                            mCommentsDatabaseReference.push().child("profileImage").setValue(commentorProfileImage);
-                            mCommentsDatabaseReference.push().child("uid").setValue(user_id);
-
-                            mCommentEditText.setText("");
-                            Toast.makeText(ViewEntertainmentActivity.this,
-                                    "Successful", Toast.LENGTH_LONG).show();
-                        }else{
-                            mCommentEditText.setText("");
-                            Toast.makeText(ViewEntertainmentActivity.this,
-                                    "Error: Check your internet connection", Toast.LENGTH_LONG).show();
-                        }*/
-                 //   }
-               // }
-
-
-
 
     }
 }
