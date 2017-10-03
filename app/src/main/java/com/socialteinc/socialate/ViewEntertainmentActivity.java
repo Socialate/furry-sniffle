@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,9 +12,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import com.squareup.picasso.Picasso;
+
+import java.util.ListIterator;
 
 public class ViewEntertainmentActivity extends AppCompatActivity {
 
@@ -32,13 +37,14 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private EditText mCommentEditText;
     private ImageButton mCommentButton;
     private String mAuthor;
+    private String commentorProfileImage;
     private Boolean mProcessLike = false;
 
 
     // Firebase instance variables
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mEventsDatabaseReference;
-    
+    private DatabaseReference mUserDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCommentsDatabaseReference;
 
@@ -74,6 +80,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         // Initialize firebase
         mFireBaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users");
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
         mCommentsDatabaseReference = mFireBaseDatabase.getReference().child("Comments");
@@ -149,21 +156,12 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot user : dataSnapshot.getChildren()){
+                    String name = (String) user.child("author").getValue();
+                    System.out.println("***"+name);
 
-               // String user_name = (String) dataSnapshot.child("name").getValue();
-                //String user_image = (String) dataSnapshot.child("profileImage").getValue();
-                String user_comment = (String) dataSnapshot.child("Comments").child(mFirebaseAuth.getCurrentUser().getUid()).getValue();
+                }
 
-                System.out.println("aaa: "+user_comment);
-                System.out.println("aaa: "+dataSnapshot.getValue());
-
-
-               // mCommentorName.setText(user_name);
-                mCommentTextView.setText(user_comment);
-
-                /*Picasso.with(getApplicationContext())
-                        .load(user_image)
-                        .into(mCommentorImage);*/
             }
 
             @Override
@@ -213,37 +211,63 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     private void processComment(){
         final String comment = mCommentEditText.getText().toString();
+        final String user_id = mFirebaseAuth.getCurrentUser().getUid();
 
-        if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(comment)){
+        mUserDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mAuthor = (String) dataSnapshot.child("name").getValue();
+                commentorProfileImage = (String) dataSnapshot.child("profileImage").getValue();
 
-            mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                Comments user_comment = new Comments(user_id, comment, commentorProfileImage, mAuthor);
 
-                    mAuthor = (String) dataSnapshot.child("name").getValue();
+                mCommentsDatabaseReference.push().setValue(user_comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-
-
-
-                    if ((mFirebaseAuth.getCurrentUser() != null)) {
-                        if (!dataSnapshot.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
-
-                            mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(comment);
-                            mCommentsDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(mAuthor);
+                        if(task.isSuccessful()){
+                            //mProgressDialog.dismiss();
+                            //handling layout of the successfully added area
                             mCommentEditText.setText("");
                             Toast.makeText(ViewEntertainmentActivity.this,
                                     "Successful", Toast.LENGTH_LONG).show();
+
+
+                        } else {
+                            //mProgressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Network Error. Check your connection", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }
+                });
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
+            }
 
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+                   /* if (!TextUtils.isEmpty(comment) && (user_id != null)) {
+                       // if (!dataSnapshot.child(mEntertainmentKey).child(user_id).exists()) {
+                            mCommentsDatabaseReference.push().child("author").setValue(mAuthor);
+                            mCommentsDatabaseReference.push().child("comment").setValue(comment);
+                            mCommentsDatabaseReference.push().child("profileImage").setValue(commentorProfileImage);
+                            mCommentsDatabaseReference.push().child("uid").setValue(user_id);
+
+                            mCommentEditText.setText("");
+                            Toast.makeText(ViewEntertainmentActivity.this,
+                                    "Successful", Toast.LENGTH_LONG).show();
+                        }else{
+                            mCommentEditText.setText("");
+                            Toast.makeText(ViewEntertainmentActivity.this,
+                                    "Error: Check your internet connection", Toast.LENGTH_LONG).show();
+                        }*/
+                 //   }
+               // }
+
 
 
 
