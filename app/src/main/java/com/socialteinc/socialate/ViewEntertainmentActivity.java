@@ -143,6 +143,28 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 Picasso.with(getApplicationContext())
                         .load(photoUrl)
                         .into(mEntertainmentImage);
+
+
+                // Display current user comments
+                mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot user_comment : dataSnapshot.getChildren()){
+                                String eUID = (String) user_comment.child("entertainmentUID").getValue();
+                                System.out.println("***"+eUID);
+                            }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
             }
 
             @Override
@@ -152,22 +174,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         });
 
 
-        // Display current user comments
-        mCommentsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot user : dataSnapshot.getChildren()){
-                    String name = (String) user.child("author").getValue();
-                    System.out.println("***"+name);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
         mLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
