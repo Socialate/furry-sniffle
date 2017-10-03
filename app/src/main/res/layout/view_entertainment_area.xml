@@ -147,9 +147,10 @@
                                                                           android:orientation="horizontal">
                                 <ImageView
                                         android:id="@+id/commentorProfileImageView"
-                                        android:layout_width="50dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="50dp"
-                                        app:srcCompat="@mipmap/ic_owner"/>
+                                        app:srcCompat="@drawable/default_avatar" android:contentDescription=""
+                                        tools:ignore="ContentDescription"/>
                             </android.support.v7.widget.LinearLayoutCompat>
 
                             <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
@@ -164,15 +165,18 @@
 
                                     <TextView android:layout_width="match_parent"
                                               android:id="@+id/commentorNameTextView"
-                                              android:text="Musa Rikhotso"
+                                              android:text="@string/musa_rikhotso1"
                                               android:textAlignment="textStart" android:textStyle="bold"
-                                              android:textSize="18sp" android:layout_height="20dp"/>
+                                              android:textSize="18sp" android:layout_height="wrap_content"
+                                              tools:ignore="TooDeepLayout"/>
 
                                     <MultiAutoCompleteTextView android:layout_width="match_parent"
                                                                android:layout_height="wrap_content"
                                                                android:id="@+id/commentMultiAutoCompleteTextView"
+                                                               android:focusable="false"
                                                                android:layout_below="@+id/commentorNameTextView"
-                                                               android:text="I was here last week with my friends. The food was really amazing"/>
+                                                               android:text="I was here last week with my friends. The food was really amazing"
+                                                               tools:ignore="HardcodedText,LabelFor"/>
 
                                 </android.support.v7.widget.LinearLayoutCompat>
 
