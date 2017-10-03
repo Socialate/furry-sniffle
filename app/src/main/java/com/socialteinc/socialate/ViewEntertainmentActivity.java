@@ -148,10 +148,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                            int i = 0;
-                            String[] image = new String[10];
-                            String[] comment = new String[10];
-                            String[] author = new String[10];
+                            //int i = 0;
+                            //String[] image = new String[0];
+                            //String[] comment = new String[0];
+                            //String[] author = new String[0];
 
                             for(DataSnapshot user_comment : dataSnapshot.getChildren()){
 
@@ -159,22 +159,39 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
                                 if(mEntertainmentKey.equals(eUID) == true){
                                     //System.out.println("*** "+eUID+" = "+mEntertainmentKey);
-                                    author[i] =  (String) user_comment.child("author").getValue();
-                                    image[i] = (String) user_comment.child("photoUrl").getValue();
-                                    comment[i] = (String) user_comment.child("comment").getValue();
+                                    String author =  (String) user_comment.child("author").getValue();
+                                    String image = (String) user_comment.child("photoUrl").getValue();
+                                    String comment = (String) user_comment.child("comment").getValue();
+                                    final String user_id = (String) user_comment.child("uid").getValue();
 
-                                    i++;
+                                    mCommentorName.setText(author);
+                                    mCommentTextView.setText(comment);
+
+                                    Picasso.with(getApplicationContext())
+                                            .load(image)
+                                            .into(mCommentorImage);
+
+                                    mCommentorName.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
+                                            profileViewIntent.putExtra("entertainmentUploader", user_id);
+                                            startActivity(profileViewIntent);
+                                        }
+                                    });
+
+                                    //i++;
                                 }
                             }
 
-                            for(int n=0; n<author.length; n++){
+                            /*for(int n=0; n<author.length; n++){
                                 mCommentorName.setText(author[i]);
                                 mCommentTextView.setText(comment[i]);
 
                                 Picasso.with(getApplicationContext())
                                         .load(image[i])
                                         .into(mCommentorImage);
-                            }
+                            }*/
 
                     }
 
@@ -182,8 +199,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-
-
             }
 
             @Override
