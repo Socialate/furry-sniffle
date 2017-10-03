@@ -6,6 +6,11 @@ import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
+/**
+ * This class is a custom preference, it will be used to make a settings object,
+ * it basically listens for any changes in the seekbar and pushes those changes to the Preferences Fragment
+ * **/
+
 
 public class seekBarPref extends Preference implements SeekBar.OnSeekBarChangeListener {
     private SeekBar mSeekBar;
@@ -27,7 +32,7 @@ public class seekBarPref extends Preference implements SeekBar.OnSeekBarChangeLi
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
+        mSeekBar = view.findViewById(R.id.seekbar);
         mSeekBar.setProgress(mProgress);
         mSeekBar.setOnSeekBarChangeListener(this);
     }
@@ -36,9 +41,7 @@ public class seekBarPref extends Preference implements SeekBar.OnSeekBarChangeLi
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (!fromUser)
             return;
-
         setValue(progress);
-        System.out.println("----------" + progress);
     }
 
     @Override

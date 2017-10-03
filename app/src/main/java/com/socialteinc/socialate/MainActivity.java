@@ -98,9 +98,10 @@ public class MainActivity extends AppCompatActivity {
         };
 
         checkProfileExist();
+        /**Checks if initial settings value is present**/
         msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         int syncConnPref = msharedPref.getInt("bar_val", 50);
-        System.out.println("------------------"+ syncConnPref );
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -260,12 +261,23 @@ public class MainActivity extends AppCompatActivity {
             launchFrag();
             return true;
         }
+        if(id == android.R.id.home){
+            getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("settings pref")).commit();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     private void launchFrag() {
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Settings");
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.GONE);
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new preferencesFrag(),"settings pref")
+                .replace(R.id.fragment_container, new preferencesFrag(),"settings pref")
                 .commit();
     }
     @Override
@@ -273,8 +285,9 @@ public class MainActivity extends AppCompatActivity {
         Fragment p = getFragmentManager().findFragmentByTag("settings pref");
         if ((p).isVisible()) {
             getFragmentManager().beginTransaction().remove(p).commit();
-            int syncConnPref = msharedPref.getInt("bar_val", 50);
-            System.out.println("------------------** "+ syncConnPref );
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
         } else {
             super.onBackPressed();
         }
@@ -377,16 +390,16 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(event_image.getContext())
                     .load(image)
                     .into(event_image, new Callback() {
-                @Override
-                public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
-                }
+                        @Override
+                        public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                        }
 
-                @Override
-                public void onError() {
+                        @Override
+                        public void onError() {
 
-                }
-            });
+                        }
+                    });
         }
     }
 
