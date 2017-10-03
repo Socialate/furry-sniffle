@@ -2,7 +2,9 @@ package com.socialteinc.socialate;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -248,7 +250,20 @@ public class MainActivity extends AppCompatActivity {
             onLogout();
             return true;
         }
+        if(id == R.id.action_settings){
+            launchFrag();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void launchFrag() {
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new preferencesFrag())
+                .commit();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int syncConnPref = sharedPref.getInt("bar_val", 50);
+        System.out.println("------------------"+ syncConnPref );
     }
 
 
