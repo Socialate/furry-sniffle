@@ -76,24 +76,12 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private GeoFire mGeoFire;
+    private LatLng location;
+    private Place place;
 
     private static final int GALLERY_REQUEST_CODE = 1;
-    private static final int PLACE_PICKER_REQUEST=1;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 7172;
+    private static final int PLACE_PICKER_REQUEST=2;
     private Toolbar mToolbar;
-    private WebView mAttributeText;
-    private LocationRequest mlocationRequest;
-    private GoogleApiClient mgoogleApiClient;
-    private int UPDATE_INTERVAL=5000; //SEC
-    private int FATEST_INTERVAL=5000; //SEC
-    private int DISPLACEMENT=10; //METERS
-
-    private boolean mRequestingLocationUpdates = false;
-    private LocationRequest mLocationRequest;
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
-
-
 
 
     @Override
@@ -114,9 +102,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
         mGeoFire =new GeoFire(mFireBaseDatabase.getReference().child("GeoFire"));
-        String itemId = mEntertainmentsDatabaseReference.push().getKey();
-        Location me=new Location("me");
-
 
 
         // Initialize references to views
@@ -158,16 +143,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
             }
         });
 
-        /*mEntertainmentAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                displayLocation();
-            }
-        });*/
-
-
-
-
         // Initialize progress bar
         mProgressDialog = new ProgressDialog(this);
 
@@ -177,7 +152,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
             @Override
             public void onClick(View view) {
 
-               /* if (EasyPermissions.hasPermissions(AddEntertainmentActivity.this, galleryPermissions)) {
+                if (EasyPermissions.hasPermissions(AddEntertainmentActivity.this, galleryPermissions)) {
                     Intent galleryIntent = new Intent();
                     galleryIntent.setType("image/*");
                     galleryIntent.setAction(Intent.ACTION_PICK);
@@ -185,7 +160,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                 } else {
                     EasyPermissions.requestPermissions(AddEntertainmentActivity.this, "Access for storage",
                             101, galleryPermissions);
-                }*/
+                }
                 Intent galleryIntent = new Intent();
                 galleryIntent.setType("image/*");
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -194,20 +169,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
             }
         });
-
-        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //Run-time request permission
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-            }, MY_PERMISSION_FINE_LOCATION);
-        } else {
-            if (checkPlayServices()) {
-                buildGoogleApiClient();
-                createLocationRequest();
-            }
-        }*/
 
         // Submit button create Entertainment
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +179,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                 mProgressDialog.setMessage("Please wait while we add the new entertainment spot.");
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.show();
-
+                mGeoFire.setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));/*setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));*/
                 // Create Entertainment on click
                 startPosting();
             }
@@ -277,42 +238,44 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
         }*/
 
-        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+        if(requestCode == GALLERY_REQUEST_CODE ){
 
-            imageUri = data.getData();
-            mEntertainmentImageView.setImageURI(imageUri);
-        }else {
-            Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
-            mProgressDialog.dismiss();
+            if(resultCode == RESULT_OK) {
+                imageUri = data.getData();
+                mEntertainmentImageView.setImageURI(imageUri);
+            }
+
+            else {
+                Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+            }
 
         }
 
-        /*if (requestCode == PLACE_PICKER_REQUEST){
+        else if (requestCode == PLACE_PICKER_REQUEST){
             if (resultCode == RESULT_OK){
-                Place place = PlacePicker.getPlace(data, this);
+                place = PlacePicker.getPlace(data, this);
                 if(place==null){
                     Toast.makeText(getApplicationContext(), "No spot selected, please select a spot and try Again!", Toast.LENGTH_SHORT).show();
                     mProgressDialog.dismiss();
                 }
                 mEntertainmentTitleEditText.setText(place.getName());
                 mEntertainmentAddress.setText(place.getAddress());
-                LatLng location=place.getLatLng();
-                mGeoFire.setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));
+                location=place.getLatLng();
 
 
-               // double latitude=place.getLatLng().latitude;
-                //mEntertainmentDescriptionEditText.setText((int) location.latitude);
+
                /* if (place.getAttributions() == null) {
                     mAttributeText.loadData("no attribution", "text/html; charset=utf-8", "UFT-8");
                 } else {
                     mAttributeText.loadData(place.getAttributions().toString(), "text/html; charset=utf-8", "UFT-8");
-                }
+                }*/
             }else {
                 Toast.makeText(getApplicationContext(), "Failed to get the place. Try Again!", Toast.LENGTH_SHORT).show();
                 mProgressDialog.dismiss();
 
             }
-        }*/
+        }
     }
 
 
@@ -437,91 +400,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         return bitmap;
     }
 
-
-    /*private void displayLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            double latitude = mLastLocation.getLatitude();
-            double longitude = mLastLocation.getLongitude();
-            mEntertainmentAddress.setText(latitude + " / " + longitude);
-        } else
-            mEntertainmentAddress.setText("Couldn't get the location. Make sure location is enable on the device");
-
-    }
-
-    private void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(UPDATE_INTERVAL);
-        mLocationRequest.setFastestInterval(FATEST_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
-
-    }
-
-    private synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API).build();
-
-        //Fix first time run app if permission doesn't grant yet so can't get anything
-        mGoogleApiClient.connect();
-
-
-    }
-
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "This device is not supported", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
-
-    private void startLocationUpdates() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-    }
-
-    private void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,this);
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        displayLocation();
-        if(mRequestingLocationUpdates)
-            startLocationUpdates();
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-        displayLocation();
-    }*/
 
 
 }
