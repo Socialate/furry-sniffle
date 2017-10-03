@@ -150,13 +150,24 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                             for(DataSnapshot user_comment : dataSnapshot.getChildren()){
+
                                 String eUID = (String) user_comment.child("entertainmentUID").getValue();
-                                System.out.println("***"+eUID);
+
+                                if(mEntertainmentKey.equals(eUID) == true){
+                                    //System.out.println("*** "+eUID+" = "+mEntertainmentKey);
+                                    String author = (String) user_comment.child("author").getValue();
+                                    String image = (String) user_comment.child("photoUrl").getValue();
+                                    String comment = (String) user_comment.child("comment").getValue();
+
+                                    mCommentorName.setText(author);
+                                    mCommentTextView.setText(comment);
+
+                                    Picasso.with(getApplicationContext())
+                                            .load(image)
+                                            .into(mCommentorImage);
+                                }
                             }
-
-
-
-
+                        
                     }
 
                     @Override
