@@ -31,6 +31,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
     private EditText getDescrip;
     private String ownerUID;
     private String commentorUID;
+    private boolean check;
     private String mUsersKey;
 
     // Firebase instance variables
@@ -51,6 +52,8 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         Intent intent1 = getIntent();
         ownerUID = intent.getStringExtra("entertainmentUploader");
         commentorUID = intent1.getStringExtra("commentUploader");
+        check = intent1.getBooleanExtra("check", false);
+
 
         // Initialize references to views
         mToolbar = findViewById(R.id.ProfileToolbar2);
@@ -77,56 +80,57 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // progress bar
         mProgressDialog = new ProgressDialog(this);
 
-        // Display entertainment uploader profile details
-        mProfileDatabaseReference.child(ownerUID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if(check == true){
 
-                String user_display = (String) dataSnapshot.child("displayName").getValue();
-                String user_name = (String) dataSnapshot.child("name").getValue();
-                String user_image = (String) dataSnapshot.child("profileImage").getValue();
-                String user_descrip = (String) dataSnapshot.child("description").getValue();
+            // Display comment uploader profile details
+            mProfileDatabaseReference1.child(commentorUID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                getDisplayName.setText(user_display);
-                getFullName.setText(user_name);
-                getDescrip.setText(user_descrip);
+                    String user_display = (String) dataSnapshot.child("displayName").getValue();
+                    String user_name = (String) dataSnapshot.child("name").getValue();
+                    String user_image = (String) dataSnapshot.child("profileImage").getValue();
+                    String user_descrip = (String) dataSnapshot.child("description").getValue();
 
-                Picasso.with(getApplicationContext())
-                        .load(user_image)
-                        .into(getProfilePicture);
-            }
+                    getDisplayName.setText(user_display);
+                    getFullName.setText(user_name);
+                    getDescrip.setText(user_descrip);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                    Picasso.with(getApplicationContext())
+                            .load(user_image)
+                            .into(getProfilePicture);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+
+        }else{
+            // Display entertainment uploader profile details
+            mProfileDatabaseReference.child(ownerUID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    String user_display = (String) dataSnapshot.child("displayName").getValue();
+                    String user_name = (String) dataSnapshot.child("name").getValue();
+                    String user_image = (String) dataSnapshot.child("profileImage").getValue();
+                    String user_descrip = (String) dataSnapshot.child("description").getValue();
+
+                    getDisplayName.setText(user_display);
+                    getFullName.setText(user_name);
+                    getDescrip.setText(user_descrip);
+
+                    Picasso.with(getApplicationContext())
+                            .load(user_image)
+                            .into(getProfilePicture);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
     }
 }
-
-        // Display comment uploader profile details
-       /* mProfileDatabaseReference1.child(commentorUID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String user_display = (String) dataSnapshot.child("displayName").getValue();
-                String user_name = (String) dataSnapshot.child("name").getValue();
-                String user_image = (String) dataSnapshot.child("profileImage").getValue();
-                String user_descrip = (String) dataSnapshot.child("description").getValue();
-
-                getDisplayName.setText(user_display);
-                getFullName.setText(user_name);
-                getDescrip.setText(user_descrip);
-
-                Picasso.with(getApplicationContext())
-                        .load(user_image)
-                        .into(getProfilePicture);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-
-    }
-}*/

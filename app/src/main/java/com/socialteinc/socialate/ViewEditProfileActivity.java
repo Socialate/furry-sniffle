@@ -111,7 +111,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 String user_phone = (String) dataSnapshot.child("phone number").getValue();
                 String user_address = (String) dataSnapshot.child("physical address").getValue();
                 String user_gender = (String) dataSnapshot.child("gender").getValue();
-                //imageUri = (Uri) dataSnapshot.child("profileImage").getValue();
                 String user_email = mFirebaseAuth.getCurrentUser().getEmail();
 
                 getDisplayName.setText(user_display);

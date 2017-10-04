@@ -2,7 +2,6 @@ package com.socialteinc.socialate;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -30,7 +29,6 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.ListIterator;
 
 public class ViewEntertainmentActivity extends AppCompatActivity {
 
@@ -41,7 +39,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private TextView mEntertainmentOwner;
     private TextView mEntertainmentDescription;
     private TextView mEntertainmentAddress;
-    private TextView mCommentorName;
+    private TextView mCommenterName;
     private TextView mLikeCommentTextView;
     private TextView mLikeCommentCounterTextView;
     private TextView mCommentDateTextView;
@@ -54,7 +52,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private String mAuthor;
     private String commentorProfileImage;
     private Boolean mProcessLike = false;
+    private Boolean mProcessCommentLike = false;
     private String mEntertainmentKey;
+    private String mCommentKey;
+    private String mCommentName;
     private String mEntertainmentName;
     private FirebaseAuth mFirebaseAuth;
     private RecyclerView mRecyclerView;
@@ -92,13 +93,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mLikeButton = findViewById(R.id.likeFloatingActionButton);
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
-        mCommentorName = findViewById(R.id.commentorNameTextView);
         mCommentTextView = findViewById(R.id.commentMultiAutoCompleteTextView);
         mCommentorImage = findViewById(R.id.commentorProfileImageView);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
         mCommentDateTextView = findViewById(R.id.dateTextView);
-        mLikeCommentCounterTextView = findViewById(R.id.likeCommentCounterTextView);
-        mLikeCommentTextView = findViewById(R.id.likeTextView);
 
         // Initialize firebase
         FirebaseApp.initializeApp(this);
@@ -197,14 +195,14 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                                     String comment = (String) user_comment.child("comment").getValue();
                                     final String user_id = (String) user_comment.child("uid").getValue();
 
-                                    mCommentorName.setText(author);
+                                    mCommenterName.setText(author);
                                     mCommentTextView.setText(comment);
 
                                     Picasso.with(getApplicationContext())
                                             .load(image)
                                             .into(mCommentorImage);
 
-                                    mCommentorName.setOnClickListener(new View.OnClickListener() {
+                                    mCommenterName.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
                                             Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
@@ -218,7 +216,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                             }
 
                             for(int n=0; n<author.length; n++){
-                                mCommentorName.setText(author[i]);
+                                mCommenterName.setText(author[i]);
                                 mCommentTextView.setText(comment[i]);
 
                                 Picasso.with(getApplicationContext())
@@ -281,6 +279,29 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     }
 
+    private void processCommentLike(){
+        mProcessCommentLike = true;
+        mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (mProcessCommentLike && mFirebaseAuth.getCurrentUser() != null) {
+                    if (!dataSnapshot.child(mCommentKey).child(mFirebaseAuth.getCurrentUser().getUid()).exists()) {
+                        mLikesDatabaseReference.child(mCommentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue("liked");
+                        mProcessCommentLike = false;
+                    } else {
+                        mLikesDatabaseReference.child(mCommentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
+                        mProcessCommentLike = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void processComment(){
         final String comment = mCommentEditText.getText().toString();
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
@@ -308,7 +329,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                         }
                     }
                 });
-
             }
 
             @Override
@@ -336,15 +356,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     if(mEntertainmentKey.equals(eUID) == true){
                         arr.add(postSnapshot);
                     }
-
-                   /* mCommentorName.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
-                            profileViewIntent.putExtra("commentUploader", uid);
-                            startActivity(profileViewIntent);
-                        }
-                    });*/
                 }
 
                 if(arr.size() == 0){
@@ -385,6 +396,11 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             public ViewHolder(CardView v) {
                 super(v);
                 cardview = v;
+
+                mLikeCommentCounterTextView = cardview.findViewById(R.id.likeCommentCounterTextView);
+                mLikeCommentTextView = cardview.findViewById(R.id.likeTextView);
+                mCommenterName = cardview.findViewById(R.id.commentorNameTextView);
+
                 mFirebaseDatabase = FirebaseDatabase.getInstance();
                 mFirebaseAuth = FirebaseAuth.getInstance();
                 mLikesDatabaseReference = mFirebaseDatabase.getReference().child("Likes");
@@ -400,12 +416,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         // Create new views (invoked by the layout manager)
         @Override
-        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType) {
+        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             // create a new view
             CardView v = (CardView) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.activity_comments, parent, false);
-            // set the view's size, margins, paddings and layout parameters
 
             ViewHolder vh = new ViewHolder(v);
             return vh;
@@ -417,24 +431,38 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             // holder.mTextView.setText(mDataset[position]);
+
+            final String uid = (String) mDataset[position].child("uid").getValue();
+            if(!TextUtils.isEmpty(uid)){
+                (holder.cardview.findViewById(R.id.commentorNameTextView)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
+                        profileViewIntent.putExtra("commentUploader", uid);
+                        boolean mCheck = true;
+                        profileViewIntent.putExtra("check", mCheck);
+                        startActivity(profileViewIntent);
+                    }
+                });
+
+            }
+
             ((TextView) holder.cardview.findViewById(R.id.commentorNameTextView)).setText((String) mDataset[position].child("author").getValue());
             ((TextView) holder.cardview.findViewById(R.id.commentMultiAutoCompleteTextView)).setText((String) mDataset[position].child("comment").getValue());
             ((TextView) holder.cardview.findViewById(R.id.dateTextView)).setText((String) mDataset[position].child("timestamp").getValue());
 
             setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
-            //setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCounterTextView));
-            //final int pos = position;
+            setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCommentCounterTextView));
+            final int pos = position;
             //final ImageView[] imageView = new ImageView[1];
-           /* holder.cardview.setOnClickListener(new View.OnClickListener() {
+            holder.cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Intent eventIntent = new Intent(SearchableActivity.this, ViewEntertainmentActivity.class);
-                    eventIntent.putExtra("entertainmentName", (String) mDataset[pos].child("name").getValue());
-                    eventIntent.putExtra("entertainmentKey", mDataset[pos].getKey());
-                    startActivity(eventIntent);
+                    mCommentName = (String) mDataset[pos].child("name").getValue();
+                    mCommentKey = mDataset[pos].getKey();
+                    //System.out.println("*** "+mCommentKey+"---- "+mCommentName);
                 }
-            }); */
+            });
 
         }
 
@@ -460,9 +488,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                         }
                     });
         }
-        void setLikeNumber(final String mEntertainmentKey, final TextView likesView){
+        void setLikeNumber(final String mCommentKey, final TextView likesView){
 
-            mLikesDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+            mLikesDatabaseReference.child(mCommentKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     likesView.setText(String.valueOf((int) dataSnapshot.getChildrenCount()));
