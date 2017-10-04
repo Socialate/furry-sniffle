@@ -60,7 +60,9 @@ public class proximityTest {
 
          Thread.sleep(3500);
          openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+         Thread.sleep(3500);
          onView(withText("Settings")).perform(ViewActions.click());
+         Thread.sleep(3500);
          //onView((withId(R.id.search_btn))).check(matches(isDisplayed()));
          //onView(allOf(withId(R.id.search_btn), withEffectiveVisibility(VISIBLE))).perform(click());
          //onView((withHint("Search for a spot"))).perform(ViewActions.typeText("Bikini"), pressImeActionButton());
