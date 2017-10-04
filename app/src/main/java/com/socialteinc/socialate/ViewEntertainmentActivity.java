@@ -392,13 +392,14 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             }
 
-            mCommentKey = mDataset[position].getKey();
-            System.out.println("*** "+mCommentKey);
-            if(!TextUtils.isEmpty(mCommentKey)){
-
+            final String val  = (String) mDataset[position].getKey();
+            //System.out.println("*** "+mCommentKey);
+           // mCommentKey = val[0];
+            if(!TextUtils.isEmpty(val)){
                 (holder.cardview.findViewById(R.id.likeTextView)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mCommentKey = val;
                         processCommentLike();
                     }
                 });
