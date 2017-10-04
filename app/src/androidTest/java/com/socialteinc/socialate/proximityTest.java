@@ -60,7 +60,7 @@ public class proximityTest {
 
          Thread.sleep(3500);
          openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-         //Thread.sleep(3500);
+         Thread.sleep(1000);
          onView(withText("Settings")).perform(ViewActions.click());
          //Thread.sleep(3500);
          //onView((withId(R.id.search_btn))).check(matches(isDisplayed()));
