@@ -281,6 +281,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     private void processCommentLike(){
         mProcessCommentLike = true;
+        mCommentKey = mCommentsDatabaseReference.push().getKey();
         mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -447,6 +448,13 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             }
 
+            (holder.cardview.findViewById(R.id.likeTextView)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    processCommentLike();
+                }
+            });
+
             ((TextView) holder.cardview.findViewById(R.id.commentorNameTextView)).setText((String) mDataset[position].child("author").getValue());
             ((TextView) holder.cardview.findViewById(R.id.commentMultiAutoCompleteTextView)).setText((String) mDataset[position].child("comment").getValue());
             ((TextView) holder.cardview.findViewById(R.id.dateTextView)).setText((String) mDataset[position].child("timestamp").getValue());
@@ -459,7 +467,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     mCommentName = (String) mDataset[pos].child("name").getValue();
-                    mCommentKey = mDataset[pos].getKey();
+                    //mCommentKey = mDataset[pos].getKey();
                     //System.out.println("*** "+mCommentKey+"---- "+mCommentName);
                 }
             });
@@ -471,6 +479,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         public int getItemCount() {
             return mDataset.length;
         }
+
         void setPhotoUrl(String image, ViewHolder vh){
             ImageView event_image = vh.cardview.findViewById(R.id.commentorProfileImageView);
             //final ProgressBar progressBar = vh.cardview.findViewById(R.id.imageProgressBar);
@@ -484,7 +493,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
                         @Override
                         public void onError() {
-
+                            Toast.makeText(getApplicationContext(), "Network error: failed to load image", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
