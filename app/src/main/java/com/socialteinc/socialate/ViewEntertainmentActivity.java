@@ -398,7 +398,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             // holder.mTextView.setText(mDataset[position]);
-            ((TextView) holder.cardview.findViewById(R.id.commentorNameTextView)).setText((position + 1) + ". " + mDataset[position].child("author").getValue());
+            ((TextView) holder.cardview.findViewById(R.id.commentorNameTextView)).setText(""+mDataset[position].child("author").getValue());
             ((TextView) holder.cardview.findViewById(R.id.commentMultiAutoCompleteTextView)).setText((String) mDataset[position].child("comment").getValue());
 
             setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
