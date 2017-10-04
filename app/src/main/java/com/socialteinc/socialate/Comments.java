@@ -7,15 +7,17 @@ public class Comments {
     private String uid;
     private String author;
     private String entertainmentUID;
+    private String timestamp;
 
     public Comments() {
     }
 
-    public Comments(String uid, String comment, String photoUrl, String author, String entertainmentUID) {
+    public Comments(String uid, String comment, String photoUrl, String author, String timestamp, String entertainmentUID) {
         this.photoUrl = photoUrl;
         this.uid = uid;
         this.author = author;
         this.comment = comment;
+        this.timestamp = timestamp;
         this.entertainmentUID = entertainmentUID;
     }
 
@@ -50,6 +52,14 @@ public class Comments {
 
     public String getAuthor() {
         return author;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public void setEntertainmentUID(String entertainmentUID) {

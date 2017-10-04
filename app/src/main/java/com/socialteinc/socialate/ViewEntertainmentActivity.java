@@ -27,7 +27,9 @@ import com.google.firebase.database.*;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ListIterator;
 
 public class ViewEntertainmentActivity extends AppCompatActivity {
@@ -40,6 +42,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private TextView mEntertainmentDescription;
     private TextView mEntertainmentAddress;
     private TextView mCommentorName;
+    private TextView mLikeCommentTextView;
+    private TextView mLikeCommentCounterTextView;
+    private TextView mCommentDateTextView;
     private AutoCompleteTextView mCommentTextView;
     private ImageView mCommentorImage;
     private Toolbar mToolbar;
@@ -49,6 +54,15 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private String mAuthor;
     private String commentorProfileImage;
     private Boolean mProcessLike = false;
+    private String mEntertainmentKey;
+    private String mEntertainmentName;
+    private FirebaseAuth mFirebaseAuth;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<DataSnapshot> arr;
+    private DataSnapshot[] dataset;
+
 
 
     // Firebase instance variables
@@ -57,15 +71,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCommentsDatabaseReference;
-    private String mEntertainmentKey;
-    private String mEntertainmentName;
-    private FirebaseAuth mFirebaseAuth;
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<DataSnapshot> arr;
-    private DataSnapshot[] dataset;
 
 
     @Override
@@ -91,6 +96,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentTextView = findViewById(R.id.commentMultiAutoCompleteTextView);
         mCommentorImage = findViewById(R.id.commentorProfileImageView);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
+        mCommentDateTextView = findViewById(R.id.dateTextView);
+        mLikeCommentCounterTextView = findViewById(R.id.likeCommentCounterTextView);
+        mLikeCommentTextView = findViewById(R.id.likeTextView);
 
         // Initialize firebase
         FirebaseApp.initializeApp(this);
@@ -274,14 +282,15 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private void processComment(){
         final String comment = mCommentEditText.getText().toString();
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 
-        mUserDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        mUserDatabaseReference.child(user_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mAuthor = (String) dataSnapshot.child("name").getValue();
                 commentorProfileImage = (String) dataSnapshot.child("profileImage").getValue();
 
-                Comments user_comment = new Comments(user_id, comment, commentorProfileImage, mAuthor, mEntertainmentKey);
+                Comments user_comment = new Comments(user_id, comment, commentorProfileImage, mAuthor, timeStamp, mEntertainmentKey);
 
                 mCommentsDatabaseReference.push().setValue(user_comment).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -398,8 +407,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             // holder.mTextView.setText(mDataset[position]);
-            ((TextView) holder.cardview.findViewById(R.id.commentorNameTextView)).setText(""+mDataset[position].child("author").getValue());
+            ((TextView) holder.cardview.findViewById(R.id.commentorNameTextView)).setText((String) mDataset[position].child("author").getValue());
             ((TextView) holder.cardview.findViewById(R.id.commentMultiAutoCompleteTextView)).setText((String) mDataset[position].child("comment").getValue());
+            ((TextView) holder.cardview.findViewById(R.id.dateTextView)).setText((String) mDataset[position].child("timestamp").getValue());
 
             setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
             //setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCounterTextView));
