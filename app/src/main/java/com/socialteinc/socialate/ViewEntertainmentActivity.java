@@ -175,6 +175,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
                 postComments();
 
+
+
                 // Display current user comments
                /* mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -320,7 +322,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     public void postComments() {
 
-        //DatabaseReference mFirebaseDatabaseReference = mFireBaseDatabase.getReference();
         mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -328,10 +329,22 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 arr = new ArrayList<>();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
                     String eUID = (String) postSnapshot.child("entertainmentUID").getValue();
+                    final String uid = (String) postSnapshot.child("uid").getValue();
+
                     if(mEntertainmentKey.equals(eUID) == true){
                         arr.add(postSnapshot);
                     }
+
+                   /* mCommentorName.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
+                            profileViewIntent.putExtra("commentUploader", uid);
+                            startActivity(profileViewIntent);
+                        }
+                    });*/
                 }
 
                 if(arr.size() == 0){
@@ -355,10 +368,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
-
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private DataSnapshot[] mDataset;
