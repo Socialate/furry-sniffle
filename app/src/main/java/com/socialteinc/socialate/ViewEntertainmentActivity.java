@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.firebase.geofire.core.GeoHashQuery;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -260,22 +261,27 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 mAuthor = (String) dataSnapshot.child("name").getValue();
                 commentorProfileImage = (String) dataSnapshot.child("profileImage").getValue();
 
-                Comments user_comment = new Comments(user_id, comment, commentorProfileImage, mAuthor, timeStamp, mEntertainmentKey);
+                if(!TextUtils.isEmpty(comment)){
+                    Comments user_comment = new Comments(user_id, comment, commentorProfileImage, mAuthor, timeStamp, mEntertainmentKey);
 
-                mCommentsDatabaseReference.push().setValue(user_comment).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    mCommentsDatabaseReference.push().setValue(user_comment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-                        if(task.isSuccessful()){
-                            mCommentEditText.setText("");
-                            Toast.makeText(ViewEntertainmentActivity.this,
-                                    "Successful", Toast.LENGTH_LONG).show();
+                            if(task.isSuccessful()){
+                                mCommentEditText.setText("");
+                                Toast.makeText(ViewEntertainmentActivity.this,
+                                        "Successful", Toast.LENGTH_LONG).show();
 
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Network Error. Check your connection", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Network Error. Check your connection", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please type a comment first", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -298,7 +304,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     String eUID = (String) postSnapshot.child("entertainmentUID").getValue();
-                    final String uid = (String) postSnapshot.child("uid").getValue();
+                    //final String uid = (String) postSnapshot.child("uid").getValue();
 
                     if(mEntertainmentKey.equals(eUID) == true){
                         arr.add(postSnapshot);
