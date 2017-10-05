@@ -43,6 +43,8 @@ import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import java.text.DateFormat;
@@ -82,7 +84,8 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
     private static final int GALLERY_REQUEST_CODE = 1;
     private static final int PLACE_PICKER_REQUEST=2;
     private Toolbar mToolbar;
-
+    private String mEntertainmentKey;
+    private String mEntertainmentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +105,10 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
         mGeoFire =new GeoFire(mFireBaseDatabase.getReference().child("GeoFire"));
+        Intent intent = getIntent();
+        mEntertainmentName = intent.getStringExtra("entertainmentName");
+        mEntertainmentKey = intent.getStringExtra("entertainmentKey");
+        Log.d(TAG, "onCreate: "+ mEntertainmentKey);
 
 
         // Initialize references to views
@@ -161,10 +168,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                     EasyPermissions.requestPermissions(AddEntertainmentActivity.this, "Access for storage",
                             101, galleryPermissions);
                 }
-                Intent galleryIntent = new Intent();
-                galleryIntent.setType("image/*");
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), GALLERY_REQUEST_CODE);
 
 
             }
@@ -179,9 +182,11 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                 mProgressDialog.setMessage("Please wait while we add the new entertainment spot.");
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.show();
-                mGeoFire.setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));/*setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));*/
+
                 // Create Entertainment on click
                 startPosting();
+                /*setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));*/
+
             }
         });
 
@@ -208,19 +213,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         }
     }
 
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSION_FINE_LOCATION:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (checkPlayServices())
-                        buildGoogleApiClient();
-                    createLocationRequest();
-                }
-                break;
-        }
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -238,7 +230,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
         }*/
 
-        if(requestCode == GALLERY_REQUEST_CODE ){
+       /* if(requestCode == GALLERY_REQUEST_CODE ){
 
             if(resultCode == RESULT_OK) {
                 imageUri = data.getData();
@@ -250,6 +242,29 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                 mProgressDialog.dismiss();
             }
 
+        }*/
+        if(requestCode == GALLERY_REQUEST_CODE  ){
+            if(resultCode == RESULT_OK) {
+                Uri ImageUri = data.getData();
+                CropImage.activity(ImageUri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1, 1)
+                        .start(this);
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+            }
+        }
+        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imageUri = result.getUri();
+                mEntertainmentImageView.setImageURI(imageUri);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(AddEntertainmentActivity.this, "Failed to get profile picture, please try again.", Toast.LENGTH_LONG).show();
+            }
         }
 
         else if (requestCode == PLACE_PICKER_REQUEST){
@@ -299,7 +314,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
             filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
 
                     Log.d("MyAPP","Upload is successful");
 
@@ -314,6 +329,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
                             assert downloadUrl != null;
 
+
                             Entertainment Entertainment = new Entertainment(
                                     mFirebaseUser.getUid(),
                                     title_val,
@@ -326,22 +342,30 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                                     owner_val,
                                     null );
 
-                            mEntertainmentsDatabaseReference.push().setValue(Entertainment).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            final String mEventId = mEntertainmentsDatabaseReference.push().getKey();
+
+                            mEntertainmentsDatabaseReference.child(mEventId).setValue(Entertainment).addOnCompleteListener(new OnCompleteListener<Void>() {;
+                            //mEntertainmentsDatabaseReference.push().setValue(Entertainment).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
+                                public void onComplete(@NonNull final Task<Void> task) {
 
                                     if(task.isSuccessful()){
+
+                                        mGeoFire.setLocation(mEntertainmentsDatabaseReference.child(mEventId).getKey(), new GeoLocation(location.latitude, location.longitude));
                                         mProgressDialog.dismiss();
                                         //handling layout of the successfully added area
                                         Intent mainIntent = new Intent(AddEntertainmentActivity.this, MainActivity.class);
                                         startActivity(mainIntent);
                                         finish();
+
                                     } else {
                                         mProgressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Failed to create Entertainment spot. Try Again!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
+
+
                         }
 
                         @Override
@@ -366,22 +390,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap;
-        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
-
-            imageUri = data.getData();
-            bitmap = getThumbnailBitmap(imageUri.getPath(),1000);
-            //mEntertainmentImageView.setImageURI(imageUri);
-            mEntertainmentImageView.setImageBitmap(bitmap);
-        }else {
-            Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
-            mProgressDialog.dismiss();
-
-        }
-    }*/
 
     //This function downscales the image size
     private Bitmap getThumbnailBitmap(final String path, final int thumbnailSize) {
