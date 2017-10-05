@@ -409,11 +409,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
                 // allow users to delete their own comments
                 mDeleteComment = (holder.cardview.findViewById(R.id.deleteCommentImageButton));
-                //mDeleteComment.setVisibility(View.GONE); // not visible to no-author of comment
+                mDeleteComment.setVisibility(View.INVISIBLE); // not visible to no-author of comment
 
                 if(mFirebaseAuth.getCurrentUser().getUid().equals(mDataset[position].child("uid").getValue())){
-                    System.out.println("*** ");
-                    //mDeleteComment.setVisibility(View.INVISIBLE);
+                    mDeleteComment.setVisibility(View.VISIBLE);
                 }
 
             }
