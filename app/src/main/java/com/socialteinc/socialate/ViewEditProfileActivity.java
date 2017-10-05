@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import static android.app.Activity.RESULT_OK;
+
 public class ViewEditProfileActivity extends AppCompatActivity {
 
     private String TAG =ViewEditProfileActivity.class.getSimpleName();
@@ -167,48 +169,62 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         final String home_address = getHome_address.getText().toString();
         final String gender_selected = getGender.getSelectedItem().toString();
 
-        if(imageUri == null){
+       /* if(imageUri == null){
             imageUri = Uri.parse("android.resourse://com.socialteinc.socialate/drawable/eventplaceholder.jpg");
-        }
+        }*/
 
-        if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(full_name) && !TextUtils.isEmpty(display_name) && !TextUtils.isEmpty(email) &&  imageUri != null) {
+        if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(full_name) && !TextUtils.isEmpty(display_name) && !TextUtils.isEmpty(email)) {
 
             Log.d("MyAPP", "started Upload");
-            StorageReference filepath = mStorageReference.child(user_id);
 
-            filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d("MyAPP","Upload is successful");
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
+            mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
+            mProfileDatabaseReference.child(user_id).child("description").setValue(description);
+            mProfileDatabaseReference.child(user_id).child("phone number").setValue(phone_number);
+            mProfileDatabaseReference.child(user_id).child("physical address").setValue(home_address);
+            mProfileDatabaseReference.child(user_id).child("gender").setValue(gender_selected);
 
-                    mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
-                    mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
-                    mProfileDatabaseReference.child(user_id).child("description").setValue(description);
-                    mProfileDatabaseReference.child(user_id).child("phone number").setValue(phone_number);
-                    mProfileDatabaseReference.child(user_id).child("physical address").setValue(home_address);
-                    mProfileDatabaseReference.child(user_id).child("gender").setValue(gender_selected);
+            if(imageUri != null){
+                StorageReference filepath = mStorageReference.child(user_id);
 
-                    assert downloadUrl != null;
-                    mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
-                    mProgressDialog.dismiss();
-                    Toast.makeText(ViewEditProfileActivity.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
+                filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d("MyAPP","Upload is successful");
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                    Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mainIntent);
-                    finish();
+                        assert downloadUrl != null;
+                        mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
+                        mProgressDialog.dismiss();
+                        Toast.makeText(ViewEditProfileActivity.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
 
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    mProgressDialog.dismiss();
-                    Log.d("MyAPP","Upload failed");
-                    Toast.makeText(ViewEditProfileActivity.this, "Failed to update your profile, please try again.", Toast.LENGTH_LONG).show();
-                }
-            });
+                        Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainIntent);
+                        finish();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mProgressDialog.dismiss();
+                        Log.d("MyAPP","Upload failed");
+                        Toast.makeText(ViewEditProfileActivity.this, "Failed to update your profile, please try again.", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }else {
+                mProgressDialog.dismiss();
+                Toast.makeText(ViewEditProfileActivity.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
+
+                Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainIntent);
+                finish();
+
+            }
+
         }
     }
 
