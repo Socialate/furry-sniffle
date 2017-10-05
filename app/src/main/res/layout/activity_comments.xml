@@ -67,7 +67,7 @@
                                       android:layout_height="match_parent"
                                       android:gravity="center"
                                       android:id="@+id/dateTextView" android:text="@string/_2017_08_20_14_00pm"
-                                      android:textSize="13sp"/>
+                                      android:textSize="14sp"/>
 
                         </android.support.v7.widget.LinearLayoutCompat>
 
