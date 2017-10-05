@@ -81,21 +81,21 @@ public class MainActivity extends AppCompatActivity {
         mLikesDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                if(user == null){
-
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(loginIntent);
-                    finish();
-                }
-            }
-        };
+//        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//
+//                if(user == null){
+//
+//                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+//                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(loginIntent);
+//                    finish();
+//                }
+//            }
+//        };
 
         checkProfileExist();
         /**Checks if initial settings value is present**/
