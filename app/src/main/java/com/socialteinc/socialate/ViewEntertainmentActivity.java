@@ -389,7 +389,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             // view comment author profile
             final String uid = (String) mDataset[position].child("uid").getValue();
             if(!TextUtils.isEmpty(uid)){
-                (holder.cardview.findViewById(R.id.commentorNameTextView)).setOnClickListener(new View.OnClickListener() {
+                mCommenterName = (holder.cardview.findViewById(R.id.commentorNameTextView));
+                mCommenterName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
