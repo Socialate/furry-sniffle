@@ -427,6 +427,18 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                                 public void onCancelled(DatabaseError databaseError) {
                                 }
                             });
+
+                            mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // delete associated likes
+                                    mLikesDatabaseReference.child(val).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+
                         }
                     });
                 }
