@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
      * and if not the user is redirected to the pofile set up page
      * before they can look at the data on the application
      */
-    private void checkProfileExist() {
+    public void checkProfileExist() {
 
         if(mFirebaseAuth.getCurrentUser() != null){
 
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * this function logs users out of firebase and the app.
      */
-    private void onLogout() { mFirebaseAuth.signOut(); }
+    public void onLogout() { mFirebaseAuth.signOut(); }
 
     public static class EntertainmentSpotAdapterViewHolder extends RecyclerView.ViewHolder{
 

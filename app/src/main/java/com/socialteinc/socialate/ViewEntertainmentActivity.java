@@ -148,9 +148,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String owner = (String) dataSnapshot.child("owner").getValue();
-                String name = (String) dataSnapshot.child("name").getValue();
+                //String owner = (String) dataSnapshot.child("owner").getValue();
+                //String name = (String) dataSnapshot.child("name").getValue();
                 String description = (String) dataSnapshot.child("description").getValue();
                 String address = (String) dataSnapshot.child("address").getValue();
                 String photoUrl = (String) dataSnapshot.child("photoUrl").getValue();
@@ -176,12 +175,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
                 postComments();
 
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
@@ -202,7 +198,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     }
 
-    private void processLike() {
+    public void processLike() {
         mProcessLike = true;
         mLikesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -283,7 +279,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 }
 
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -294,7 +289,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
 
     public void postComments() {
-
         mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -325,7 +319,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
