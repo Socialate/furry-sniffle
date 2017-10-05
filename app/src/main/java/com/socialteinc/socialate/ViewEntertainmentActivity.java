@@ -412,7 +412,23 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 mDeleteComment.setVisibility(View.INVISIBLE); // not visible to no-author of comment
 
                 if(mFirebaseAuth.getCurrentUser().getUid().equals(mDataset[position].child("uid").getValue())){
-                    mDeleteComment.setVisibility(View.VISIBLE);
+
+                    mDeleteComment.setVisibility(View.VISIBLE); // allow author the option to delete their comment
+
+                    mDeleteComment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    mCommentsDatabaseReference.child(val).removeValue();  // delete comment
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+                        }
+                    });
                 }
 
             }
