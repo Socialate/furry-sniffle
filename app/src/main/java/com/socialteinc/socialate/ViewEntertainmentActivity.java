@@ -96,10 +96,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mLikeButton = findViewById(R.id.likeFloatingActionButton);
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
-        mCommentTextView = findViewById(R.id.commentMultiAutoCompleteTextView);
-        mCommentorImage = findViewById(R.id.commentorProfileImageView);
+        //mCommentTextView = findViewById(R.id.commentMultiAutoCompleteTextView);
+        //mCommentorImage = findViewById(R.id.commentorProfileImageView);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
-        mCommentDateTextView = findViewById(R.id.dateTextView);
+        //mCommentDateTextView = findViewById(R.id.dateTextView);
 
         // Initialize firebase
         FirebaseApp.initializeApp(this);
@@ -351,8 +351,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 cardview = v;
 
                 mLikeCommentCounterTextView = cardview.findViewById(R.id.likeCommentCounterTextView);
-                mLikeCommentTextView = cardview.findViewById(R.id.likeTextView);
-                mCommenterName = cardview.findViewById(R.id.commentorNameTextView);
+                //mLikeCommentTextView = cardview.findViewById(R.id.likeTextView);
+                //mCommenterName = cardview.findViewById(R.id.commentorNameTextView);
                 //mDeleteComment = cardview.findViewById(R.id.deleteCommentImageButton);
 
                 mFirebaseDatabase = FirebaseDatabase.getInstance();
