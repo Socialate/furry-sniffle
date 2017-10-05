@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private TextView mCommentDateTextView;
     private AutoCompleteTextView mCommentTextView;
     private ImageView mCommentorImage;
+    private ImageButton mDeleteComment;
     private Toolbar mToolbar;
     private FloatingActionButton mLikeButton;
     private EditText mCommentEditText;
@@ -345,6 +347,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 mLikeCommentCounterTextView = cardview.findViewById(R.id.likeCommentCounterTextView);
                 mLikeCommentTextView = cardview.findViewById(R.id.likeTextView);
                 mCommenterName = cardview.findViewById(R.id.commentorNameTextView);
+                //mDeleteComment = cardview.findViewById(R.id.deleteCommentImageButton);
 
                 mFirebaseDatabase = FirebaseDatabase.getInstance();
                 mFirebaseAuth = FirebaseAuth.getInstance();
@@ -377,6 +380,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             // - replace the contents of the view with that element
             // holder.mTextView.setText(mDataset[position]);
 
+            // view comment author profile
             final String uid = (String) mDataset[position].child("uid").getValue();
             if(!TextUtils.isEmpty(uid)){
                 (holder.cardview.findViewById(R.id.commentorNameTextView)).setOnClickListener(new View.OnClickListener() {
@@ -392,9 +396,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             }
 
-            final String val  = (String) mDataset[position].getKey();
-            //System.out.println("*** "+mCommentKey);
-           // mCommentKey = val[0];
+            // like comments
+            final String val  =  mDataset[position].getKey();
             if(!TextUtils.isEmpty(val)){
                 (holder.cardview.findViewById(R.id.likeTextView)).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -404,6 +407,15 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     }
                 });
 
+                // allow users to delete their own comments
+                mDeleteComment = (holder.cardview.findViewById(R.id.deleteCommentImageButton));
+                //mDeleteComment.setVisibility(View.GONE); // not visible to no-author of comment
+
+                if(mFirebaseAuth.getCurrentUser().getUid().equals(mDataset[position].child("uid").getValue())){
+                    System.out.println("*** ");
+                    //mDeleteComment.setVisibility(View.INVISIBLE);
+                }
+
             }
 
             ((TextView) holder.cardview.findViewById(R.id.commentorNameTextView)).setText((String) mDataset[position].child("author").getValue());
@@ -412,6 +424,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
             setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCommentCounterTextView));
+
             final int pos = position;
             //final ImageView[] imageView = new ImageView[1];
 
