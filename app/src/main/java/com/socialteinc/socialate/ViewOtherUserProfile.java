@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 public class ViewOtherUserProfile extends AppCompatActivity{
 
-    private String TAG =ViewEntertainmentActivity.class.getSimpleName();
+    private String TAG = ViewEntertainmentActivity.class.getSimpleName();
 
     private ProgressDialog mProgressDialog;
     private Toolbar mToolbar;

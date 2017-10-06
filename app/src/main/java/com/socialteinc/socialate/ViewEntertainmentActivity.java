@@ -144,6 +144,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
+        // Testing purposes
+        if(mEntertainmentKey == null){
+            mEntertainmentKey = "-KuWr5VqOeGcL7325m9H";
+        }
         mEventsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -292,11 +296,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentsDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 arr = new ArrayList<>();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
                     String eUID = (String) postSnapshot.child("entertainmentUID").getValue();
                     //final String uid = (String) postSnapshot.child("uid").getValue();
 
@@ -321,7 +323,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
