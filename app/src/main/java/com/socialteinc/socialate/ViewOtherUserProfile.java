@@ -41,7 +41,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
     private DatabaseReference mProfileDatabaseReference;
     private DatabaseReference mProfileDatabaseReference1;
     private FirebaseStorage mFirebaseStorage;
-    public Object check1;
+    public boolean checker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,6 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         ownerUID = intent.getStringExtra("entertainmentUploader");
         commentorUID = intent1.getStringExtra("commentUploader");
         check = intent1.getBooleanExtra("check", false);
-        check1 = check;
-
 
         // Initialize references to views
         mToolbar = findViewById(R.id.ProfileToolbar2);
@@ -111,7 +109,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
                 }
             });
 
-        }else{
+        }else {
             // for testing purposes
             if(ownerUID == null){
                 ownerUID = "B7TbLOcLXggRL1TyQxrgrGlwMiO2";
