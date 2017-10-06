@@ -80,7 +80,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // progress bar
         mProgressDialog = new ProgressDialog(this);
 
-        if(check == true){
+        if(check == false){
             // for testing purposes
             if(commentorUID == null){
                 commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";

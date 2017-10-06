@@ -58,26 +58,9 @@ public class CommentsTest1 {
                 });
     }
 
-//    @Test
-//    public void recyclerViewTest() throws InterruptedException{
-//        Thread.sleep(2000);
-//        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToPosition(5));
-//        Thread.sleep(9000);
-//        //onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToHolder(...));
-//    }
-
-//    @Test
-//    public void signOutTest() throws InterruptedException {
-//        Thread.sleep(6000);
-//        mAuth.signOut();
-//        Thread.sleep(3000);
-//        login();
-//    }
-
     @Test
     public void ViewEntertainmentAreaTest() throws InterruptedException {
         Thread.sleep(9000);
-        //onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(6,click()));
 
         onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
         onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
@@ -95,7 +78,7 @@ public class CommentsTest1 {
         onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
 
-//        Thread.sleep(90000);
+        Thread.sleep(40000);
     }
 
 //    @Test
@@ -112,36 +95,6 @@ public class CommentsTest1 {
 //        onView(withId(R.id.likeTextView)).check(matches(isDisplayed()));
 //        onView(withId(R.id.likeCommentCounterTextView)).check(matches(isDisplayed()));
 //
-//    }
-//
-//    @Test
-//    public void checkProfileTest() throws InterruptedException{
-//        Thread.sleep(6000);
-//        mFireBaseDatabase = FirebaseDatabase.getInstance();
-//        mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
-//        FirebaseApp.initializeApp(rule2.getActivity());
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        Looper.prepare();
-//        final MainActivity obj = new MainActivity();
-//
-//        if(mAuth.getCurrentUser() != null){
-//
-//            final String user_id = mAuth.getCurrentUser().getUid();
-//            mUsersDatabaseReference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    if(!dataSnapshot.hasChild(user_id)){
-//                        obj.startActivity(new Intent(obj.getApplicationContext(), CreateProfileActivity.class));
-//                        obj.finish();
-//                    }
-//                }
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }
 //    }
 
 
