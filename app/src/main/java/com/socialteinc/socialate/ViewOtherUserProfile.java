@@ -41,6 +41,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
     private DatabaseReference mProfileDatabaseReference;
     private DatabaseReference mProfileDatabaseReference1;
     private FirebaseStorage mFirebaseStorage;
+    public Object check1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         ownerUID = intent.getStringExtra("entertainmentUploader");
         commentorUID = intent1.getStringExtra("commentUploader");
         check = intent1.getBooleanExtra("check", false);
+        check1 = check;
 
 
         // Initialize references to views
@@ -81,7 +83,10 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         mProgressDialog = new ProgressDialog(this);
 
         if(check == true){
-
+            // for testing purposes
+            if(commentorUID == null){
+                commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";
+            }
             // Display comment uploader profile details
             mProfileDatabaseReference1.child(commentorUID).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -107,6 +112,11 @@ public class ViewOtherUserProfile extends AppCompatActivity{
             });
 
         }else{
+            // for testing purposes
+            if(ownerUID == null){
+                ownerUID = "B7TbLOcLXggRL1TyQxrgrGlwMiO2";
+            }
+
             // Display entertainment uploader profile details
             mProfileDatabaseReference.child(ownerUID).addValueEventListener(new ValueEventListener() {
                 @Override
