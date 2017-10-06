@@ -60,8 +60,7 @@ public class CommentsTest1 {
 
     @Test
     public void ViewEntertainmentAreaTest() throws InterruptedException {
-        Thread.sleep(9000);
-
+        Thread.sleep(10000);
         onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
         onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
         onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
@@ -78,7 +77,7 @@ public class CommentsTest1 {
         onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
 
-        Thread.sleep(40000);
+//        Thread.sleep(40000);
     }
 
 //    @Test

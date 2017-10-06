@@ -53,17 +53,19 @@ public class ViewOtherUserProfileTest {
                 });
     }
 
+
     @Test
     public void profileViewTests1() throws InterruptedException{
+        Thread.sleep(10000);
         Looper.prepare();
         ViewOtherUserProfile obj = new ViewOtherUserProfile();
         obj.checker = true;
-        Thread.sleep(9000);
+
         onView(withId(R.id.displayNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
-        Thread.sleep(4000);
+        Thread.sleep(1000);
     }
 
 
