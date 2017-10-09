@@ -33,10 +33,6 @@ public class ResetPasswordTest{
         onView(withId(R.id.resetPasswordButton)).perform(click());
         Thread.sleep(9000);
         onView(withId(R.id.resetPasswordConstraintLayout)).check(matches(isDisplayed()));
-        //Thread.sleep(3000);
-        //onView(withId(R.id.resetPasswordConstraintLayout)).check(matches(isClickable()));
-        //onView(ViewMatchers.withId(R.id.resetPasswordConstraintLayout)).perform(ViewActions.openLinkWithText("LOGIN"));
-        //Thread.sleep(3000);
     }
 
     @Test
