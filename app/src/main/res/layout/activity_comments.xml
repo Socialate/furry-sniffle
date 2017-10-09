@@ -120,7 +120,7 @@
                                              android:layout_height="34dp"
                                              tools:ignore="ContentDescription"
                                              app:srcCompat="@android:drawable/ic_menu_delete"
-                                             android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                                             android:background="@drawable/com_facebook_auth_dialog_background"
                                              android:backgroundTint="@color/cardview_light_background"
                                              android:tint="@color/cardview_shadow_start_color"
                                              android:id="@+id/deleteCommentImageButton"/>
