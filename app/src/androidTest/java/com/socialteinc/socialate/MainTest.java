@@ -32,16 +32,6 @@ public class MainTest {
 //        logout();
     }
 
-    @Test
-    public void testLogout() throws InterruptedException {
-//        login();
-//        Thread.sleep(5000);
-//        Intents.init();
-//        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-//        onView(withText("Logout")).perform(click());
-//        intended(hasComponent(LoginActivity.class.getName()));
-//        Intents.release();
-    }
 
     public void login(){
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());

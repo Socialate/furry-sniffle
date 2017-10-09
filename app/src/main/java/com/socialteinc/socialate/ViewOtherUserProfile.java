@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 public class ViewOtherUserProfile extends AppCompatActivity{
 
-    private String TAG =ViewEntertainmentActivity.class.getSimpleName();
+    private String TAG = ViewEntertainmentActivity.class.getSimpleName();
 
     private ProgressDialog mProgressDialog;
     private Toolbar mToolbar;
@@ -30,6 +30,8 @@ public class ViewOtherUserProfile extends AppCompatActivity{
     private TextView getFullName;
     private EditText getDescrip;
     private String ownerUID;
+    private String commentorUID;
+    private boolean check;
     private String mUsersKey;
 
     // Firebase instance variables
@@ -37,7 +39,9 @@ public class ViewOtherUserProfile extends AppCompatActivity{
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mProfileDatabaseReference;
+    private DatabaseReference mProfileDatabaseReference1;
     private FirebaseStorage mFirebaseStorage;
+    public boolean checker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,10 @@ public class ViewOtherUserProfile extends AppCompatActivity{
 
         // get identifier key
         Intent intent = getIntent();
+        Intent intent1 = getIntent();
         ownerUID = intent.getStringExtra("entertainmentUploader");
+        commentorUID = intent1.getStringExtra("commentUploader");
+        check = intent1.getBooleanExtra("check", false);
 
         // Initialize references to views
         mToolbar = findViewById(R.id.ProfileToolbar2);
@@ -61,9 +68,8 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         mFirebaseStorage = FirebaseStorage.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        //mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        //mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
+        mProfileDatabaseReference1 = mFireBaseDatabase.getReference().child("users");
         //mUsersKey = mFirebaseAuth.
 
         //Initialise toolbar
@@ -74,30 +80,65 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // progress bar
         mProgressDialog = new ProgressDialog(this);
 
-        // Display current user profile details
-        mProfileDatabaseReference.child(ownerUID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        if(check == false){
+            // for testing purposes
+            if(commentorUID == null){
+                commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";
+            }
+            // Display comment uploader profile details
+            mProfileDatabaseReference1.child(commentorUID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String user_display = (String) dataSnapshot.child("displayName").getValue();
-                String user_name = (String) dataSnapshot.child("name").getValue();
-                String user_image = (String) dataSnapshot.child("profileImage").getValue();
-                String user_descrip = (String) dataSnapshot.child("description").getValue();
+                    String user_display = (String) dataSnapshot.child("displayName").getValue();
+                    String user_name = (String) dataSnapshot.child("name").getValue();
+                    String user_image = (String) dataSnapshot.child("profileImage").getValue();
+                    String user_descrip = (String) dataSnapshot.child("description").getValue();
 
-                getDisplayName.setText(user_display);
-                getFullName.setText(user_name);
-                getDescrip.setText(user_descrip);
+                    getDisplayName.setText(user_display);
+                    getFullName.setText(user_name);
+                    getDescrip.setText(user_descrip);
 
-                Picasso.with(getApplicationContext())
-                        .load(user_image)
-                        .into(getProfilePicture);
+                    Picasso.with(getApplicationContext())
+                            .load(user_image)
+                            .into(getProfilePicture);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+
+        }else {
+            // for testing purposes
+            if(ownerUID == null){
+                ownerUID = "B7TbLOcLXggRL1TyQxrgrGlwMiO2";
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+            // Display entertainment uploader profile details
+            mProfileDatabaseReference.child(ownerUID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
+                    String user_display = (String) dataSnapshot.child("displayName").getValue();
+                    String user_name = (String) dataSnapshot.child("name").getValue();
+                    String user_image = (String) dataSnapshot.child("profileImage").getValue();
+                    String user_descrip = (String) dataSnapshot.child("description").getValue();
+
+                    getDisplayName.setText(user_display);
+                    getFullName.setText(user_name);
+                    getDescrip.setText(user_descrip);
+
+                    Picasso.with(getApplicationContext())
+                            .load(user_image)
+                            .into(getProfilePicture);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
 
     }
 }

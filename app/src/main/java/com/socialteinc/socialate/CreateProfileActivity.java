@@ -95,7 +95,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void galleryIntent() {
+    public void galleryIntent() {
         Intent galleryIntent = new Intent();
         galleryIntent.setType("image/*");
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -106,12 +106,16 @@ public class CreateProfileActivity extends AppCompatActivity {
      * this function creates a profile for the newly created account making
      * sure we have a profile picture, username and the full name of the user.
      */
-    private void startSetupAccount() {
+    public void startSetupAccount() {
 
         assert mFirebaseAuth.getCurrentUser() != null;
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
         final String displayName = mDisplayNameEditText.getText().toString().trim();
         final String name = mFullNameEditText.getText().toString().trim();
+
+        if(mImageUri == null){
+            mImageUri = Uri.parse("android.resourse://com.socialteinc.socialate/drawable/default_avatar.png");
+        }
 
         if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(displayName)&& mImageUri != null){
 
