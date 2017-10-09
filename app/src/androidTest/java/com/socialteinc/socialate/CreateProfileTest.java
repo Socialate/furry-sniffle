@@ -72,17 +72,21 @@ public class CreateProfileTest {
     @Test
     public void test2() throws InterruptedException{
         Thread.sleep(3000);
-        onView(withId(R.id.accountSetupTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.setupPictureButton)).check(matches(isClickable()));
     }
 
     @Test
-    public void createProfileLaunchTest() throws InterruptedException{
+    public void test3() throws InterruptedException{
+        Thread.sleep(3000);
+        onView(withId(R.id.accountSetupTextView)).check(matches(isDisplayed()));
+    }
 
+    @Test
+    public void createProfileLaunchTest() throws InterruptedException{
+        Thread.sleep(3000);
         onView(withId(R.id.displayNameEditText)).perform(typeText(displayName),pressBack());
         onView(withId(R.id.fullNameEditText)).perform(typeText(fullName),pressBack());
-
         onView(withId(R.id.setupSubmitButton)).perform(click());
-        Thread.sleep(6000);
+        Thread.sleep(8000);
     }
 }
