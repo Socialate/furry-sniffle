@@ -126,6 +126,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 Picasso.with(getApplicationContext())
                         .load(user_image)
                         .into(getProfilePicture);
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

@@ -215,7 +215,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     }
 
-    public void processLike() {
     private void launchMap() {
         Uri gmmIntentUri = Uri.parse("geo:0,0?q="+ mEntertainmentAddress.getText().toString());
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
