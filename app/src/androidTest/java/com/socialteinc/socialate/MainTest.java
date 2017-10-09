@@ -19,18 +19,18 @@ public class MainTest {
     @Rule
     public ActivityTestRule<MainActivity> main = new ActivityTestRule<>(MainActivity.class);
 
-    @Test
-    public void testAddEntertainment() throws InterruptedException {
-//        login();
-//        Thread.sleep(5000);
-//        init();
-//        onView(withId(R.id.action_add_entertainment)).perform(click());
-//        intended(hasComponent(AddEntertainmentActivity.class.getName()));
-//        Intents.release();
-//        onView(withId(R.id.entertainmentTitleEditText)).perform(closeSoftKeyboard());
-//        onView(isRoot()).perform(ViewActions.pressBack());
-//        logout();
-    }
+//    @Test
+//    public void testAddEntertainment() throws InterruptedException {
+////        login();
+////        Thread.sleep(5000);
+////        init();
+////        onView(withId(R.id.action_add_entertainment)).perform(click());
+////        intended(hasComponent(AddEntertainmentActivity.class.getName()));
+////        Intents.release();
+////        onView(withId(R.id.entertainmentTitleEditText)).perform(closeSoftKeyboard());
+////        onView(isRoot()).perform(ViewActions.pressBack());
+////        logout();
+//    }
 
 
     public void login(){
