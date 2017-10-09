@@ -80,7 +80,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // progress bar
         mProgressDialog = new ProgressDialog(this);
 
-        if(check == false){
+        if(check == true){
             // for testing purposes
             if(commentorUID == null){
                 commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";
@@ -111,9 +111,9 @@ public class ViewOtherUserProfile extends AppCompatActivity{
 
         }else {
             // for testing purposes
-            if(ownerUID == null){
-                ownerUID = "B7TbLOcLXggRL1TyQxrgrGlwMiO2";
-            }
+//            if(ownerUID == null){
+//                ownerUID = "B7TbLOcLXggRL1TyQxrgrGlwMiO2";
+//            }
 
             // Display entertainment uploader profile details
             mProfileDatabaseReference.child(ownerUID).addValueEventListener(new ValueEventListener() {
