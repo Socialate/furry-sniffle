@@ -66,7 +66,7 @@
                                android:layout_height="wrap_content"
                                android:contentDescription="@string/entetainment_spot_owner"
                                android:src="@mipmap/ic_owner"
-                               android:layout_weight="1"/>
+                               android:layout_weight="1" android:id="@+id/authorImageView"/>
 
                     <TextView
                             android:layout_gravity="center_vertical"
