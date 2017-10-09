@@ -36,15 +36,15 @@ public class MainTest1 {
     FirebaseDatabase mFireBaseDatabase;
 
     @Rule
-    public ActivityTestRule<MainActivity> rule2 = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void login(){
-        FirebaseApp.initializeApp(rule2.getActivity());
+        FirebaseApp.initializeApp(rule.getActivity());
         mAuth = FirebaseAuth.getInstance();
 
-        mAuth.signInWithEmailAndPassword("joe@gmail.com", "sandile")
-                .addOnCompleteListener(rule2.getActivity(), new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword("musa@gmail.com", "password")
+                .addOnCompleteListener(rule.getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -60,6 +60,7 @@ public class MainTest1 {
 
     @Test
     public void recyclerViewTest() throws InterruptedException{
+        login();
         Thread.sleep(4000);
         onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToPosition(3));
         //onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToHolder(...));
@@ -76,7 +77,8 @@ public class MainTest1 {
 
     @Test
     public void ViewEntertainmentAreaTest() throws InterruptedException {
-        Thread.sleep(10000);
+        login();
+        Thread.sleep(9000);
         onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(3,click()));
 
         onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
@@ -94,11 +96,12 @@ public class MainTest1 {
         onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
     }
 
     @Test
     public void ViewCommentsTest() throws InterruptedException{
+        login();
         Thread.sleep(9000);
         onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
         onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed()));
@@ -118,7 +121,7 @@ public class MainTest1 {
         Thread.sleep(6000);
         mFireBaseDatabase = FirebaseDatabase.getInstance();
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
-        FirebaseApp.initializeApp(rule2.getActivity());
+        FirebaseApp.initializeApp(rule.getActivity());
         mAuth = FirebaseAuth.getInstance();
 
         Looper.prepare();

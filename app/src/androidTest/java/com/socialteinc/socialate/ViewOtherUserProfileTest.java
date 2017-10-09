@@ -65,7 +65,7 @@ public class ViewOtherUserProfileTest {
         onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
     }
 
 
