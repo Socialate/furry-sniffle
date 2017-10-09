@@ -58,13 +58,13 @@ public class MainTest1 {
                 });
     }
 
-    @Test
-    public void recyclerViewTest() throws InterruptedException{
-        login();
-        Thread.sleep(4000);
-        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToPosition(3));
-        //onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToHolder(...));
-    }
+//    @Test
+//    public void recyclerViewTest() throws InterruptedException{
+//        login();
+//        Thread.sleep(4000);
+//        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToPosition(3));
+//        //onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToHolder(...));
+//    }
 
     @Test
     public void signOutTest() throws InterruptedException {
@@ -75,46 +75,46 @@ public class MainTest1 {
         Thread.sleep(2000);
     }
 
-    @Test
-    public void ViewEntertainmentAreaTest() throws InterruptedException {
-        login();
-        Thread.sleep(9000);
-        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(3,click()));
+//    @Test
+//    public void ViewEntertainmentAreaTest() throws InterruptedException {
+//        login();
+//        Thread.sleep(9000);
+//        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(3,click()));
+//
+//        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
+//        onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
+//        onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
+//        onView(withId(R.id.ViewAddedAreaImageView)).check(matches(isDisplayed()));
+//
+////        onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
+////        onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
+//
+//        onView(withId(R.id.likeFloatingActionButton)).perform(click());
+//        onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
+//        Thread.sleep(3000);
+//        onView(withId(R.id.displayNameTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
+//        onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
+//        //Thread.sleep(4000);
+//    }
 
-        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
-        onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
-        onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
-        onView(withId(R.id.ViewAddedAreaImageView)).check(matches(isDisplayed()));
-
-//        onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
-//        onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.likeFloatingActionButton)).perform(click());
-        onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
-        Thread.sleep(3000);
-        onView(withId(R.id.displayNameTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
-        onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
-        //Thread.sleep(4000);
-    }
-
-    @Test
-    public void ViewCommentsTest() throws InterruptedException{
-        login();
-        Thread.sleep(9000);
-        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
-        onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed()));
-        //Thread.sleep(5000);
-        //onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));
-//        onView(withId(R.id.commentorNameTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.commentorProfileImageView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.commentMultiAutoCompleteTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.dateTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.likeTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.likeCommentCounterTextView)).check(matches(isDisplayed()));
-//        Thread.sleep(4000);
-    }
+//    @Test
+//    public void ViewCommentsTest() throws InterruptedException{
+//        login();
+//        Thread.sleep(9000);
+//        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
+//        onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed()));
+//        //Thread.sleep(5000);
+//        //onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));
+////        onView(withId(R.id.commentorNameTextView)).check(matches(isDisplayed()));
+////        onView(withId(R.id.commentorProfileImageView)).check(matches(isDisplayed()));
+////        onView(withId(R.id.commentMultiAutoCompleteTextView)).check(matches(isDisplayed()));
+////        onView(withId(R.id.dateTextView)).check(matches(isDisplayed()));
+////        onView(withId(R.id.likeTextView)).check(matches(isDisplayed()));
+////        onView(withId(R.id.likeCommentCounterTextView)).check(matches(isDisplayed()));
+////        Thread.sleep(4000);
+//    }
 
     @Test
     public void checkProfileTest() throws InterruptedException{
