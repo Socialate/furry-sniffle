@@ -66,8 +66,13 @@ public class CreateProfileTest {
     @Test
     public void test1() throws InterruptedException{
         Thread.sleep(3000);
+        onView(withId(R.id.displayNameEditText)).check(matches(isClickable()));
+    }
+
+    @Test
+    public void test2() throws InterruptedException{
+        Thread.sleep(3000);
         onView(withId(R.id.accountSetupTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.displayNameEditText)).check(matches(isFocusable()));
         onView(withId(R.id.setupPictureButton)).check(matches(isClickable()));
     }
 
@@ -77,9 +82,6 @@ public class CreateProfileTest {
         onView(withId(R.id.displayNameEditText)).perform(typeText(displayName),pressBack());
         onView(withId(R.id.fullNameEditText)).perform(typeText(fullName),pressBack());
 
-        //onView(ViewMatchers.withId(R.id.setupPictureButton)).perform(ViewActions.openLinkWithText("choose_profile_picture")).wait(2000); // select picture
-        //CreateProfileActivity obj = new CreateProfileActivity();
-        //obj.galleryIntent();
         onView(withId(R.id.setupSubmitButton)).perform(click());
         Thread.sleep(6000);
     }
