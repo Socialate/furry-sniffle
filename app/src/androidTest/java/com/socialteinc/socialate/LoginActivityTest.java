@@ -1,7 +1,6 @@
 package com.socialteinc.socialate;
 
 
-import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
@@ -25,13 +24,15 @@ public class LoginActivityTest {
 
     @Test
     public void noValidEmailTest() throws InterruptedException {
+        Thread.sleep(1500);
         onView(withId(R.id.email_field)).perform(typeText("invalidsocialate.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("furry"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
     }
 
     @Test
-    public void noValidPasswordTest(){
+    public void noValidPasswordTest() throws InterruptedException {
+        Thread.sleep(1500);
         onView(withId(R.id.email_field)).perform(typeText("invalid@socialate.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("furry"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(clearText());
@@ -40,14 +41,16 @@ public class LoginActivityTest {
 
     @Test
     public void loginTesting() throws InterruptedException {
+        Thread.sleep(1500);
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
     }
 
     @Test
-    public void signUpTesting(){
+    public void signUpTesting() throws InterruptedException {
         init();
+        Thread.sleep(1500);
         onView(withId(R.id.creatAccountTextView)).perform(click());
         intended(hasComponent(RegisterActivity.class.getName()));
         release();
