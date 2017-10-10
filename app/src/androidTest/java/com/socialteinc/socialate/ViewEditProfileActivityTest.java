@@ -95,42 +95,42 @@ public class ViewEditProfileActivityTest {
 
     }
 
-    @Test
-    public void editProfileTest2() throws InterruptedException{
-        login();
-        Looper.prepare();
-        ViewEditProfileActivity obj = new ViewEditProfileActivity();
-        //mFirebaseUser = mAuth.getCurrentUser();
-       // mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-       // mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
-        obj.mUsersKey = mAuth.getCurrentUser().getUid();
-
-        Thread.sleep(15000);
-        //onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.fullNameEditText)).perform(clearText())
-                .perform(typeText("Christiano Ronaldo"), closeSoftKeyboard());
-
-        onView(withId(R.id.displayNameEditText)).perform(clearText())
-                .perform(typeText("CR7"), closeSoftKeyboard());
-
-        onView(withId(R.id.describeEditText)).perform(clearText())
-                .perform(ViewActions.scrollTo()).perform(typeText("I work hard"), closeSoftKeyboard());
-
-        onView(withId(R.id.phoneEditText)).perform(clearText())
-                .perform(ViewActions.scrollTo()).perform(typeText("0793472862"), closeSoftKeyboard());
-
-        onView(withId(R.id.homeAddressEditText)).perform(clearText())
-                .perform(ViewActions.scrollTo()).perform(typeText("Madrid, Spain"), closeSoftKeyboard());
-
-        //onView(withId(R.id.spinnerGender)).perform(ViewActions.scrollTo()).perform(click()).perform(click());
-
-        onView(withId(R.id.submitChangesButton)).perform(ViewActions.scrollTo()).perform(click());
-
-
-
-        //Thread.sleep(8000);
-
-    }
+//    @Test
+//    public void editProfileTest2() throws InterruptedException{
+//        login();
+//        Looper.prepare();
+//        ViewEditProfileActivity obj = new ViewEditProfileActivity();
+//        //mFirebaseUser = mAuth.getCurrentUser();
+//       // mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
+//       // mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+//        obj.mUsersKey = mAuth.getCurrentUser().getUid();
+//
+//        Thread.sleep(15000);
+//        //onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.fullNameEditText)).perform(clearText())
+//                .perform(typeText("Christiano Ronaldo"), closeSoftKeyboard());
+//
+//        onView(withId(R.id.displayNameEditText)).perform(clearText())
+//                .perform(typeText("CR7"), closeSoftKeyboard());
+//
+//        onView(withId(R.id.describeEditText)).perform(clearText())
+//                .perform(ViewActions.scrollTo()).perform(typeText("I work hard"), closeSoftKeyboard());
+//
+//        onView(withId(R.id.phoneEditText)).perform(clearText())
+//                .perform(ViewActions.scrollTo()).perform(typeText("0793472862"), closeSoftKeyboard());
+//
+//        onView(withId(R.id.homeAddressEditText)).perform(clearText())
+//                .perform(ViewActions.scrollTo()).perform(typeText("Madrid, Spain"), closeSoftKeyboard());
+//
+//        //onView(withId(R.id.spinnerGender)).perform(ViewActions.scrollTo()).perform(click()).perform(click());
+//
+//        onView(withId(R.id.submitChangesButton)).perform(ViewActions.scrollTo()).perform(click());
+//
+//
+//
+//        //Thread.sleep(8000);
+//
+//    }
 
 //    @Test
 //    public void Test1() throws InterruptedException{
