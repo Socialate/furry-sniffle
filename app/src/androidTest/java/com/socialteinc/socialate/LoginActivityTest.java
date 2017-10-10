@@ -47,7 +47,7 @@ public class LoginActivityTest {
     public void signUpTesting(){
         Intents.init();
         onView(withId(R.id.creatAccountTextView)).perform(click());
-        intended(hasComponent(CheckEmailActivity.class.getName()));
+        intended(hasComponent(RegisterActivity.class.getName()));
         Intents.release();
 
     }
