@@ -106,4 +106,13 @@
     <string name="likes">Like</string>
     <string name="continue_with_google">Continue with Google</string>
 
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="proximity_desc">This setting will be used to search nearby areas</string>
+    <string name="proximity">Proximity</string>
+    <string name="_10_km">10 KM</string>
+    <string name="_25_km">25 KM</string>
+    <string name="_50_km">50 KM</string>
+    <string name="_100_km">100 KM</string>
 </resources>

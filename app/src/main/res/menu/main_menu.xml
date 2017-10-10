@@ -9,6 +9,10 @@
             tools:ignore="HardcodedText"/>
 
     <item
+            android:id="@+id/action_settings"
+            android:title="Settings" android:visible="true"/>
+
+    <item
         android:id="@+id/action_logout"
         android:title="@string/logout"
         app:showAsAction="never"/>

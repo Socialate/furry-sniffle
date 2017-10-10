@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <com.socialteinc.socialate.seekBarPref
+        android:title="hello world"
+        android:key="bar_val"
+        android:defaultValue="10"
+
+    />
+
+</PreferenceScreen>

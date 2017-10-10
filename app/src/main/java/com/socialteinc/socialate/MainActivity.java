@@ -3,8 +3,11 @@ package com.socialteinc.socialate;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private Boolean mProcessLike = false;
+
+    SharedPreferences msharedPref;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -103,8 +108,10 @@ public class MainActivity extends AppCompatActivity {
         };
 
         checkProfileExist();
-
-
+        /**Checks if initial settings value is present**/
+        msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int syncConnPref = msharedPref.getInt("bar_val", 50);
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -268,10 +275,41 @@ public class MainActivity extends AppCompatActivity {
             onLogout();
             return true;
         }
-
+        if(id == R.id.action_settings){
+            launchFrag();
+            return true;
+        }
+        if(id == android.R.id.home){
+            getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("settings pref")).commit();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+    private void launchFrag() {
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Settings");
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.GONE);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new preferencesFrag(),"settings pref")
+                .commit();
+    }
+    @Override
+    public void onBackPressed() {
+        Fragment p = getFragmentManager().findFragmentByTag("settings pref");
+        if ((p).isVisible()) {
+            getFragmentManager().beginTransaction().remove(p).commit();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     /**
      * This function launches add entertainment activity to create a new spot
@@ -373,16 +411,16 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(event_image.getContext())
                     .load(image)
                     .into(event_image, new Callback() {
-                @Override
-                public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
-                }
+                        @Override
+                        public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                        }
 
-                @Override
-                public void onError() {
+                        @Override
+                        public void onError() {
 
-                }
-            });
+                        }
+                    });
         }
     }
 
