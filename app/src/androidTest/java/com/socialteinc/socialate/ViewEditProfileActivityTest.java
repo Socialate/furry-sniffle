@@ -106,11 +106,11 @@ public class ViewEditProfileActivityTest {
         onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.imageView)).check(matches(isDisplayed()));*/
 
-        assertEquals(true, CheckEmailActivity.isValidEmail("socialate@gmail.com"));
-        assertEquals(true, CheckEmailActivity.isValidEmail("1234@gmail.com"));
-        assertEquals(false, LoginActivity.isValidEmail("yakka"));
-        assertEquals(true, LoginActivity.isValidEmail("sandile.cyber@gmail.com"));
-        assertEquals(true, LoginActivity.isValidEmail("12@gmail.com"));
+//        assertEquals(true, CheckEmailActivity.isValidEmail("socialate@gmail.com"));
+//        assertEquals(true, CheckEmailActivity.isValidEmail("1234@gmail.com"));
+//        assertEquals(false, LoginActivity.isValidEmail("yakka"));
+//        assertEquals(true, LoginActivity.isValidEmail("sandile.cyber@gmail.com"));
+//        assertEquals(true, LoginActivity.isValidEmail("12@gmail.com"));
 
     }
 
