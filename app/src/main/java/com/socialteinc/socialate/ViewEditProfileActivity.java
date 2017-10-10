@@ -75,7 +75,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+        //mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
 
         mUsersKey = mFirebaseAuth.getCurrentUser().getUid();

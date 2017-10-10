@@ -96,15 +96,17 @@ public class ViewEditProfileActivityTest {
 
     @Test
     public void editProfileTest2() throws InterruptedException{
+        login();
+        //ViewEditProfileActivity obj = new ViewEditProfileActivity();
         mFirebaseUser = mAuth.getCurrentUser();
         mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+       // mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mUsersKey = mAuth.getCurrentUser().getUid();
 
         Thread.sleep(15000);
         //onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameEditText)).perform(clearText())
-                .perform(typeText("ChristianoRonaldo"), closeSoftKeyboard());
+                .perform(typeText("Christiano Ronaldo"), closeSoftKeyboard());
 
         onView(withId(R.id.displayNameEditText)).perform(clearText())
                 .perform(typeText("CR7"), closeSoftKeyboard());
