@@ -10,7 +10,9 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.intent.Intents.init;
 import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.release;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
@@ -45,20 +47,19 @@ public class LoginActivityTest {
 
     @Test
     public void signUpTesting(){
-        Intents.init();
+        init();
         onView(withId(R.id.creatAccountTextView)).perform(click());
         intended(hasComponent(RegisterActivity.class.getName()));
-        Intents.release();
-
+        release();
     }
 
     @Test
     public void resetPasswordTesting() throws InterruptedException {
-        Intents.init();
+        init();
         Thread.sleep(1500);
         onView(withId(R.id.resetPasswordTextView)).perform(click());
         intended(hasComponent(ResetPasswordActivity.class.getName()));
-        Intents.release();
+        release();
 
     }
 
