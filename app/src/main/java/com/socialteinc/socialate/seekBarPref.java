@@ -29,6 +29,7 @@ public class seekBarPref extends Preference implements SeekBar.OnSeekBarChangeLi
         setLayoutResource(R.layout.preference_seekbar);
     }
 
+
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
