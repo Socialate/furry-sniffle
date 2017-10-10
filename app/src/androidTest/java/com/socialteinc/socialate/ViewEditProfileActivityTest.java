@@ -63,10 +63,6 @@ public class ViewEditProfileActivityTest {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
 
-                            mFirebaseUser = mAuth.getCurrentUser();
-                            mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-                            mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
-                            mUsersKey = mAuth.getCurrentUser().getUid();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("login activity", "signInWithEmail:failure", task.getException());
@@ -74,6 +70,13 @@ public class ViewEditProfileActivityTest {
                         }
                     }
                 });
+
+
+//        mFirebaseUser = mAuth.getCurrentUser();
+//        mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
+//        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+//        mUsersKey = mAuth.getCurrentUser().getUid();
+
     }
 
     @Test

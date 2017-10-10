@@ -32,14 +32,15 @@ public class MainTest {
 ////        logout();
 //    }
 
-
-    public void login(){
+    @Test
+    public void login() throws InterruptedException{
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.password_field)).perform(typeText("sandile"), closeSoftKeyboard());
         onView(withId(R.id.SinginButton)).perform(click());
     }
 
-    public void logout(){
+    @Test
+    public void logout() throws InterruptedException{
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("Logout")).perform(click());
     }
