@@ -55,7 +55,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST_CODE = 1;
     private String mAuthor;
-    private String mUsersKey;
+    public String mUsersKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

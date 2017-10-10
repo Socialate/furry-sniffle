@@ -3,6 +3,7 @@ package com.socialteinc.socialate;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -47,7 +48,7 @@ public class ViewEditProfileActivityTest {
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mUserDatabaseReference;
     private DatabaseReference mProfileDatabaseReference;
-    private String mUsersKey;
+    //private String mUsersKey;
 
 
     @Before
@@ -97,11 +98,12 @@ public class ViewEditProfileActivityTest {
     @Test
     public void editProfileTest2() throws InterruptedException{
         login();
-        //ViewEditProfileActivity obj = new ViewEditProfileActivity();
+        Looper.prepare();
+        ViewEditProfileActivity obj = new ViewEditProfileActivity();
         //mFirebaseUser = mAuth.getCurrentUser();
        // mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
        // mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
-       // mUsersKey = mAuth.getCurrentUser().getUid();
+        obj.mUsersKey = mAuth.getCurrentUser().getUid();
 
         Thread.sleep(15000);
         //onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
