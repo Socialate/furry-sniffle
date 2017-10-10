@@ -71,12 +71,6 @@ public class ViewEditProfileActivityTest {
                     }
                 });
 
-
-//        mFirebaseUser = mAuth.getCurrentUser();
-//        mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-//        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
-//        mUsersKey = mAuth.getCurrentUser().getUid();
-
     }
 
     @Test
@@ -102,6 +96,11 @@ public class ViewEditProfileActivityTest {
 
     @Test
     public void editProfileTest2() throws InterruptedException{
+        mFirebaseUser = mAuth.getCurrentUser();
+        mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
+        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+        mUsersKey = mAuth.getCurrentUser().getUid();
+
         Thread.sleep(15000);
         //onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameEditText)).perform(clearText())
