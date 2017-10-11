@@ -51,6 +51,12 @@ public class MainTest {
         //onView(withText("Search for a spot")).perform(ViewActions.typeText("Bikini"));
 
     }
+//    @Test
+//    public void Settings(){
+//        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+//        onView(withText("Settings")).perform(click());
+//
+//    }
 
     public void logout(){
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
