@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         checkProfileExist();
         /**Checks if initial settings value is present**/
         msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        int syncConnPref = msharedPref.getInt("bar_val", 50);
+        //int syncConnPref = msharedPref.getInt("bar_val", 50);
         (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
     }
 
