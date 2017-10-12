@@ -147,6 +147,7 @@ public class CommentsTest2 {
         onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
         onView(withId(R.id.ViewAddedAreaDescText)).perform(swipeUp());
         onView(isRoot()).perform(swipeUp());
+        Thread.sleep(1000);
         onView(isRoot()).perform(ViewActions.swipeUp());
 
         onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed())); //
@@ -155,7 +156,7 @@ public class CommentsTest2 {
                 withParent(withId(android.R.id.content)), isDisplayed()));
 
         onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1));
-        onView(withId(R.id.comment_recyclerView)).perform(swipeUp());
+        //onView(withId(R.id.comment_recyclerView)).perform(swipeUp());
         Thread.sleep(4000);
     }
 
