@@ -1,8 +1,13 @@
 package com.socialteinc.socialate;
 
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Intent;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
@@ -20,8 +25,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
@@ -30,10 +38,9 @@ import static junit.framework.Assert.assertFalse;
 
 public class CommentsTest2 {
     private FirebaseAuth mAuth;
-    //private FirebaseAuth mFirebaseAuth;
-    FirebaseDatabase mFireBaseDatabase;
-    DatabaseReference mLikesDatabaseReference;
-    FloatingActionButton mLikeButton;
+//    FirebaseDatabase mFireBaseDatabase;
+//    DatabaseReference mLikesDatabaseReference;
+//    FloatingActionButton mLikeButton;
 
 
     @Rule
@@ -58,21 +65,102 @@ public class CommentsTest2 {
                 });
     }
 
+
     @Test
-    public void likesTest(){
-        // create an object from ViewEntertainmentActivity
-        //Looper.prepare();
-       //final ViewEntertainmentActivity obj = new ViewEntertainmentActivity();
-       // assertEquals(rule.getActivity().doMySearch("Bikini"), true);
-        //mLikeButton = obj.findViewById(R.id.likeFloatingActionButton);
-        onView(withId(R.id.likeFloatingActionButton)).perform(click());
-        /*(obj.findViewById(R.id.likeFloatingActionButton)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                obj.processLike();
-            }
-        });*/
+    public void isDisplayedTest() throws InterruptedException {
+        Thread.sleep(15000);
+
+        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
+        onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
+        onView(withId(R.id.ViewAddedAreaImageView)).check(matches(isDisplayed()));
+        onView(withId(R.id.authorImageView)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
+
+        onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
+        onView(withId(R.id.navigationImageView)).check(matches(isDisplayed()));
+        //onView(withId(R.id.de)).check(matches(isDisplayed()));
 
     }
+
+    @Test
+    public void testComment() throws InterruptedException{
+        Thread.sleep(15000);
+        onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
+        onView(withId(R.id.ViewAddedAreaDescText)).perform(swipeUp());
+        onView(isRoot()).perform(swipeUp());
+
+        onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
+        Thread.sleep(4000);
+
+    }
+
+//    @Test
+//    public void commentsTest() throws InterruptedException{
+//        Thread.sleep(9000);
+//        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(3,click()));
+//
+//        Thread.sleep(3000);
+//        onView(withId(R.id.displayNameTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
+//        onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
+//    }
+
+    @Test
+    public void likeTest() throws InterruptedException {
+        Thread.sleep(15000);
+        onView(withId(R.id.likeFloatingActionButton)).perform(click());
+        //onView(isRoot()).perform(ViewActions.pressBack());
+        Thread.sleep(4000);
+    }
+
+    @Test
+    public void viewAuthorTest() throws InterruptedException {
+        Thread.sleep(15000);
+        onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
+        onView(isRoot()).perform(pressBack());
+        Thread.sleep(4000);
+    }
+
+
+    @Test
+    public void NavigationTest() throws InterruptedException{
+        Thread.sleep(15000);
+        onView(withId(R.id.navigationImageView)).perform(click());
+        Thread.sleep(2000);
+        //onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));
+//        onView(withId(R.id.commentorNameTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.commentorProfileImageView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.commentMultiAutoCompleteTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.dateTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.likeTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.likeCommentCounterTextView)).check(matches(isDisplayed()));
+//        Thread.sleep(4000);
+    }
+
+//    @Test
+//    public void navigationTest2() throws InterruptedException{
+//        // Build the result to return when the activity is launched.
+//        Intent resultData = new Intent();
+//        //String phoneNumber = "123-345-6789";
+//        //resultData.putExtra("phone", phoneNumber);
+//
+//        Instrumentation.ActivityResult result =
+//                new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
+//
+//        // Set up result stubbing when an intent sent to "contacts" is seen.
+//        intending(toPackage("com.google.android.apps.maps")).respondWith(result);
+//
+//        // User action that results in "contacts" activity being launched.
+//        // Launching activity expects phoneNumber to be returned and displayed.
+//        onView(withId(R.id.navigationImageView)).perform(click());
+//
+//        // Assert that the data we set up above is shown.
+//        //onView(withId(R.id.phoneNumber)).check(matches(withText(phoneNumber)));
+//
+//    }
+
 
 }

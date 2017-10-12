@@ -152,7 +152,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         // Testing purposes
         if(mEntertainmentKey == null){
-            mEntertainmentKey = "-KuWr5VqOeGcL7325m9H";
+            mEntertainmentKey = "-KuWs0YVBB_nWlC03LrE";
         }
         mEventsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
 

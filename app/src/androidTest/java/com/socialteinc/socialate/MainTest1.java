@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -27,6 +29,7 @@ import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class MainTest1 {
@@ -105,6 +108,20 @@ public class MainTest1 {
             });
         }
         Thread.sleep(4000);
+    }
+
+    @Test
+    public void testView() throws InterruptedException{
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.entertainmentSpotRecyclerView),
+                    withParent(allOf(withId(R.id.cardView1),
+                        withParent(withId(android.R.id.content)))),
+                    isDisplayed()));
+        //recyclerView.check(matches(isDisplayed()));
+
+        ViewInteraction action = onView(
+                allOf(withId(R.id.titleTextView), withContentDescription("Bikini Beach"), isDisplayed()));
+        //action.perform(click());
     }
 
 
