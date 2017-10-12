@@ -39,14 +39,14 @@ public class MainTest {
         onView(withId(R.id.SinginButton)).perform(click());
         Thread.sleep(1000);
     }
-   // @Test
+    @Test
     public void search() throws InterruptedException {
        // login();
         //openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-        onView(withContentDescription("Search")).perform(click());
-        onView(withHint("Search for a spot")).perform(typeText("Bikini"));
-        onView(withHint("Search for a spot"))
-                .perform(pressImeActionButton());
+       // onView(withContentDescription("Search")).perform(click());
+       // onView(withHint("Search for a spot")).perform(typeText("Bikini"));
+       // onView(withHint("Search for a spot"))
+       //         .perform(pressImeActionButton());
         //onView(withText("Search for a spot")).perform(ViewActions.typeText("Bikini"));
 
     }
