@@ -42,7 +42,7 @@ public class MainTest {
     }
     @Test
     public void search() throws InterruptedException {
-        login();
+       // login();
         //openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withContentDescription("Search")).perform(click());
         onView(withHint("Search for a spot")).perform(typeText("Bikini"));
@@ -51,7 +51,7 @@ public class MainTest {
         //onView(withText("Search for a spot")).perform(ViewActions.typeText("Bikini"));
 
     }
-    @Test
+    //@Test
     public void Settings(){
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("Settings")).perform(click());
