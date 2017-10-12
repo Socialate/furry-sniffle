@@ -155,7 +155,7 @@ public class CommentsTest2 {
                 withParent(withId(android.R.id.content)), isDisplayed()));
 
         onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1));
-        onView(withId(R.id.comment_recyclerView)).perform(swipeUp()).perform(swipeUp());
+        onView(withId(R.id.comment_recyclerView)).perform(swipeUp());
         Thread.sleep(4000);
     }
 
