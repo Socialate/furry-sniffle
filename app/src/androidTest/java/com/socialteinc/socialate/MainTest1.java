@@ -12,6 +12,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerViewAccessibilityDelegate;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -122,6 +124,31 @@ public class MainTest1 {
         ViewInteraction action = onView(
                 allOf(withId(R.id.titleTextView), withContentDescription("Bikini Beach"), isDisplayed()));
         //action.perform(click());
+    }
+
+    @Test
+    public void ViewCommentsTest() throws InterruptedException{
+        Thread.sleep(9000);
+        onView(allOf(withId(R.id.entertainmentSpotRecyclerView))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.entertainmentSpotRecyclerView),
+                withParent(withId(R.id.cardView1)),
+                    withParent(withId(android.R.id.content)), isDisplayed()));
+
+        onView(withId(R.id.action_add_entertainment)).check(matches(isDisplayed()));
+
+        //onView(withId(R.menu.main_menu)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToPosition(4));
+//        onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed()));
+//        Thread.sleep(4000);
+//        onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));
+//        onView(withId(R.id.commentorNameTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.commentorProfileImageView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.commentMultiAutoCompleteTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.dateTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.likeTextView)).check(matches(isDisplayed()));
+//        onView(withId(R.id.likeCommentCounterTextView)).check(matches(isDisplayed()));
+
     }
 
 
