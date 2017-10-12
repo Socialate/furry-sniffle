@@ -328,7 +328,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 }
 
                 if(arr.size() == 0){
-                    Snackbar sb = Snackbar.make(findViewById(R.id.viewEntertainment_activity), "No comments to display", Snackbar.LENGTH_LONG);
+                    Snackbar sb = Snackbar.make(findViewById(R.id.viewEntertainment_activity), "Be the first to comment on this spot", Snackbar.LENGTH_LONG);
                     View v = sb.getView();
                     v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
                     sb.show();

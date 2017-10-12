@@ -191,6 +191,8 @@ public class AddEntertainmentActivity extends AppCompatActivity {
                                         Intent mainIntent = new Intent(AddEntertainmentActivity.this, MainActivity.class);
                                         startActivity(mainIntent);
                                         finish();
+                                        Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_SHORT).show();
+
                                     } else {
                                         mProgressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Failed to create Entertainment spot. Try Again!", Toast.LENGTH_SHORT).show();
