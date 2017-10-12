@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -20,9 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.*;
@@ -35,7 +38,7 @@ import static junit.framework.Assert.assertFalse;
 
 
 @RunWith(AndroidJUnit4.class)
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentsTest2 {
     private FirebaseAuth mAuth;
 //    FirebaseDatabase mFireBaseDatabase;
@@ -89,6 +92,7 @@ public class CommentsTest2 {
         onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
         onView(withId(R.id.ViewAddedAreaDescText)).perform(swipeUp());
         onView(isRoot()).perform(swipeUp());
+        onView(isRoot()).perform(ViewActions.swipeUp());
 
         onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
@@ -119,8 +123,9 @@ public class CommentsTest2 {
     @Test
     public void viewAuthorTest() throws InterruptedException {
         Thread.sleep(15000);
+        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isClickable()));
         onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
-        onView(isRoot()).perform(pressBack());
+        //onView(isRoot()).perform(pressBack());
         Thread.sleep(4000);
     }
 
@@ -128,6 +133,8 @@ public class CommentsTest2 {
     @Test
     public void NavigationTest() throws InterruptedException{
         Thread.sleep(15000);
+        onView(withId(R.id.navigationImageView)).check(matches(isClickable()));
+        //onView(withId(R.id.navigationImageView)).check(matches(isFocusable()));
         onView(withId(R.id.navigationImageView)).perform(click());
         Thread.sleep(2000);
         //onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));

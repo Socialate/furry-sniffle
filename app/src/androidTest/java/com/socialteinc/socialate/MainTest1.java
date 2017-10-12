@@ -26,9 +26,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.Matchers.allOf;
@@ -138,7 +137,25 @@ public class MainTest1 {
 
         //onView(withId(R.menu.main_menu)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToPosition(4));
+        onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.scrollToPosition(1),click());
+        Thread.sleep(9000);
+        onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
+        onView(withId(R.id.ViewAddedAreaDescText)).perform(swipeUp());
+        onView(isRoot()).perform(swipeUp());
+        onView(isRoot()).perform(ViewActions.swipeUp());
+
+        onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentEditText)).check(matches(isFocusable()));
+
+        onView(withId(R.id.commentEditText)).perform(typeText("This is an automated comment!!!"));
+        onView(withId(R.id.commentImageButton)).perform(click());
+        Thread.sleep(5000);
+
+        onView(withId(R.id.commentEditText)).perform(click()).perform(typeText("This is an automated comment!!!"),pressBack());
+        onView(withId(R.id.commentImageButton)).perform(click());
+        Thread.sleep(5000);
+
 //        onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed()));
 //        Thread.sleep(4000);
 //        onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));
