@@ -35,6 +35,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.toPack
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static org.hamcrest.Matchers.allOf;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -94,9 +95,9 @@ public class CommentsTest2 {
         onView(isRoot()).perform(swipeUp());
         onView(isRoot()).perform(ViewActions.swipeUp());
 
-        onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
-        onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
-        Thread.sleep(4000);
+//        onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
+//        onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
+//        Thread.sleep(4000);
 
     }
 
@@ -124,7 +125,7 @@ public class CommentsTest2 {
     public void viewAuthorTest() throws InterruptedException {
         Thread.sleep(15000);
         onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isClickable()));
-        onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
+        //onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
         //onView(isRoot()).perform(pressBack());
         Thread.sleep(4000);
     }
@@ -137,14 +138,25 @@ public class CommentsTest2 {
         //onView(withId(R.id.navigationImageView)).check(matches(isFocusable()));
         onView(withId(R.id.navigationImageView)).perform(click());
         Thread.sleep(2000);
-        //onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(2));
-//        onView(withId(R.id.commentorNameTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.commentorProfileImageView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.commentMultiAutoCompleteTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.dateTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.likeTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.likeCommentCounterTextView)).check(matches(isDisplayed()));
-//        Thread.sleep(4000);
+
+    }
+
+    @Test
+    public void testComments() throws InterruptedException{
+        Thread.sleep(15000);
+        onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
+        onView(withId(R.id.ViewAddedAreaDescText)).perform(swipeUp());
+        onView(isRoot()).perform(swipeUp());
+        onView(isRoot()).perform(ViewActions.swipeUp());
+
+        onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed())); //
+        onView(allOf(withId(R.id.comment_recyclerView),
+                withParent(withId(R.id.cardView2)),
+                withParent(withId(android.R.id.content)), isDisplayed()));
+
+        onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1),click());
+        onView(withId(R.id.comment_recyclerView)).perform(swipeUp()).perform(swipeUp());
+        Thread.sleep(4000);
     }
 
 //    @Test

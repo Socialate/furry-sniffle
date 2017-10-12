@@ -7,7 +7,7 @@
                                     android:layout_height="wrap_content"
                                     app:cardUseCompatPadding="true" android:elevation="5dp"
                                     tools:layout_editor_absoluteY="72dp"
-                                    tools:layout_editor_absoluteX="8dp">
+                                    tools:layout_editor_absoluteX="8dp" android:id="@+id/cardView2">
 
     <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                   android:orientation="horizontal"
