@@ -23,6 +23,8 @@ import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import java.text.DateFormat;
@@ -228,13 +230,23 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
 
             imageUri = data.getData();
-            bitmap = getThumbnailBitmap(imageUri.getPath(),1000);
             mEntertainmentImageView.setImageURI(imageUri);
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(2,2)
+                    .start(this);
             //mEntertainmentImageView.setImageBitmap(bitmap);
-        }else {
-            Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
-            mProgressDialog.dismiss();
+        }
+        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
 
+                imageUri = result.getUri();
+                mEntertainmentImageView.setImageURI(imageUri);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(AddEntertainmentActivity.this, "Failed to get profile picture, Try Again.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

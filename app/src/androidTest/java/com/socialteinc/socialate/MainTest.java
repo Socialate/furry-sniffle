@@ -19,7 +19,6 @@ public class MainTest {
     @Rule
     public ActivityTestRule<MainActivity> main = new ActivityTestRule<>(MainActivity.class);
 
-
     public void testAddEntertainment() throws InterruptedException {
 //        login();
 //        Thread.sleep(5000);
@@ -40,7 +39,7 @@ public class MainTest {
         onView(withId(R.id.SinginButton)).perform(click());
         Thread.sleep(1000);
     }
-    @Test
+   // @Test
     public void search() throws InterruptedException {
        // login();
         //openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
