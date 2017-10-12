@@ -121,25 +121,25 @@ public class CommentsTest2 {
         Thread.sleep(4000);
     }
 
-    @Test
-    public void viewAuthorTest() throws InterruptedException {
-        Thread.sleep(15000);
-        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isClickable()));
-        //onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
-        //onView(isRoot()).perform(pressBack());
-        Thread.sleep(4000);
-    }
-
-
-    @Test
-    public void NavigationTest() throws InterruptedException{
-        Thread.sleep(15000);
-        onView(withId(R.id.navigationImageView)).check(matches(isClickable()));
-        //onView(withId(R.id.navigationImageView)).check(matches(isFocusable()));
-        onView(withId(R.id.navigationImageView)).perform(click());
-        Thread.sleep(2000);
-
-    }
+//    @Test
+//    public void viewAuthorTest() throws InterruptedException {
+//        Thread.sleep(15000);
+//        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isClickable()));
+//        //onView(withId(R.id.ViewAddedAreaOwnerText)).perform(click());
+//        //onView(isRoot()).perform(pressBack());
+//        Thread.sleep(4000);
+//    }
+//
+//
+//    @Test
+//    public void NavigationTest() throws InterruptedException{
+//        Thread.sleep(15000);
+//        onView(withId(R.id.navigationImageView)).check(matches(isClickable()));
+//        //onView(withId(R.id.navigationImageView)).check(matches(isFocusable()));
+//        onView(withId(R.id.navigationImageView)).perform(click());
+//        Thread.sleep(2000);
+//
+//    }
 
     @Test
     public void testComments() throws InterruptedException{
@@ -154,7 +154,7 @@ public class CommentsTest2 {
                 withParent(withId(R.id.cardView2)),
                 withParent(withId(android.R.id.content)), isDisplayed()));
 
-        onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1),click());
+        onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1));
         onView(withId(R.id.comment_recyclerView)).perform(swipeUp()).perform(swipeUp());
         Thread.sleep(4000);
     }

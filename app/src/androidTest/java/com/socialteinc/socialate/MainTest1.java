@@ -129,7 +129,6 @@ public class MainTest1 {
     public void ViewCommentsTest() throws InterruptedException{
         Thread.sleep(15000);
 
-        onView(withId(R.id.action_add_entertainment)).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.entertainmentSpotRecyclerView))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.entertainmentSpotRecyclerView),
                 withParent(withId(R.id.cardView1)),
@@ -154,7 +153,13 @@ public class MainTest1 {
         onView(withId(R.id.commentEditText)).perform(click()).perform(typeText("This is an automated comment!!!"),pressBack());
         onView(withId(R.id.commentImageButton)).perform(click());
         Thread.sleep(5000);
-        
+
+    }
+
+    @Test
+    public void testAddE() throws InterruptedException{
+        Thread.sleep(15000);
+        onView(withId(R.id.action_add_entertainment)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -172,7 +177,7 @@ public class MainTest1 {
                 withParent(withId(R.id.cardView2)),
                 withParent(withId(android.R.id.content)), isDisplayed()));
 
-        onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1), click());
+        onView(withId(R.id.comment_recyclerView)).perform(RecyclerViewActions.scrollToPosition(1));
         onView(withId(R.id.comment_recyclerView)).perform(swipeUp()).perform(swipeUp());
         Thread.sleep(4000);
     }
