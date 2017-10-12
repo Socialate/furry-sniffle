@@ -20,17 +20,17 @@ public class MainTest {
     public ActivityTestRule<MainActivity> main = new ActivityTestRule<>(MainActivity.class);
 
 
-    public void testAddEntertainment() throws InterruptedException {
-//        login();
-//        Thread.sleep(5000);
-//        init();
-//        onView(withId(R.id.action_add_entertainment)).perform(click());
-//        intended(hasComponent(AddEntertainmentActivity.class.getName()));
-//        Intents.release();
-//        onView(withId(R.id.entertainmentTitleEditText)).perform(closeSoftKeyboard());
-//        onView(isRoot()).perform(ViewActions.pressBack());
-//        logout();
-    }
+//    public void testAddEntertainment() throws InterruptedException {
+////        login();
+////        Thread.sleep(5000);
+////        init();
+////        onView(withId(R.id.action_add_entertainment)).perform(click());
+////        intended(hasComponent(AddEntertainmentActivity.class.getName()));
+////        Intents.release();
+////        onView(withId(R.id.entertainmentTitleEditText)).perform(closeSoftKeyboard());
+////        onView(isRoot()).perform(ViewActions.pressBack());
+////        logout();
+//    }
 
 
     public void login() throws InterruptedException {
@@ -40,17 +40,17 @@ public class MainTest {
         onView(withId(R.id.SinginButton)).perform(click());
         Thread.sleep(1000);
     }
-    @Test
-    public void search() throws InterruptedException {
-       // login();
-        //openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-        onView(withContentDescription("Search")).perform(click());
-        onView(withHint("Search for a spot")).perform(typeText("Bikini"));
-        onView(withHint("Search for a spot"))
-                .perform(pressImeActionButton());
-        //onView(withText("Search for a spot")).perform(ViewActions.typeText("Bikini"));
-
-    }
+//    @Test
+//    public void search() throws InterruptedException {
+//       // login();
+//        //openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+//        onView(withContentDescription("Search")).perform(click());
+//        onView(withHint("Search for a spot")).perform(typeText("Bikini"));
+//        onView(withHint("Search for a spot"))
+//                .perform(pressImeActionButton());
+//        //onView(withText("Search for a spot")).perform(ViewActions.typeText("Bikini"));
+//
+//    }
     //@Test
     public void Settings(){
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
