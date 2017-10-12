@@ -32,7 +32,7 @@ public class MainTest {
 ////        logout();
 //    }
 
-
+    @Test
     public void login() throws InterruptedException {
         main.getActivity().onLogout();
         onView(withId(R.id.email_field)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
@@ -51,14 +51,18 @@ public class MainTest {
 //        //onView(withText("Search for a spot")).perform(ViewActions.typeText("Bikini"));
 //
 //    }
-    //@Test
-    public void Settings(){
+
+    @Test
+    public void Settings() throws InterruptedException{
+        login();
+        Thread.sleep(9000);
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("Settings")).perform(click());
         onView(withId(R.id.seekbar)).perform(ViewActions.swipeLeft());
 
     }
 
+    @Test
     public void logout(){
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         onView(withText("Logout")).perform(click());
