@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_add_entertainment"
-        android:icon="@mipmap/ic_add_white_24dp"
-        android:title="@string/add_entertainment_spot"
-        app:showAsAction="ifRoom"/>
 
     <item
             android:id="@+id/action_view_edit_profile"
@@ -14,7 +9,20 @@
             tools:ignore="HardcodedText"/>
 
     <item
+            android:id="@+id/action_settings"
+            android:title="Settings" android:visible="true"/>
+
+    <item
         android:id="@+id/action_logout"
         android:title="@string/logout"
         app:showAsAction="never"/>
+    <item
+            android:id="@+id/search_btn"
+            android:icon="@drawable/ic_search_white_24dp"
+            android:title="@string/action_search"
+            android:contentDescription="@string/search_desc"
+            app:actionViewClass="android.support.v7.widget.SearchView"
+            app:showAsAction="ifRoom|collapseActionView"
+
+    />
 </menu>

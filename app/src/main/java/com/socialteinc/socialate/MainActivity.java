@@ -1,17 +1,24 @@
 package com.socialteinc.socialate;
 
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private Boolean mProcessLike = false;
+
+    SharedPreferences msharedPref;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -89,16 +98,20 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 if(user == null){
-
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                     finish();
+
                 }
             }
         };
 
         checkProfileExist();
+        /**Checks if initial settings value is present**/
+        msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int syncConnPref = msharedPref.getInt("bar_val", 50);
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -234,17 +247,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search_btn).getActionView();
+
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.requestFocus(1);
+        //searchView.setSubmitButtonEnabled(true);
+
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if(id == R.id.action_add_entertainment){
-            onAddEntertainment();
-            return true;
-        }
 
         if(id == R.id.action_view_edit_profile){
             onEditProfile();
@@ -254,14 +275,46 @@ public class MainActivity extends AppCompatActivity {
             onLogout();
             return true;
         }
+        if(id == R.id.action_settings){
+            launchFrag();
+            return true;
+        }
+        if(id == android.R.id.home){
+            getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("settings pref")).commit();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+    private void launchFrag() {
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Settings");
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.GONE);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new preferencesFrag(),"settings pref")
+                .commit();
+    }
+    @Override
+    public void onBackPressed() {
+        Fragment p = getFragmentManager().findFragmentByTag("settings pref");
+        if ((p).isVisible()) {
+            getFragmentManager().beginTransaction().remove(p).commit();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     /**
      * This function launches add entertainment activity to create a new spot
      */
-    private void onAddEntertainment(){
+    public void onAddEntertainment(View v){
         Intent addEntertainmentIntent = new Intent(this, AddEntertainmentActivity.class);
         startActivity(addEntertainmentIntent);
     }
@@ -358,16 +411,16 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(event_image.getContext())
                     .load(image)
                     .into(event_image, new Callback() {
-                @Override
-                public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
-                }
+                        @Override
+                        public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                        }
 
-                @Override
-                public void onError() {
+                        @Override
+                        public void onError() {
 
-                }
-            });
+                        }
+                    });
         }
     }
 
