@@ -1,130 +1,127 @@
-//package com.socialteinc.socialate;
+package com.socialteinc.socialate;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 //
-//import android.content.Context;
-//import android.content.Intent;
-//import android.net.Uri;
-//import android.os.Looper;
-//import android.support.annotation.NonNull;
-//import android.support.test.InstrumentationRegistry;
-//import android.support.test.espresso.Espresso;
-//import android.support.test.espresso.ViewAction;
-//import android.support.test.espresso.ViewInteraction;
-//import android.support.test.espresso.action.ViewActions;
-//import android.support.test.rule.ActivityTestRule;
-//import android.support.test.runner.AndroidJUnit4;
-//import android.util.Log;
-//import android.widget.ArrayAdapter;
-//import com.google.android.gms.tasks.OnCompleteListener;
-//import com.google.android.gms.tasks.Task;
-//import com.google.firebase.FirebaseApp;
-//import com.google.firebase.auth.AuthResult;
-//import com.google.firebase.auth.FirebaseAuth;
-//import com.google.firebase.auth.FirebaseUser;
-//import com.google.firebase.database.*;
-//import com.google.firebase.storage.FirebaseStorage;
-//import com.squareup.picasso.Picasso;
-//import org.junit.*;
-//import org.junit.runner.RunWith;
-//import org.junit.runners.MethodSorters;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.google.firebase.database.DatabaseReference.goOffline;
+import static com.google.firebase.database.DatabaseReference.goOnline;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 //
-//import static android.support.test.espresso.Espresso.onView;
-//import static android.support.test.espresso.action.ViewActions.*;
-//import static android.support.test.espresso.assertion.ViewAssertions.matches;
-//import static android.support.test.espresso.matcher.ViewMatchers.*;
-//import static com.facebook.FacebookSdk.getApplicationContext;
-//import static com.google.firebase.database.DatabaseReference.goOffline;
-//import static com.google.firebase.database.DatabaseReference.goOnline;
-//import static junit.framework.Assert.assertEquals;
-//import static junit.framework.Assert.assertTrue;
-//
-//@RunWith(AndroidJUnit4.class)
-//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-//public class ViewEditProfileActivityTest {
-//    @Rule
-//    public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<>(ViewEditProfileActivity.class);
-//
-//    private FirebaseAuth mAuth;
-//    private FirebaseUser mFirebaseUser;
-//    private FirebaseDatabase mFireBaseDatabase;
-//    private DatabaseReference mUserDatabaseReference;
-//    private DatabaseReference mProfileDatabaseReference;
-//    //private String mUsersKey;
+@RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class ViewEditProfileActivityTest {
+    @Rule
+    public ActivityTestRule<ViewEditProfileActivity> rule = new ActivityTestRule<>(ViewEditProfileActivity.class);
+    private FirebaseAuth mAuth;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseDatabase mFireBaseDatabase;
+    private DatabaseReference mUserDatabaseReference;
+    private DatabaseReference mProfileDatabaseReference;
+    private String mUsersKey;
 //
 //
-//    @Before
-//    public void login(){
-//        FirebaseApp.initializeApp(rule.getActivity());
-//        mAuth = FirebaseAuth.getInstance();
-//        mFireBaseDatabase = FirebaseDatabase.getInstance();
+    @Before
+    public void login(){
+        FirebaseApp.initializeApp(rule.getActivity());
+        mAuth = FirebaseAuth.getInstance();
+        mFireBaseDatabase = FirebaseDatabase.getInstance();
+
+        mAuth.signInWithEmailAndPassword("musa@gmail.com", "password")
+                .addOnCompleteListener(rule.getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("login activity", "signInWithEmail:failure", task.getException());
 //
-//        mAuth.signInWithEmailAndPassword("musa@gmail.com", "password")
-//                .addOnCompleteListener(rule.getActivity(), new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            // Sign in success, update UI with the signed-in user's information
+                        }
+                    }
+                });
 //
-//                        } else {
-//                            // If sign in fails, display a message to the user.
-//                            Log.w("login activity", "signInWithEmail:failure", task.getException());
+    }
 //
-//                        }
-//                    }
-//                });
+    @Test
+    public void isDisplayedTest1() throws InterruptedException{
+        Thread.sleep(15000);
+        onView(withId(R.id.ProfileToolbar1)).check(matches(isDisplayed()));
+        onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
+        onView(withId(R.id.fullNameEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.displayNameEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.textView3)).check(matches(isDisplayed()));
+        onView(withId(R.id.emailEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.phoneEditText)).check(matches(isDisplayed()));
 //
-//    }
+        onView(withId(R.id.homeAddressEditText)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.spinnerGender)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.imageView)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
+        onView(withId(R.id.submitChangesButton)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
 //
-//    @Test
-//    public void isDisplayedTest1() throws InterruptedException{
-//        Thread.sleep(15000);
-//        onView(withId(R.id.ProfileToolbar1)).check(matches(isDisplayed()));
-//        onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.fullNameEditText)).check(matches(isDisplayed()));
-//        onView(withId(R.id.displayNameEditText)).check(matches(isDisplayed()));
-//        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
-//        onView(withId(R.id.textView3)).check(matches(isDisplayed()));
-//        onView(withId(R.id.emailEditText)).check(matches(isDisplayed()));
-//        onView(withId(R.id.phoneEditText)).check(matches(isDisplayed()));
+        Thread.sleep(5000);
 //
-//        onView(withId(R.id.homeAddressEditText)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
-//        onView(withId(R.id.spinnerGender)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
-//        onView(withId(R.id.imageView)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
-//        onView(withId(R.id.submitChangesButton)).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
+    }
 //
-//        Thread.sleep(5000);
-//
-//    }
-//
-////    @Test
-////    public void editProfileTest2() throws InterruptedException{
-////        login();
-////        Looper.prepare();
-////        ViewEditProfileActivity obj = new ViewEditProfileActivity();
-////        //mFirebaseUser = mAuth.getCurrentUser();
-////       // mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-////       // mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
-////        obj.mUsersKey = mAuth.getCurrentUser().getUid();
+    @Test
+   public void editProfileTest2() throws InterruptedException{
+        login();
+        Looper.prepare();
+        ViewEditProfileActivity obj = new ViewEditProfileActivity();
+        //mFirebaseUser = mAuth.getCurrentUser();
+       // mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
+       // mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+        obj.mUsersKey = mAuth.getCurrentUser().getUid();
 ////
-////        Thread.sleep(15000);
-////        //onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
-////        onView(withId(R.id.fullNameEditText)).perform(clearText())
-////                .perform(typeText("Christiano Ronaldo"), closeSoftKeyboard());
+        Thread.sleep(15000);
+        onView(withId(R.id.addImageTextView)).check(matches(isDisplayed()));
+        onView(withId(R.id.fullNameEditText)).perform(clearText())
+                .perform(typeText("Christiano Ronaldo"), closeSoftKeyboard());
+        onView(withId(R.id.displayNameEditText)).perform(clearText())
+                .perform(typeText("CR7"), closeSoftKeyboard());
+///
+        onView(withId(R.id.describeEditText)).perform(clearText())
+                .perform(ViewActions.scrollTo()).perform(typeText("I work hard"), closeSoftKeyboard());
 ////
-////        onView(withId(R.id.displayNameEditText)).perform(clearText())
-////                .perform(typeText("CR7"), closeSoftKeyboard());
+        onView(withId(R.id.phoneEditText)).perform(clearText())
+                .perform(ViewActions.scrollTo()).perform(typeText("0793472862"), closeSoftKeyboard());
 ////
-////        onView(withId(R.id.describeEditText)).perform(clearText())
-////                .perform(ViewActions.scrollTo()).perform(typeText("I work hard"), closeSoftKeyboard());
+        onView(withId(R.id.homeAddressEditText)).perform(clearText())
+                .perform(ViewActions.scrollTo()).perform(typeText("Madrid, Spain"), closeSoftKeyboard());
+        onView(withId(R.id.spinnerGender)).perform(ViewActions.scrollTo()).perform(click()).perform(click());
 ////
-////        onView(withId(R.id.phoneEditText)).perform(clearText())
-////                .perform(ViewActions.scrollTo()).perform(typeText("0793472862"), closeSoftKeyboard());
-////
-////        onView(withId(R.id.homeAddressEditText)).perform(clearText())
-////                .perform(ViewActions.scrollTo()).perform(typeText("Madrid, Spain"), closeSoftKeyboard());
-////
-////        //onView(withId(R.id.spinnerGender)).perform(ViewActions.scrollTo()).perform(click()).perform(click());
-////
-////        onView(withId(R.id.submitChangesButton)).perform(ViewActions.scrollTo()).perform(click());
+        onView(withId(R.id.submitChangesButton)).perform(ViewActions.scrollTo()).perform(click());
 ////
 ////
 ////
@@ -250,18 +247,18 @@
 ////        getMock();
 ////        /*final String val = onView(withId(R.id.DisplayNameTextView)).check(matches(isDisplayed())).toString();
 ////        final String val2 = onView(withId(R.id.FullNameTextView)).check(matches(isDisplayed())).toString();
-////        final String val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed())).toString();
-////        //final String val4 = onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed())).toString();
-////        */
-////        //String user_email = mAuth.getCurrentUser().getEmail();
-////        //assertEquals(val, user_email);
+           /*final String val3 = onView(withId(R.id.emailTextView)).check(matches(isDisplayed())).toString();
+            final String val4 = onView(withId(R.id.ProfileImageView)).check(matches(isDisplayed())).toString();
 ////
-////        //assertEquals(true,val);
-////        // assertEquals(user_name,val2);
-////        //assertEquals(user_email,val3);
-////        //assertEquals(true ,user_image);
+          String user_email = mAuth.getCurrentUser().getEmail();
+          assertEquals(val, user_email);
 ////
-////    }
+          assertEquals(true,val);
+          assertEquals(user_name,val2);
+          assertEquals(user_email,val3);
+          assertEquals(true ,user_image);*/
+////
+    }
 //
 //
-//}
+}
