@@ -12,9 +12,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -39,14 +37,16 @@ public class AddEntertainmentTest {
 
     @Test
     public void test1() throws InterruptedException{
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
         onView(withId(R.id.entertainmentTitleEditText)).check(matches(isClickable()));
-        onView(withId(R.id.entertainmentTitleEditText)).perform(typeText(nameOfPlace), pressBack());
+        onView(withId(R.id.entertainmentTitleEditText)).perform(scrollTo(), typeText(nameOfPlace));
+        onView(withId(R.id.entertainmentTitleEditText)).check(matches(withText(nameOfPlace)));
+
     }
 
     @Test
     public void test2() throws InterruptedException{
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
         onView(withId(R.id.chooseImageButton)).check(matches(isClickable()));
        // onView(withId(R.id.chooseImageButton)).perform(click());
     }
@@ -59,34 +59,34 @@ public class AddEntertainmentTest {
 
     @Test
     public void test4() throws InterruptedException{
-        Thread.sleep(3000);
-        onView(withId(R.id.scrollView)).perform(swipeUp());
+        //Thread.sleep(3000);
+        //onView(withId(R.id.scrollView)).perform(swipeUp());
         onView(withId(R.id.NameOfOwnerEditText)).check(matches(isClickable()));
-        onView(withId(R.id.NameOfOwnerEditText)).perform(typeText(nameOfOwner), pressBack());
+        onView(withId(R.id.NameOfOwnerEditText)).perform(scrollTo(), typeText(nameOfOwner));
+        onView(withId(R.id.NameOfOwnerEditText)).check(matches(withText(nameOfOwner)));
     }
 
     @Test
     public void test5() throws InterruptedException{
-        Thread.sleep(3000);
-        onView(withId(R.id.scrollView)).perform(swipeUp());
+        //Thread.sleep(3000);
         onView(withId(R.id.entertainmentAddressEditText)).check(matches(isClickable()));
-        onView(withId(R.id.entertainmentAddressEditText)).perform(typeText(physicalAddress), pressBack());
+        onView(withId(R.id.entertainmentAddressEditText)).perform(scrollTo(), typeText(physicalAddress));
+        onView(withId(R.id.entertainmentAddressEditText)).check(matches(withText(physicalAddress)));
     }
 
     @Test
     public void test6() throws InterruptedException{
-        Thread.sleep(3000);
-        onView(withId(R.id.scrollView)).perform(swipeUp());
+        //Thread.sleep(3000);
         onView(withId(R.id.entertainmentDescrptionEditText)).check(matches(isClickable()));
-        onView(withId(R.id.entertainmentDescrptionEditText)).perform(typeText(description), pressBack());
+        onView(withId(R.id.entertainmentDescrptionEditText)).perform(scrollTo(), typeText(description));
+        onView(withId(R.id.entertainmentDescrptionEditText)).check(matches(withText(description)));
     }
 
     @Test
     public void test7() throws InterruptedException{
-        Thread.sleep(3000);
-        onView(withId(R.id.scrollView)).perform(swipeUp());
+        //Thread.sleep(3000);
         onView(withId(R.id.addEntertainmentAreaButton)).check(matches(isClickable()));
-        onView(withId(R.id.addEntertainmentAreaButton)).perform(click());
+        onView(withId(R.id.addEntertainmentAreaButton)).perform(scrollTo(), click());
     }
 
 
