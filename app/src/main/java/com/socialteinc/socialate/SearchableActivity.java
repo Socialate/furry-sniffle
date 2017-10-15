@@ -107,6 +107,7 @@ public class SearchableActivity extends AppCompatActivity {
                     arr.add(postSnapshot);
                 }
                 if(arr.size() == 0){
+
                     Snackbar sb = Snackbar.make(findViewById(R.id.search_acivity), "No results found", Snackbar.LENGTH_LONG);
                     View v = sb.getView();
                     v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));

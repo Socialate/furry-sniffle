@@ -494,13 +494,13 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         void setPhotoUrl(String image, ViewHolder vh){
             ImageView event_image = vh.cardview.findViewById(R.id.commentorProfileImageView);
-            //final ProgressBar progressBar = vh.cardview.findViewById(R.id.imageProgressBar);
+            final ProgressBar progressBar = vh.cardview.findViewById(R.id.progressBar2);
             Picasso.with(event_image.getContext())
                     .load(image)
                     .into(event_image, new Callback() {
                         @Override
                         public void onSuccess() {
-                            //progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.GONE);
                         }
 
                         @Override

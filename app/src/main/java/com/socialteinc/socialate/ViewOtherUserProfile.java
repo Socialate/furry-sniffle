@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class ViewOtherUserProfile extends AppCompatActivity{
@@ -80,7 +82,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // progress bar
         mProgressDialog = new ProgressDialog(this);
 
-        if(check == false){
+        if(check == true){
             // for testing purposes
             if(commentorUID == null){
                 commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";
@@ -101,7 +103,17 @@ public class ViewOtherUserProfile extends AppCompatActivity{
 
                     Picasso.with(getApplicationContext())
                             .load(user_image)
-                            .into(getProfilePicture);
+                            .into(getProfilePicture, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    (findViewById(R.id.ViewProfileProgressBar3)).setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onError() {
+
+                                }
+                            });
                 }
 
                 @Override
@@ -131,7 +143,18 @@ public class ViewOtherUserProfile extends AppCompatActivity{
 
                     Picasso.with(getApplicationContext())
                             .load(user_image)
-                            .into(getProfilePicture);
+                            .into(getProfilePicture,
+                                    new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            (findViewById(R.id.ViewProfileProgressBar3)).setVisibility(View.GONE);
+                                        }
+
+                                        @Override
+                                        public void onError() {
+
+                                        }
+                                    });
                 }
 
                 @Override

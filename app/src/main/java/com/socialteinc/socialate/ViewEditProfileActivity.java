@@ -19,6 +19,7 @@ import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -125,7 +126,16 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
                 Picasso.with(getApplicationContext())
                         .load(user_image)
-                        .into(getProfilePicture);
+                        .into(getProfilePicture, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                (findViewById(R.id.ViewProfileProgress4)).setVisibility(View.GONE);
+                            }
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
 
             }
             @Override
