@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -45,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     private LoginButton mFacebookLoginButton;
     private CallbackManager mCallbackManager;
     private GoogleApiClient mGoogleApiClient;
+    private ProgressDialog mProgressDialog;
 
     private static final int RC_SIGN_IN = 1;
 
@@ -69,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
         textView.setText(R.string.continue_with_google);
         textView.setPadding(0,0,10,0);
         textView.setTextSize(18);
-
+        mProgressDialog = new ProgressDialog(this);
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -134,6 +136,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
 
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                mProgressDialog.setTitle("Logging In");
+                mProgressDialog.setMessage("Setting up account...");
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.show();
                 FirebaseAuthWithFacebook(loginResult.getAccessToken());
 
             }
@@ -174,6 +180,10 @@ public class RegisterActivity extends AppCompatActivity {
                 // Google Sign In was successful.
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+                mProgressDialog.setTitle("Logging In");
+                mProgressDialog.setMessage("Setting up account...");
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.show();
 
             } else {
                 // Google Sign In failed.
@@ -204,7 +214,9 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            mProgressDialog.dismiss();
                             startActivity(mainIntent);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -228,7 +240,9 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            mProgressDialog.dismiss();
                             startActivity(mainIntent);
+                            finish();
                         } else {
                             // Sign in failed
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

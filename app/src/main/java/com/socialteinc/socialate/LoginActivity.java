@@ -109,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
-
             }
         });
 
@@ -122,7 +121,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-
+                mProgressDialog.setTitle("Logging In");
+                mProgressDialog.setMessage("Setting up account...");
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.show();
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 FirebaseAuthWithFacebook(loginResult.getAccessToken());
 
@@ -234,7 +236,10 @@ public class LoginActivity extends AppCompatActivity {
                 // Google Sign In was successful.
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-
+                mProgressDialog.setTitle("Logging In");
+                mProgressDialog.setMessage("Setting up account...");
+                mProgressDialog.setCanceledOnTouchOutside(false);
+                mProgressDialog.show();
             } else {
                 // Google Sign In failed.
                 Snackbar.make(mConstraintLayout, "Google Connection Failed.", Snackbar.LENGTH_LONG ).show();
@@ -242,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
 
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+           mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -262,6 +267,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            mProgressDialog.dismiss();
                             startActivity(mainIntent);
                             finish();
 
@@ -288,6 +294,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            mProgressDialog.dismiss();
                             startActivity(mainIntent);
                             finish();
                         } else {

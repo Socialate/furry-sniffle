@@ -344,9 +344,10 @@ public class MainActivity extends AppCompatActivity {
     /**
      * this function logs users out of firebase and the app.
      */
-    public void onLogout() {
+    public boolean onLogout() {
         mFirebaseAuth.signOut();
         LoginManager.getInstance().logOut();
+        return true;
         }
 
     public static class EntertainmentSpotAdapterViewHolder extends RecyclerView.ViewHolder{
