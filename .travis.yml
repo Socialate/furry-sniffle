@@ -10,7 +10,7 @@ android:
     - tools
 
     # To run emulator during your tests
-    - sys-img-armeabi-v7a-android-22
+    - sys-img-armeabi-v7a-android-23
   sudo: enabled
 
 before_install:
