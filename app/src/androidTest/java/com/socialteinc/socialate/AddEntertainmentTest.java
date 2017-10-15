@@ -88,7 +88,7 @@ public class AddEntertainmentTest {
         onView(withId(R.id.addEntertainmentAreaButton)).check(matches(isClickable()));
         onView(withId(R.id.addEntertainmentAreaButton)).perform(scrollTo(), click());
     }
-
+//
 
 
 
