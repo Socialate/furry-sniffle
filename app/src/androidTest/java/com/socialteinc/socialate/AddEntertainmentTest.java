@@ -70,7 +70,7 @@ public class AddEntertainmentTest {
         Thread.sleep(3000);
         onView(withId(R.id.scrollView)).perform(swipeUp());
     }*/
-
+//
     @Test
     public void test4() throws InterruptedException{
         //Thread.sleep(3000);
