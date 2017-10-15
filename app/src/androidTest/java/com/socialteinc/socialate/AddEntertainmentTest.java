@@ -4,6 +4,7 @@ package com.socialteinc.socialate;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.WindowManager;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,6 +34,19 @@ public class AddEntertainmentTest {
         physicalAddress = "Men's Hall of Residence";
         description = "Kuyafiwa la baba!!!";
 
+    }
+
+    @Before
+    public void unlockScreen() {
+        final AddEntertainmentActivity activity = rule.getActivity();
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        activity.runOnUiThread(wakeUpDevice);
     }
 
     @Test
