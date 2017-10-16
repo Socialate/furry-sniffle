@@ -91,7 +91,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mEntertainmentName = intent.getStringExtra("entertainmentName");
         mEntertainmentKey = intent.getStringExtra("entertainmentKey");
-        Log.d(TAG, "onCreate: "+ mEntertainmentKey);
+        //Log.d(TAG, "onCreate: "+ mEntertainmentKey);
 
         // Initialize references to views
         mEntertainmentImage = findViewById(R.id.ViewAddedAreaImageView);

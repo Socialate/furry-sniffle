@@ -101,7 +101,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
             @Override
             public void onComplete(@NonNull Task<ProviderQueryResult> task) {
-                Log.d(TAG, "checking email exists.");
+                //Log.d(TAG, "checking email exists.");
                 if(task.getResult().getProviders() != null){
 
                             resetPassword(task.getResult().getProviders(), email);
@@ -133,7 +133,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "Email sent.");
+                        //Log.d(TAG, "Email sent.");
                         mProgressDialog.dismiss();
                         Snackbar.make(mConstraintLayout, "Check your Emails for Reset Password Email.", Snackbar.LENGTH_INDEFINITE)
                                 .setAction("LOGIN", new View.OnClickListener() {
@@ -163,7 +163,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         Intent activity = new Intent(this,LoginActivity.class);
         startActivity(activity);
         finish();
-        Log.d( TAG,"reset email sent successfully ");
+        //Log.d( TAG,"reset email sent successfully ");
     }
 
     private class MyTextWatcher implements TextWatcher {

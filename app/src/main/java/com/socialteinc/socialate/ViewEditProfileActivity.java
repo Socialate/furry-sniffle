@@ -186,7 +186,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(full_name) && !TextUtils.isEmpty(display_name) && !TextUtils.isEmpty(email)) {
 
-            Log.d("MyAPP", "started Upload");
+            //Log.d("MyAPP", "started Upload");
 
             mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
             mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
@@ -201,7 +201,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.d("MyAPP","Upload is successful");
+                        //Log.d("MyAPP","Upload is successful");
                         Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                         assert downloadUrl != null;
@@ -221,7 +221,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         mProgressDialog.dismiss();
-                        Log.d("MyAPP","Upload failed");
+                        //Log.d("MyAPP","Upload failed");
                         Toast.makeText(ViewEditProfileActivity.this, "Failed to update your profile, please try again.", Toast.LENGTH_LONG).show();
                     }
                 });

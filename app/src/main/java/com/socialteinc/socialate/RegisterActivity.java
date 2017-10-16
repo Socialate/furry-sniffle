@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                //Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 mProgressDialog.setTitle("Logging In");
                 mProgressDialog.setMessage("Setting up account...");
                 mProgressDialog.setCanceledOnTouchOutside(false);
@@ -147,14 +147,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
 
-                Log.d(TAG, "facebook:onCancel");
+                //Log.d(TAG, "facebook:onCancel");
 
             }
 
             @Override
             public void onError(FacebookException error) {
 
-                Log.d(TAG, "facebook:onError", error);
+                //Log.d(TAG, "facebook:onError", error);
             }
         });
     }
@@ -201,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mFirebaseAuth.signInWithCredential(credential)
@@ -211,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            //Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             mProgressDialog.dismiss();
@@ -219,7 +219,7 @@ public class RegisterActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -227,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void FirebaseAuthWithFacebook(AccessToken token) {
-        Log.d(TAG, "FirebaseAuthWithFacebook:" + token);
+        //Log.d(TAG, "FirebaseAuthWithFacebook:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mFirebaseAuth.signInWithCredential(credential)
@@ -237,7 +237,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             // Sign in success.
-                            Log.d(TAG, "signInWithCredential:success");
+                            //Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             mProgressDialog.dismiss();
@@ -245,7 +245,7 @@ public class RegisterActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // Sign in failed
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     }

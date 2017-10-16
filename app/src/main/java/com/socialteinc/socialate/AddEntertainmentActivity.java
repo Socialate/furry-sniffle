@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class AddEntertainmentActivity extends AppCompatActivity {
 
-    private String TAG =AddEntertainmentActivity.class.getSimpleName();
+    //private String TAG =AddEntertainmentActivity.class.getSimpleName();
     private static final String ANONYMOUS = "anonymous";
 
 
@@ -148,7 +148,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         }
 
         if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(address_val) && !TextUtils.isEmpty(description_val) &&  imageUri != null){
-            Log.d("MyAPP","started Upload");
+           // Log.d("MyAPP","started Upload");
 
             StorageReference filepath = mStorageReference.child(imageNameGenerator());
 
@@ -156,7 +156,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d("MyAPP","Upload is successful");
+                    //Log.d("MyAPP","Upload is successful");
 
                     final Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
@@ -212,7 +212,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d("MyAPP","Upload failed");
+                    //Log.d("MyAPP","Upload failed");
                 }
             });
         }

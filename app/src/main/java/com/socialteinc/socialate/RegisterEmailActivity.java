@@ -100,7 +100,7 @@ public class RegisterEmailActivity extends AppCompatActivity {
 
                     if (task.isSuccessful()) {
                         // Sign up success.
-                        Log.d(TAG, "createUserWithEmail:success");
+                        //Log.d(TAG, "createUserWithEmail:success");
                         mProgressDialog.dismiss();
 
                         Intent createProfileIntent = new Intent(RegisterEmailActivity.this, CreateProfileActivity.class);
@@ -111,7 +111,7 @@ public class RegisterEmailActivity extends AppCompatActivity {
                     } else {
                         // Sign up failed.
                         mProgressDialog.hide();
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        //Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Snackbar.make(mConstraintLayout, "Failed to Create Account, Try Again.", Snackbar.LENGTH_LONG ).show();
 
                     }

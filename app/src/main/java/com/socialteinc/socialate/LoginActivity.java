@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 mProgressDialog.setMessage("Setting up account...");
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.show();
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                //Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 FirebaseAuthWithFacebook(loginResult.getAccessToken());
 
             }
@@ -133,14 +133,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
 
-                Log.d(TAG, "facebook:onCancel");
+                //Log.d(TAG, "facebook:onCancel");
 
             }
 
             @Override
             public void onError(FacebookException error) {
 
-                Log.d(TAG, "facebook:onError", error);
+                //Log.d(TAG, "facebook:onError", error);
             }
         });
     }
@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             mProgressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("login activity", "signInWithEmail:success *******");
+                            //Log.d("login activity", "signInWithEmail:success *******");
                             Intent activity = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(activity);
                             finish();
@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             mProgressDialog.dismiss();
                             // If sign in fails, display a message to the user.
-                            Log.w("login activity", "signInWithEmail:failure", task.getException());
+                            //Log.w("login activity", "signInWithEmail:failure", task.getException());
                             Snackbar.make(mConstraintLayout, "Authentication Failed, Invalid Email or Password!", Snackbar.LENGTH_LONG ).show();
 
                         }
@@ -220,7 +220,7 @@ public class LoginActivity extends AppCompatActivity {
     public void signUp(View v){
         Intent activity = new Intent(this,RegisterActivity.class);
         startActivity(activity);
-        Log.d("login activity"," Need an account click successful");
+        //Log.d("login activity"," Need an account click successful");
 
     }
 
@@ -254,7 +254,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -264,7 +264,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            //Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             mProgressDialog.dismiss();
@@ -273,7 +273,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(mConstraintLayout, "Google Connection Failed.", Snackbar.LENGTH_LONG ).show();
                         }
                     }
@@ -281,7 +281,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void FirebaseAuthWithFacebook(AccessToken token) {
-        Log.d(TAG, "FirebaseAuthWithFacebook:" + token);
+        //Log.d(TAG, "FirebaseAuthWithFacebook:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
@@ -291,7 +291,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()) {
                             // Sign in success.
-                            Log.d(TAG, "signInWithCredential:success");
+                            //Log.d(TAG, "signInWithCredential:success");
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             mProgressDialog.dismiss();
@@ -299,7 +299,7 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // Sign in failed
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(mConstraintLayout, "Facebook Connection Failed.", Snackbar.LENGTH_LONG ).show();
                         }
 
@@ -310,7 +310,7 @@ public class LoginActivity extends AppCompatActivity {
     public void resetPassword(View v){
         Intent activity = new Intent(this,ResetPasswordActivity.class);
         startActivity(activity);
-        Log.d("login activity"," reset password click successful");
+        //Log.d("login activity"," reset password click successful");
 
     }
     static boolean isValidEmail(CharSequence target) {

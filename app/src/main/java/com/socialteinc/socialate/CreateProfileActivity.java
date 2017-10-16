@@ -124,7 +124,7 @@ public class CreateProfileActivity extends AppCompatActivity {
             mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.show();
 
-            Log.d("MyAPP","started Upload");
+            //Log.d("MyAPP","started Upload");
 
             StorageReference filepath = mStorageReference.child(user_id);
 
@@ -132,7 +132,7 @@ public class CreateProfileActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    Log.d("MyAPP","Upload is successful");
+                    //Log.d("MyAPP","Upload is successful");
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     mUsersDatabaseReference.child(user_id).child("name").setValue(name);
                     mUsersDatabaseReference.child(user_id).child("displayName").setValue(displayName);
@@ -151,7 +151,7 @@ public class CreateProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     mProgressDialog.dismiss();
-                    Log.d("MyAPP","Upload failed");
+                    //Log.d("MyAPP","Upload failed");
                     Toast.makeText(CreateProfileActivity.this, "Failed to Create Profile, Try Again.", Toast.LENGTH_LONG).show();
 
                 }
