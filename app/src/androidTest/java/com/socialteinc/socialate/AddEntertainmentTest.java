@@ -51,7 +51,7 @@ public class AddEntertainmentTest {
 
     @Test
     public void test1() throws InterruptedException{
-        //Thread.sleep(3000);
+        Thread.sleep(3000);
         onView(withId(R.id.entertainmentTitleEditText)).check(matches(isClickable()));
         onView(withId(R.id.entertainmentTitleEditText)).perform(scrollTo(), typeText(nameOfPlace));
         onView(withId(R.id.entertainmentTitleEditText)).check(matches(withText(nameOfPlace)));
@@ -60,7 +60,7 @@ public class AddEntertainmentTest {
 
     @Test
     public void test2() throws InterruptedException{
-        //Thread.sleep(3000);
+        Thread.sleep(3000);
         onView(withId(R.id.chooseImageButton)).check(matches(isClickable()));
        // onView(withId(R.id.chooseImageButton)).perform(click());
     }
@@ -73,7 +73,7 @@ public class AddEntertainmentTest {
 //
     @Test
     public void test4() throws InterruptedException{
-        //Thread.sleep(3000);
+        Thread.sleep(3000);
         //onView(withId(R.id.scrollView)).perform(swipeUp());
         onView(withId(R.id.NameOfOwnerEditText)).check(matches(isClickable()));
         onView(withId(R.id.NameOfOwnerEditText)).perform(scrollTo(), typeText(nameOfOwner));
@@ -82,7 +82,7 @@ public class AddEntertainmentTest {
 
     @Test
     public void test5() throws InterruptedException{
-        //Thread.sleep(3000);
+        Thread.sleep(3000);
         onView(withId(R.id.entertainmentAddressEditText)).check(matches(isClickable()));
         onView(withId(R.id.entertainmentAddressEditText)).perform(scrollTo(), typeText(physicalAddress));
         onView(withId(R.id.entertainmentAddressEditText)).check(matches(withText(physicalAddress)));
@@ -90,7 +90,7 @@ public class AddEntertainmentTest {
 
     @Test
     public void test6() throws InterruptedException{
-        //Thread.sleep(3000);
+        Thread.sleep(3000);
         onView(withId(R.id.entertainmentDescrptionEditText)).check(matches(isClickable()));
         onView(withId(R.id.entertainmentDescrptionEditText)).perform(scrollTo(), typeText(description));
         onView(withId(R.id.entertainmentDescrptionEditText)).check(matches(withText(description)));
