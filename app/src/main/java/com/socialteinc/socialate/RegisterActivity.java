@@ -37,7 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    //private static final String TAG = RegisterActivity.class.getSimpleName();
 
     // References variables
     private Button mEmailRegistrationButton;

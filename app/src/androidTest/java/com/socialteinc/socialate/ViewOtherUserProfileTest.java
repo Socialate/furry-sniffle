@@ -72,7 +72,8 @@ public class ViewOtherUserProfileTest {
 
     @Test
     public void profileViewTests1() throws InterruptedException{
-        Thread.sleep(15000);
+        rule2.getActivity();
+        Thread.sleep(20000);
 
         onView(withId(R.id.displayNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));

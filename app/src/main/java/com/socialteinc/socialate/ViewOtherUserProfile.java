@@ -83,6 +83,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
             // for testing purposes
             if(commentorUID == null){
                 commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";
+                (findViewById(R.id.ViewProfileProgressBar3)).setVisibility(View.GONE);
             }
             // Display comment uploader profile details
             mProfileDatabaseReference1.child(commentorUID).addValueEventListener(new ValueEventListener() {
@@ -122,6 +123,8 @@ public class ViewOtherUserProfile extends AppCompatActivity{
             //for testing purposes
             if(ownerUID == null){
                 ownerUID = "B7TbLOcLXggRL1TyQxrgrGlwMiO2";
+                (findViewById(R.id.ViewProfileProgressBar3)).setVisibility(View.GONE);
+
             }
 
             // Display entertainment uploader profile details
