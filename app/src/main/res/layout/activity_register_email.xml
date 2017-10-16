@@ -49,10 +49,10 @@
             app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintHorizontal_bias="0.0">
 
         <EditText
-                android:clickable="false"
+                android:clickable="true"
                 android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -69,6 +69,9 @@
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:clickable="true"
                 android:hint="@string/password" android:id="@+id/loginPasswordEditText"
                 android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>

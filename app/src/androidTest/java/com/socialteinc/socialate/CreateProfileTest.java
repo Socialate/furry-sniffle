@@ -48,7 +48,7 @@ public class CreateProfileTest {
         FirebaseApp.initializeApp(rule.getActivity());
         mAuth = FirebaseAuth.getInstance();
 
-        mAuth.signInWithEmailAndPassword("test@gmail.com", "password")
+        mAuth.signInWithEmailAndPassword("testgmail.com", "password")
                 .addOnCompleteListener(rule.getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
