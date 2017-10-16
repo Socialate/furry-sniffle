@@ -1,6 +1,7 @@
 package com.socialteinc.socialate;
 
 import android.os.Looper;
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
@@ -42,7 +43,7 @@ public class ResetPasswordTest{
     @Test
     public void test3() throws InterruptedException{
         Thread.sleep(1000);
-        onView(withId(R.id.resetEmailEditText)).perform(typeText("abcd@gmail.com"));
+        onView(withId(R.id.resetEmailEditText)).perform(typeText("abcd@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.resetPasswordButton)).perform(click());
         Thread.sleep(9000);
         //onView(withId(R.id.resetPasswordConstraintLayout)).check(matches(isDisplayed()));
@@ -51,7 +52,7 @@ public class ResetPasswordTest{
     @Test
     public void test4() throws InterruptedException{
         Thread.sleep(1000);
-        onView(withId(R.id.resetEmailEditText)).perform(typeText("musa950820@gmail.com"));
+        onView(withId(R.id.resetEmailEditText)).perform(typeText("musa@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.resetPasswordButton)).perform(click());
         Thread.sleep(9000);
         //onView(withId(R.id.resetPasswordConstraintLayout)).check(matches(isDisplayed()));
