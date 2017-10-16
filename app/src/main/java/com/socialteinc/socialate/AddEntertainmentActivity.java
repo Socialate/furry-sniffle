@@ -146,7 +146,6 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         }
 
         if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(address_val) && !TextUtils.isEmpty(description_val) &&  imageUri != null){
-
             Log.d("MyAPP","started Upload");
 
             StorageReference filepath = mStorageReference.child(imageNameGenerator());
@@ -155,7 +154,6 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                     Log.d("MyAPP","Upload is successful");
 
                     final Uri downloadUrl = taskSnapshot.getDownloadUrl();

@@ -20,7 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.firebase.geofire.core.GeoHashQuery;
+//import com.firebase.geofire.core.GeoHashQuery;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -102,8 +102,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mLikeButton = findViewById(R.id.likeFloatingActionButton);
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
-        //mCommentTextView = findViewById(R.id.commentMultiAutoCompleteTextView);
-        //mCommentorImage = findViewById(R.id.commentorProfileImageView);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
         //mCommentDateTextView = findViewById(R.id.dateTextView);
 
