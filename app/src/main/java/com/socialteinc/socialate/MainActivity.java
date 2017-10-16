@@ -1,9 +1,9 @@
 package com.socialteinc.socialate;
 
 
+import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,9 +37,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.InetAddress;
 
 public class MainActivity extends AppCompatActivity {
 
