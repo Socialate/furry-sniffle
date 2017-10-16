@@ -24,8 +24,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class ViewEntertainmentTest1 {
 
     private FirebaseAuth mAuth;
-    DatabaseReference mUsersDatabaseReference;
-    FirebaseDatabase mFireBaseDatabase;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
@@ -83,7 +81,7 @@ public class ViewEntertainmentTest1 {
 
     @Test
     public void likeTest() throws InterruptedException {
-        Thread.sleep(9000);
+        Thread.sleep(15000);
         onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(3,click()));
         onView(withId(R.id.likeFloatingActionButton)).perform(click());
         Thread.sleep(4000);
@@ -91,7 +89,7 @@ public class ViewEntertainmentTest1 {
 
     @Test
     public void viewAuthorTest() throws InterruptedException {
-        Thread.sleep(9000);
+        Thread.sleep(15000);
         onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(3,click()));
 
         Thread.sleep(4000);
@@ -99,7 +97,7 @@ public class ViewEntertainmentTest1 {
 
     @Test
     public void NavigationTest() throws InterruptedException{
-        Thread.sleep(9000);
+        Thread.sleep(15000);
         onView(withId(R.id.entertainmentSpotRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
         onView(withId(R.id.navigationImageView)).check(matches(isDisplayed()));
         onView(withId(R.id.navigationImageView)).perform(click());
