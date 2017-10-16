@@ -148,7 +148,6 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         }
 
         if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(address_val) && !TextUtils.isEmpty(description_val) &&  imageUri != null){
-
             Log.d("MyAPP","started Upload");
 
             StorageReference filepath = mStorageReference.child(imageNameGenerator());
@@ -157,7 +156,6 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                     Log.d("MyAPP","Upload is successful");
 
                     final Uri downloadUrl = taskSnapshot.getDownloadUrl();
@@ -193,6 +191,8 @@ public class AddEntertainmentActivity extends AppCompatActivity {
                                         Intent mainIntent = new Intent(AddEntertainmentActivity.this, MainActivity.class);
                                         startActivity(mainIntent);
                                         finish();
+                                        Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_SHORT).show();
+
                                     } else {
                                         mProgressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Failed to create Entertainment spot. Try Again!", Toast.LENGTH_SHORT).show();

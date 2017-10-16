@@ -20,7 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.firebase.geofire.core.GeoHashQuery;
+//import com.firebase.geofire.core.GeoHashQuery;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -102,8 +102,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mLikeButton = findViewById(R.id.likeFloatingActionButton);
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
-        //mCommentTextView = findViewById(R.id.commentMultiAutoCompleteTextView);
-        //mCommentorImage = findViewById(R.id.commentorProfileImageView);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
         //mCommentDateTextView = findViewById(R.id.dateTextView);
 
@@ -152,7 +150,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         // Testing purposes
         if(mEntertainmentKey == null){
-            mEntertainmentKey = "-KuWr5VqOeGcL7325m9H";
+            mEntertainmentKey = "-KuWs0YVBB_nWlC03LrE";
         }
         mEventsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
 
@@ -328,7 +326,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 }
 
                 if(arr.size() == 0){
-                    Snackbar sb = Snackbar.make(findViewById(R.id.viewEntertainment_activity), "No comments to display", Snackbar.LENGTH_LONG);
+                    Snackbar sb = Snackbar.make(findViewById(R.id.viewEntertainment_activity), "Be the first to comment on this spot", Snackbar.LENGTH_LONG);
                     View v = sb.getView();
                     v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
                     sb.show();

@@ -116,7 +116,7 @@
                                android:layout_height="wrap_content"
                                android:contentDescription="@string/entertainment_spot_description"
                                android:src="@mipmap/ic_description"
-                               android:layout_weight="1"/>
+                               android:layout_weight="1" android:id="@+id/descriptImageView"/>
 
                     <TextView
                             android:layout_gravity="center_vertical"
@@ -144,7 +144,7 @@
                                                             app:layout_constraintTop_toTopOf="parent"
                                                             android:layout_marginTop="8dp"
                                                             app:layout_constraintHorizontal_bias="0.0"
-                                                            android:layout_height="300dp">
+                                                            android:layout_height="200dp">
 
                     </android.support.v7.widget.RecyclerView>
 

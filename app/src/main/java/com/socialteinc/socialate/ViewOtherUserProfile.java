@@ -38,12 +38,10 @@ public class ViewOtherUserProfile extends AppCompatActivity{
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFireBaseDatabase;
     private DatabaseReference mProfileDatabaseReference;
     private DatabaseReference mProfileDatabaseReference1;
-    private FirebaseStorage mFirebaseStorage;
-    public boolean checker;
+    private boolean checker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,8 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         Intent intent1 = getIntent();
         ownerUID = intent.getStringExtra("entertainmentUploader");
         commentorUID = intent1.getStringExtra("commentUploader");
-        check = intent1.getBooleanExtra("check", false);
+        checker = intent1.getBooleanExtra("check", false);
+        setChecker(checker);
 
         // Initialize references to views
         mToolbar = findViewById(R.id.ProfileToolbar2);
@@ -63,11 +62,9 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         getDisplayName = findViewById(R.id.displayNameTextView);
         getFullName = findViewById(R.id.fullNameTextView);
         getDescrip = findViewById(R.id.describeEditText);
-        //ownerUID = findViewById(R.id.ownerTextView);
 
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
-        mFirebaseStorage = FirebaseStorage.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
@@ -82,7 +79,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // progress bar
         mProgressDialog = new ProgressDialog(this);
 
-        if(check == true){
+        if(getChecker() == true){
             // for testing purposes
             if(commentorUID == null){
                 commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";
@@ -122,7 +119,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
             });
 
         }else {
-            // for testing purposes
+            //for testing purposes
             if(ownerUID == null){
                 ownerUID = "B7TbLOcLXggRL1TyQxrgrGlwMiO2";
             }
@@ -163,5 +160,13 @@ public class ViewOtherUserProfile extends AppCompatActivity{
             });
         }
 
+    }
+
+    public void setChecker(boolean check){
+        this.check = check;
+    }
+
+    public boolean getChecker(){
+        return check;
     }
 }

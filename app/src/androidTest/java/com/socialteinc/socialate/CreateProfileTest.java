@@ -89,4 +89,6 @@ public class CreateProfileTest {
         //onView(withId(R.id.setupSubmitButton)).perform(click());
         Thread.sleep(8000);
     }
+
+
 }

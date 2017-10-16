@@ -56,7 +56,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST_CODE = 1;
     private String mAuthor;
-    private String mUsersKey;
+    public String mUsersKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+        //mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
 
         mUsersKey = mFirebaseAuth.getCurrentUser().getUid();
