@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -167,7 +166,7 @@ public class RegisterEmailActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public  final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         @Override
         public void onReceive(Context context, Intent intent) {

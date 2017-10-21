@@ -16,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -202,12 +201,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean response1 = intent.getBooleanExtra("response",true);
-            if((response1 == false) && (response1 != response)){
+            if((!response1) && (response1 != response)){
                 Snackbar sb = Snackbar.make(findViewById(R.id.resetPasswordConstraintLayout), "Oops, No data connection?", Snackbar.LENGTH_LONG);
                 View v = sb.getView();
                 v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
