@@ -365,9 +365,15 @@ public class LoginActivity extends AppCompatActivity {
         startService(service);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
+    }
+
     public class connect_receiver extends BroadcastReceiver {
 
-        public  final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         View fb_button = findViewById(R.id.facebookButton);
         View gmail_button = findViewById(R.id.googleButton);

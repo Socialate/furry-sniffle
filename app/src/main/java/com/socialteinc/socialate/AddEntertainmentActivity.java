@@ -233,6 +233,12 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
+    }
+
     private String imageNameGenerator(){
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return mFirebaseUser.getUid() + currentDateTimeString;
@@ -294,7 +300,7 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         @Override
         public void onReceive(Context context, Intent intent) {

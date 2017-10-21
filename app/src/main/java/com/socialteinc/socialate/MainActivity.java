@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     //intentService variables
     private connect_receiver connect_receiver;
-    private IntentFilter filter;
+    private IntentFilter intentFilter;
+
 
     private Boolean mProcessLike = false;
 
@@ -109,13 +110,8 @@ public class MainActivity extends AppCompatActivity {
         //int syncConnPref = msharedPref.getInt("bar_val", 50);
         (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
 
-        filter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        connect_receiver = new connect_receiver();
-        registerReceiver(connect_receiver,filter);
-        Intent service = new Intent(getApplicationContext(), connection_service.class);
-        startService(service);
-
+        //starting intent service
+        startIntentService();
     }
 
     /**
@@ -149,6 +145,17 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    public void startIntentService(){
+        //intentService
+        connect_receiver = new connect_receiver();
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
 
     @Override
     protected void onStart() {
@@ -245,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        unregisterReceiver(connect_receiver);
     }
 
     @Override
@@ -449,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         View fab = findViewById(R.id.floatingActionButton);
         @Override

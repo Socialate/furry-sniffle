@@ -205,7 +205,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
+    }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
@@ -271,7 +275,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public  final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         @Override
         public void onReceive(Context context, Intent intent) {

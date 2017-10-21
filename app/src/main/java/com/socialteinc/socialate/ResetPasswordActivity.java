@@ -191,9 +191,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     public void startIntentService(){
         //intentService
+        connect_receiver = new connect_receiver();
         intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        connect_receiver = new connect_receiver();
         registerReceiver(connect_receiver,intentFilter);
         Intent service = new Intent(getApplicationContext(), connection_service.class);
         startService(service);
@@ -201,7 +201,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -214,5 +214,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
             }
             response = response1;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
     }
 }

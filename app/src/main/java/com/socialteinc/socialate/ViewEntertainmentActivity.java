@@ -217,6 +217,12 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
+    }
+
     private void launchMap() {
         Uri gmmIntentUri = Uri.parse("geo:0,0?q="+ mEntertainmentAddress.getText().toString());
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
@@ -531,9 +537,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     public void startIntentService(){
         //intentService
+        connect_receiver = new connect_receiver();
         intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        connect_receiver = new connect_receiver();
         registerReceiver(connect_receiver,intentFilter);
         Intent service = new Intent(getApplicationContext(), connection_service.class);
         startService(service);
