@@ -115,4 +115,5 @@
     <string name="_25_km">25 KM</string>
     <string name="_50_km">50 KM</string>
     <string name="_100_km">100 KM</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>
