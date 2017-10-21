@@ -314,14 +314,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment p = getFragmentManager().findFragmentByTag("settings pref");
-        if ((p).isVisible()) {
+        if(p == null){
+            super.onBackPressed();
+        }
+        else if ((p).isVisible()) {
             getFragmentManager().beginTransaction().remove(p).commit();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setTitle("Socialate");
             setVisibility(1);
 
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -455,7 +456,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         View fab = findViewById(R.id.floatingActionButton);
         @Override
@@ -468,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
                sb.show();
                fab.setClickable(false);
            }
-           else if((response1) && response1 != response ){
+           else if((response1) && (response1 != response )){
                fab.setClickable(true);
            }
             response = response1;

@@ -277,7 +277,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public  final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         View submit_btn = findViewById(R.id.submitChangesButton);
 

@@ -546,7 +546,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     public class connect_receiver extends BroadcastReceiver {
 
-        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
         View like = findViewById(R.id.likeButton);
         View ownerText = findViewById(R.id.ownerTextView);
@@ -565,7 +565,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 ownerText.setClickable(false);
                 nav.setClickable(false);
             }
-            else if((response1) && response1 != response ){
+            else if((response1) && (response1 != response) ){
                 //submit_btn.setClickable(true);
                 like.setClickable(true);
                 ownerText.setClickable(true);
