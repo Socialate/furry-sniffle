@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent" android:id="@+id/view_edit_profile1">
 
     <include
             layout="@layout/app_bar_layout"
@@ -74,7 +75,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:id="@+id/displayNameEditText" tools:ignore="LabelFor" android:hint="@string/display_name2"/>
+                        android:id="@+id/displayNameEditText" tools:ignore="LabelFor"
+                        android:hint="@string/display_name2"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -89,7 +91,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
-                        android:id="@+id/describeEditText" tools:ignore="LabelFor" android:hint="@string/describe_yourself1"/>
+                        android:id="@+id/describeEditText" tools:ignore="LabelFor"
+                        android:hint="@string/describe_yourself1"/>
             </android.support.design.widget.TextInputLayout>
             <TextView
                     android:text="@string/private_information"

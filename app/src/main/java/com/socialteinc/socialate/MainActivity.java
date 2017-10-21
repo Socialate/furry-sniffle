@@ -3,9 +3,7 @@ package com.socialteinc.socialate;
 
 import android.app.Fragment;
 import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mLikesDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private connect_receiver connect_receiver;
+    private IntentFilter filter;
 
     private Boolean mProcessLike = false;
 
@@ -63,12 +64,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        if(!isConnected()){
-            Snackbar sb = Snackbar.make(findViewById(R.id.layout_main_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
-            View v = sb.getView();
-            v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
-            sb.show();
-        }
         // Initialize references to views
         mToolbar = findViewById(R.id.mainPageToolBar);
         mEntertainmentSpotRecyclerView = findViewById(R.id.entertainmentSpotRecyclerView);
@@ -119,6 +114,14 @@ public class MainActivity extends AppCompatActivity {
         msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         //int syncConnPref = msharedPref.getInt("bar_val", 50);
         (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
+
+        filter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        connect_receiver = new connect_receiver();
+        registerReceiver(connect_receiver,filter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+
     }
 
     /**
@@ -449,11 +452,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    public class connect_receiver extends BroadcastReceiver {
 
-        return cm.getActiveNetworkInfo() != null;
-
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = false;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+           if((response1 == false) && (response1 != response)){
+               Snackbar sb = Snackbar.make(findViewById(R.id.layout_main_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+               View v = sb.getView();
+               v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+               sb.show();
+           }
+            response = response1;
+        }
     }
 
 }
