@@ -279,14 +279,20 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
         public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
+        View submit_btn = findViewById(R.id.submitChangesButton);
+
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean response1 = intent.getBooleanExtra("response",true);
-            if((response1 == false) && (response1 != response)){
+            if((!response1) && (response1 != response)){
                 Snackbar sb = Snackbar.make(findViewById(R.id.view_edit_profile1), "Oops, No data connection?", Snackbar.LENGTH_LONG);
                 View v = sb.getView();
                 v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
                 sb.show();
+                submit_btn.setClickable(false);
+            }
+            else if((response1) && response1 != response ){
+                submit_btn.setClickable(true);
             }
             response = response1;
         }

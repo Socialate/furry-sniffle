@@ -1,7 +1,10 @@
 package com.socialteinc.socialate;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
@@ -81,6 +84,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCommentsDatabaseReference;
 
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +216,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 processComment();
             }
         });
+
+        //starting the intent service
+        startIntentService();
 
     }
 
@@ -525,5 +534,45 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     }
 
+    public void startIntentService(){
+        //intentService
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        connect_receiver = new connect_receiver();
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
+    public class connect_receiver extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = false;
+        View like = findViewById(R.id.likeButton);
+        View ownerText = findViewById(R.id.ownerTextView);
+        View nav = findViewById(R.id.navigationImageView);
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.viewEntertainment_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+                View v = sb.getView();
+                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                sb.show();
+                like.setClickable(false);
+                ownerText.setClickable(false);
+                nav.setClickable(false);
+            }
+            else if((response1) && response1 != response ){
+                //submit_btn.setClickable(true);
+                like.setClickable(true);
+                ownerText.setClickable(true);
+                nav.setClickable(true);
+            }
+            response = response1;
+        }
+    }
 
 }

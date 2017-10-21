@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mLikesDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    //intentService variables
     private connect_receiver connect_receiver;
     private IntentFilter filter;
 
@@ -343,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * this function logs users out of firebase and the app.
      */
-    public boolean onLogout() {
+    private boolean onLogout() {
         mFirebaseAuth.signOut();
         LoginManager.getInstance().logOut();
         return true;
@@ -456,14 +457,19 @@ public class MainActivity extends AppCompatActivity {
 
         public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
+        View fab = findViewById(R.id.floatingActionButton);
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean response1 = intent.getBooleanExtra("response",true);
-           if((response1 == false) && (response1 != response)){
+           if((!response1) && (response1 != response)){
                Snackbar sb = Snackbar.make(findViewById(R.id.layout_main_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
                View v = sb.getView();
                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
                sb.show();
+               fab.setClickable(false);
+           }
+           else if((response1) && response1 != response ){
+               fab.setClickable(true);
            }
             response = response1;
         }

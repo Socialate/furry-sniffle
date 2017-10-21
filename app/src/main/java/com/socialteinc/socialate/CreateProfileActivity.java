@@ -1,10 +1,15 @@
 package com.socialteinc.socialate;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -50,6 +55,10 @@ public class CreateProfileActivity extends AppCompatActivity {
 
     private static int GALLERY_REQUEST_CODE = 1;
 
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +102,12 @@ public class CreateProfileActivity extends AppCompatActivity {
                 startSetupAccount();
             }
         });
+
+        //starting the service
+        startIntentService();
     }
 
-    public void galleryIntent() {
+    private void galleryIntent() {
         Intent galleryIntent = new Intent();
         galleryIntent.setType("image/*");
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -106,7 +118,7 @@ public class CreateProfileActivity extends AppCompatActivity {
      * this function creates a profile for the newly created account making
      * sure we have a profile picture, username and the full name of the user.
      */
-    public void startSetupAccount() {
+    private void startSetupAccount() {
 
         assert mFirebaseAuth.getCurrentUser() != null;
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
@@ -181,6 +193,33 @@ public class CreateProfileActivity extends AppCompatActivity {
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(CreateProfileActivity.this, "Failed to get profile picture, Try Again.", Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void startIntentService(){
+        //intentService
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        connect_receiver = new connect_receiver();
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
+    public class connect_receiver extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = false;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.activity_create_profile), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+                View v = sb.getView();
+                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                sb.show();
+            }
+            response = response1;
         }
     }
 }

@@ -1,8 +1,13 @@
 package com.socialteinc.socialate;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -43,6 +48,11 @@ public class ViewOtherUserProfile extends AppCompatActivity{
     private DatabaseReference mProfileDatabaseReference1;
     private boolean checker;
 
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +89,7 @@ public class ViewOtherUserProfile extends AppCompatActivity{
         // progress bar
         mProgressDialog = new ProgressDialog(this);
 
-        if(getChecker() == true){
+        if(getChecker()){
             // for testing purposes
             if(commentorUID == null){
                 commentorUID = "rv32DonlxHVQz7IHcCSUyx4xRx42";
@@ -163,6 +173,9 @@ public class ViewOtherUserProfile extends AppCompatActivity{
             });
         }
 
+        //starting the intent service
+        startIntentService();
+
     }
 
     public void setChecker(boolean check){
@@ -171,5 +184,32 @@ public class ViewOtherUserProfile extends AppCompatActivity{
 
     public boolean getChecker(){
         return check;
+    }
+
+    public void startIntentService(){
+        //intentService
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        connect_receiver = new connect_receiver();
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
+    public class connect_receiver extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = false;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.other_profile_view), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+                View v = sb.getView();
+                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                sb.show();
+            }
+            response = response1;
+        }
     }
 }

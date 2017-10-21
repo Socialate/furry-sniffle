@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -63,6 +64,10 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
 
     private static final int RC_SIGN_IN = 1;
+
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -146,7 +151,11 @@ public class LoginActivity extends AppCompatActivity {
                 //Log.d(TAG, "facebook:onError", error);
             }
         });
+
+        startIntentService();
     }
+
+
 
 
     public void signIn(View v) {
@@ -352,18 +361,47 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void startIntentService(){
+        //intentService
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        connect_receiver = new connect_receiver();
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
     public class connect_receiver extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
         boolean response = false;
+        View fb_button = findViewById(R.id.facebookButton);
+        View gmail_button = findViewById(R.id.googleButton);
+        View reset_pwd = findViewById(R.id.resetPasswordTextView);
+        View need_acc = findViewById(R.id.creatAccountTextView);
+        View login_btn = findViewById(R.id.SinginButton);
+
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean response1 = intent.getBooleanExtra("response",true);
-            if((response1 == false) && (response1 != response)){
-                Snackbar sb = Snackbar.make(findViewById(R.id.layout_main_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.loginConstraintLayout), "Oops, No data connection?", Snackbar.LENGTH_LONG);
                 View v = sb.getView();
                 v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
                 sb.show();
+                fb_button.setClickable(false);
+                gmail_button.setClickable(false);
+                reset_pwd.setClickable(false);
+                need_acc.setClickable(false);
+                login_btn.setClickable(false);
+            }
+            else if((response1) && response1 != response ){
+                fb_button.setClickable(true);
+                gmail_button.setClickable(true);
+                reset_pwd.setClickable(true);
+                need_acc.setClickable(true);
+                login_btn.setClickable(true);
             }
             response = response1;
         }
