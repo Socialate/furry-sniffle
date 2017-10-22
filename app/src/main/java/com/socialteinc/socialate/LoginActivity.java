@@ -374,7 +374,7 @@ public class LoginActivity extends AppCompatActivity {
     public class connect_receiver extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
-        boolean response = false;
+        boolean response = true;
         View fb_button = findViewById(R.id.facebookButton);
         View gmail_button = findViewById(R.id.googleButton);
         View reset_pwd = findViewById(R.id.resetPasswordTextView);
@@ -395,7 +395,7 @@ public class LoginActivity extends AppCompatActivity {
                 need_acc.setClickable(false);
                 login_btn.setClickable(false);
             }
-            else if((response1) && (response1 != response) ){
+            else if(response1 ){
                 fb_button.setClickable(true);
                 gmail_button.setClickable(true);
                 reset_pwd.setClickable(true);

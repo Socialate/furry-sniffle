@@ -548,9 +548,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     public class connect_receiver extends BroadcastReceiver {
 
         public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
-        boolean response = false;
-        View like = findViewById(R.id.likeButton);
-        View ownerText = findViewById(R.id.ownerTextView);
+        boolean response = true;
+        //View like = findViewById(R.id.likeButton);
+       // View ownerText = findViewById(R.id.ownerTextView);
         View nav = findViewById(R.id.navigationImageView);
 
 
@@ -562,14 +562,13 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 View v = sb.getView();
                 v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
                 sb.show();
-                like.setClickable(false);
-                ownerText.setClickable(false);
+               // like.setClickable(false);
+               // ownerText.setClickable(false);
                 nav.setClickable(false);
             }
-            else if((response1) && (response1 != response) ){
-                //submit_btn.setClickable(true);
-                like.setClickable(true);
-                ownerText.setClickable(true);
+            else if(response1){
+               // like.setClickable(true);
+               // ownerText.setClickable(true);
                 nav.setClickable(true);
             }
             response = response1;

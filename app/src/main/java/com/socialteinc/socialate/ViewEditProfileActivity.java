@@ -281,7 +281,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
     public class connect_receiver extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
-        boolean response = false;
+        boolean response = true;
         View submit_btn = findViewById(R.id.submitChangesButton);
 
         @Override
@@ -294,7 +294,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 sb.show();
                 submit_btn.setClickable(false);
             }
-            else if((response1) && response1 != response ){
+            else if(response1 ){
                 submit_btn.setClickable(true);
             }
             response = response1;

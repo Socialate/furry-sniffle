@@ -202,7 +202,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     public class connect_receiver extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
-        boolean response = false;
+        boolean response = true;
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean response1 = intent.getBooleanExtra("response",true);

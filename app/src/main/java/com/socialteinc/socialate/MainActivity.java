@@ -458,7 +458,7 @@ public class MainActivity extends AppCompatActivity {
     public class connect_receiver extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
-        boolean response = false;
+        boolean response = true;
         View fab = findViewById(R.id.floatingActionButton);
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -470,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
                sb.show();
                fab.setClickable(false);
            }
-           else if((response1) && (response1 != response )){
+           else if(response1){
                fab.setClickable(true);
            }
             response = response1;

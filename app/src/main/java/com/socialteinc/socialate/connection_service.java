@@ -17,6 +17,7 @@ public class connection_service extends IntentService {
         super("connection_service");
     }
     //public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+    public boolean default_result = true;
     public boolean result;
     @Override
     protected void onHandleIntent(Intent intent) {
