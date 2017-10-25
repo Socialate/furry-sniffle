@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_marginTop="10dp"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_marginTop="10dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="10dp"
@@ -52,7 +52,22 @@
                 android:paddingBottom="6dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/francis_tinashe_mudavanhu" android:textSize="24sp"
-                android:focusableInTouchMode="true" android:contextClickable="true"/>
+                android:focusableInTouchMode="true" android:contextClickable="true" tools:ignore="UnusedAttribute"/>
+
+        <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
+                                                      android:layout_height="wrap_content"
+                                                      android:paddingStart="8dp"
+                                                      android:paddingEnd="8dp"
+                                                      android:id="@+id/avergaeCostLinearlayout"
+                                                      android:orientation="horizontal">
+
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:id="@+id/averageCostTextView" android:textSize="18sp"
+                      android:text="Average rate: Low Cost"
+                      android:textColor="@color/colorPrimaryText"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
 
         <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"

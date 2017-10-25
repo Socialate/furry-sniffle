@@ -67,8 +67,20 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <array name="gender">
+        <item>Select gender</item>
         <item>Male</item>
         <item>Female</item>
+    </array>
+    <string name="affordable">Low Cost</string>
+    <string name="mediumPrice">Medium Cost</string>
+    <string name="highPrice">High Cost</string>
+    <string name="veryHighCost">Very High Cost</string>
+    <array name="cost">
+        <item>How costly is this place for you?</item>
+        <item>Low Cost</item>
+        <item>Medium Cost</item>
+        <item>High High</item>
+        <item>Very High Cost</item>
     </array>
     <string name="image_for_the_entertainment_spot">Image for the entertainment spot</string>
     <string name="francis_tinashe_mudavanhu">Francis Tinashe Mudavanhu</string>
@@ -115,4 +127,5 @@
     <string name="_25_km">25 KM</string>
     <string name="_50_km">50 KM</string>
     <string name="_100_km">100 KM</string>
+    <string name="the_average_person_says_this_place_overpriced">The average person says this place overpriced</string>
 </resources>

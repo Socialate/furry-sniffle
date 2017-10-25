@@ -133,7 +133,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onError() {
-
                             }
                         });
 
@@ -187,7 +186,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(full_name) && !TextUtils.isEmpty(display_name) && !TextUtils.isEmpty(email)) {
 
             //Log.d("MyAPP", "started Upload");
-
             mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
             mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
             mProfileDatabaseReference.child(user_id).child("description").setValue(description);

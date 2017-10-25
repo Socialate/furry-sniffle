@@ -103,7 +103,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
-        //mCommentDateTextView = findViewById(R.id.dateTextView);
 
         // Initialize firebase
         FirebaseApp.initializeApp(this);
@@ -238,7 +237,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
