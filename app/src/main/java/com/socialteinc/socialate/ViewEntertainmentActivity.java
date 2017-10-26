@@ -57,6 +57,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private FloatingActionButton mLikeButton;
     private EditText mCommentEditText;
     private ImageButton mCommentButton;
+    private Spinner mAverageCostSpinner;
+    private ImageView mAverageCostImage;
     private String mAuthor;
     private String commentorProfileImage;
     private Boolean mProcessLike = false;
@@ -80,6 +82,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCommentsDatabaseReference;
+    private DatabaseReference mCostDatabaseReference;
 
 
     @Override
@@ -103,6 +106,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
+        mAverageCostSpinner = findViewById(R.id.averageCostSpinner);
+        mAverageCostImage = findViewById(R.id.averageCostImageView);
 
         // Initialize firebase
         FirebaseApp.initializeApp(this);
@@ -112,6 +117,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
         mCommentsDatabaseReference = mFireBaseDatabase.getReference().child("Comments");
+        mCostDatabaseReference = mFireBaseDatabase.getReference().child("cost");
 
         mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
 
@@ -210,6 +216,33 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
+        mAverageCostImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do something
+            }
+        });
+
+        mAverageCostSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                CostSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+    }
+
+    private void CostSpinner(){
+        final String get_selected = mAverageCostSpinner.getSelectedItem().toString();
+
+        if(!TextUtils.isEmpty(get_selected) && !TextUtils.equals(get_selected,"How costly is this place for you?")){
+
+            mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(get_selected);
+        }
     }
 
     private void launchMap() {
@@ -361,9 +394,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 cardview = v;
 
                 mLikeCommentCounterTextView = cardview.findViewById(R.id.likeCommentCounterTextView);
-                //mLikeCommentTextView = cardview.findViewById(R.id.likeTextView);
-                //mCommenterName = cardview.findViewById(R.id.commentorNameTextView);
-                //mDeleteComment = cardview.findViewById(R.id.deleteCommentImageButton);
 
                 mFirebaseDatabase = FirebaseDatabase.getInstance();
                 mFirebaseAuth = FirebaseAuth.getInstance();
