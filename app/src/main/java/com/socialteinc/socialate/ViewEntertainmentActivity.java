@@ -1,6 +1,5 @@
 package com.socialteinc.socialate;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
@@ -15,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +55,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private FloatingActionButton mLikeButton;
     private EditText mCommentEditText;
     private ImageButton mCommentButton;
-    private Spinner mAverageCostSpinner;
+    private Spinner mCostSpinner;
     private ImageView mAverageCostImage;
     private String mAuthor;
     private String commentorProfileImage;
@@ -106,7 +104,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
-        mAverageCostSpinner = findViewById(R.id.averageCostSpinner);
+        mCostSpinner = findViewById(R.id.averageCostSpinner);
         mAverageCostImage = findViewById(R.id.averageCostImageView);
 
         // Initialize firebase
@@ -186,6 +184,20 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                         .load(photoUrl)
                         .into(mEntertainmentImage);
 
+                mCostDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String get_selected = (String) dataSnapshot.child(mFirebaseAuth.getCurrentUser().getUid()).getValue();
+                        if(!TextUtils.isEmpty(get_selected)){
+                            mCostSpinner.setSelection(((ArrayAdapter<String>)mCostSpinner.getAdapter()).getPosition(get_selected));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
                 postComments();
 
             }
@@ -223,7 +235,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
-        mAverageCostSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mCostSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 CostSpinner();
@@ -237,7 +249,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     }
 
     private void CostSpinner(){
-        final String get_selected = mAverageCostSpinner.getSelectedItem().toString();
+        final String get_selected = mCostSpinner.getSelectedItem().toString();
 
         if(!TextUtils.isEmpty(get_selected) && !TextUtils.equals(get_selected,"How costly is this place for you?")){
 
