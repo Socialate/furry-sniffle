@@ -64,7 +64,6 @@
             <TextView android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:id="@+id/averageCostTextView" android:textSize="18sp"
-                      android:text="@string/average_rate_low_cost"
                       android:textColor="@color/colorPrimaryText"/>
 
         </android.support.v7.widget.LinearLayoutCompat>

@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -168,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 mEventsDatabaseReference
         ) {
             @Override
-            protected void populateViewHolder(EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
+            protected void populateViewHolder(final EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
 
                 final String mEntertainmentKey = getRef(position).getKey();
                 final String mEntertainmentName = model.getName();
@@ -204,7 +205,9 @@ public class MainActivity extends AppCompatActivity {
                 mCostDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        //String get_rating = (String) dataSnapshot.child()
+                        String get_rating = (String) dataSnapshot.child("Average cost rating").getValue();
+                        viewHolder.setAverageCost(get_rating);
+
                     }
 
                     @Override
@@ -428,7 +431,14 @@ public class MainActivity extends AppCompatActivity {
 
         private void setAverageCost(String cost){
             TextView average_cost = mView.findViewById(R.id.averageCostTextView);
-            average_cost.setText("Average cost rate: "+cost);
+            if(TextUtils.isEmpty(cost) || cost.equals("No Rating")){
+                average_cost.setVisibility(View.GONE);
+
+            }else {
+                //average_cost.setVisibility(View.VISIBLE);
+                average_cost.setText("Average cost: "+cost);
+            }
+
         }
 
         void setOwner(String author){

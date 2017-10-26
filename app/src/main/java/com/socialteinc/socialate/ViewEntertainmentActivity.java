@@ -188,51 +188,53 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String get_selected = (String) dataSnapshot.child(mFirebaseAuth.getCurrentUser().getUid()).getValue();
+
                         if(!TextUtils.isEmpty(get_selected)){
                             mCostSpinner.setSelection(((ArrayAdapter<String>)mCostSpinner.getAdapter()).getPosition(get_selected));
-                        }
 
-                        //int n = (int) dataSnapshot.getChildrenCount();
-                        int low = 0; int medium = 0; int high = 0;
+                            int n = (int) dataSnapshot.getChildrenCount();
+                            int low = 1; int medium = 1; int high = 1;
 
-                        for(DataSnapshot child : dataSnapshot.getChildren()){
-                            String value = (String) child.getValue();
+                            for(DataSnapshot child : dataSnapshot.getChildren()){
+                                String value = (String) child.getValue();
 
-                            if(value.equals("Low price")){
-                                low++;
+                                if(value.equals("Low Cost")){
+                                    low++;
+
+                                }else if(value.equals("Medium Cost")){
+                                    medium++;
+
+                                }else if(value.equals("High Cost")){
+                                    high++;
+
+                                }
                             }
 
-                            if(value.equals("Medium price")){
-                                medium++;
+                            if(low > medium && low > high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low Cost");
+
+                            }else if(medium > low && medium > high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Cost");
+
+                            }else if(high > medium && high > low){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("High Cost");
+
+                            }else if(low == medium && low > high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Low Cost");
+
+                            }else if((high == medium && high > low)){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium High Cost");
+
+                            }else if(low == high && low > medium){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low to High Cost");
+
+                            }else if(low == medium && medium == high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("No Rating");
+                            }else {
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("No Rating");
                             }
 
-                            if(value.equals("High price")){
-                                high++;
-                            }
                         }
-
-                        if(low > medium && low > high){
-                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low Cost");
-
-                        }else if(medium > low && medium > high){
-                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Cost");
-
-                        }else if(high > medium && high > low){
-                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("High Cost");
-
-                        }else if(low == medium && low > high){
-                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Low Cost");
-
-                        }else if((high == medium && high > low)){
-                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium High Cost");
-
-                        }else if(low == high && low > medium){
-                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low to High Cost");
-
-                        }else {
-                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("No Rating");
-                        }
-
                     }
 
                     @Override
