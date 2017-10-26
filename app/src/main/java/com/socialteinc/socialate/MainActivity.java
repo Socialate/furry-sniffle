@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mEventsDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
+    private DatabaseReference mCostDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -92,10 +93,12 @@ public class MainActivity extends AppCompatActivity {
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
+        mCostDatabaseReference = mFireBaseDatabase.getReference().child("cost");
 
         mUsersDatabaseReference.keepSynced(true);
         mEventsDatabaseReference.keepSynced(true);
         mLikesDatabaseReference.keepSynced(true);
+        mCostDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -195,6 +198,17 @@ public class MainActivity extends AppCompatActivity {
                         Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
                         profileViewIntent.putExtra("entertainmentUploader", mEntertainmentUploader);
                         startActivity(profileViewIntent);
+                    }
+                });
+
+                mCostDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //String get_rating = (String) dataSnapshot.child()
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                     }
                 });
 
@@ -410,6 +424,11 @@ public class MainActivity extends AppCompatActivity {
         public void setName(String title){
             TextView event_title = mView.findViewById(R.id.titleTextView);
             event_title.setText(title);
+        }
+
+        private void setAverageCost(String cost){
+            TextView average_cost = mView.findViewById(R.id.averageCostTextView);
+            average_cost.setText("Average cost rate: "+cost);
         }
 
         void setOwner(String author){

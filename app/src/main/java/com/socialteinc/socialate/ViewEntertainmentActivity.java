@@ -56,7 +56,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private EditText mCommentEditText;
     private ImageButton mCommentButton;
     private Spinner mCostSpinner;
-    private ImageView mAverageCostImage;
+    private ImageView mCostImage;
     private String mAuthor;
     private String commentorProfileImage;
     private Boolean mProcessLike = false;
@@ -105,7 +105,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentButton = findViewById(R.id.commentImageButton);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
         mCostSpinner = findViewById(R.id.averageCostSpinner);
-        mAverageCostImage = findViewById(R.id.averageCostImageView);
+        mCostImage = findViewById(R.id.averageCostImageView);
 
         // Initialize firebase
         FirebaseApp.initializeApp(this);
@@ -191,6 +191,48 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                         if(!TextUtils.isEmpty(get_selected)){
                             mCostSpinner.setSelection(((ArrayAdapter<String>)mCostSpinner.getAdapter()).getPosition(get_selected));
                         }
+
+                        //int n = (int) dataSnapshot.getChildrenCount();
+                        int low = 0; int medium = 0; int high = 0;
+
+                        for(DataSnapshot child : dataSnapshot.getChildren()){
+                            String value = (String) child.getValue();
+
+                            if(value.equals("Low price")){
+                                low++;
+                            }
+
+                            if(value.equals("Medium price")){
+                                medium++;
+                            }
+
+                            if(value.equals("High price")){
+                                high++;
+                            }
+                        }
+
+                        if(low > medium && low > high){
+                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low Cost");
+
+                        }else if(medium > low && medium > high){
+                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Cost");
+
+                        }else if(high > medium && high > low){
+                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("High Cost");
+
+                        }else if(low == medium && low > high){
+                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Low Cost");
+
+                        }else if((high == medium && high > low)){
+                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium High Cost");
+
+                        }else if(low == high && low > medium){
+                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low to High Cost");
+
+                        }else {
+                            mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("No Rating");
+                        }
+
                     }
 
                     @Override
@@ -228,7 +270,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
-        mAverageCostImage.setOnClickListener(new View.OnClickListener() {
+        mCostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // do something
