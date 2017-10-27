@@ -431,12 +431,11 @@ public class MainActivity extends AppCompatActivity {
 
         private void setAverageCost(String cost){
             TextView average_cost = mView.findViewById(R.id.averageCostTextView);
-            if(TextUtils.isEmpty(cost) || cost.equals("No Rating")){
-                average_cost.setVisibility(View.GONE);
-
-            }else {
+            if(cost != null && !cost.equals(" No Rating")){
                 //average_cost.setVisibility(View.VISIBLE);
-                average_cost.setText("Average cost: "+cost);
+                average_cost.setText("Average cost:"+cost);
+            }else {
+                average_cost.setVisibility(View.GONE);
             }
 
         }
