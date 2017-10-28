@@ -296,12 +296,12 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
-        mCostImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // do something
-            }
-        });
+//        mCostImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // do something
+//            }
+//        });
 
         mCostSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
