@@ -1,8 +1,9 @@
 package com.socialteinc.socialate;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +44,10 @@ public class BookmarkActivity extends AppCompatActivity {
 
     SharedPreferences msharedPref;
 
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,15 @@ public class BookmarkActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Bookmarks");
         }
+
+        //starting intent service
+        startIntentService();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
     }
 
     @Override
@@ -202,6 +216,16 @@ public class BookmarkActivity extends AppCompatActivity {
         mEntertainmentSpotRecyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
+    public void startIntentService(){
+        //intentService
+        connect_receiver = new connect_receiver();
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
     public static class EntertainmentSpotAdapterViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
@@ -317,4 +341,24 @@ public class BookmarkActivity extends AppCompatActivity {
                     });
         }
     }
+    public class connect_receiver extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = true;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.activity_bookmark), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+                View v = sb.getView();
+                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                sb.show();
+            }
+            else if(response1){
+            }
+            response = response1;
+        }
+    }
+
 }

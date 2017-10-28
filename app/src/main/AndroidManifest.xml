@@ -82,7 +82,8 @@
         <activity
                 android:name=".SearchableActivity"
 
-                android:label="@string/title_activity_searchable"android:launchMode="singleTop"
+                android:label="@string/title_activity_searchable"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
@@ -97,7 +98,6 @@
                 android:exported="false">
         </service>
 
-        <activity android:name=".RegisterActivity" />
         <activity android:name=".BookmarkActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

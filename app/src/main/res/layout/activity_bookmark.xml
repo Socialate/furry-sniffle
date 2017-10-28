@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.socialteinc.socialate.BookmarkActivity">
+    tools:context="com.socialteinc.socialate.BookmarkActivity"
+    android:id="@+id/activity_bookmark"
+>
 
     <include
         layout="@layout/app_bar_layout"
