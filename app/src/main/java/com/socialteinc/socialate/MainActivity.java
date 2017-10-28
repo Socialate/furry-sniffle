@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 mEventsDatabaseReference
         ) {
             @Override
-            protected void populateViewHolder(final EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
+            protected void populateViewHolder(final EntertainmentSpotAdapterViewHolder viewHolder, final Entertainment model, int position) {
 
                 final String mEntertainmentKey = getRef(position).getKey();
                 final String mEntertainmentName = model.getName();
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.mShareButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent share = createShareEntertainmentIntent(mEntertainmentName);
+                        Intent share = createShareEntertainmentIntent(mEntertainmentName,  model.getAddress());
                         startActivity(share);
                     }
                 });
@@ -496,10 +496,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private Intent createShareEntertainmentIntent(String mEventName) {
+    private Intent createShareEntertainmentIntent(String mEventName, String Address) {
         return ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
-                .setText( mEventName + "-Come check out this place #SocialateApp")
+                .setText( mEventName + "-"+Address+" :Come check out more about this place #SocialateApp")
                 .getIntent();
     }
 
