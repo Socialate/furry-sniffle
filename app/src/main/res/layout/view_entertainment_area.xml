@@ -131,6 +131,40 @@
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
+                <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
+                                                              android:layout_height="wrap_content"
+                                                              android:orientation="horizontal"
+                                                              android:padding="12dp">
+
+                    <ImageView android:layout_width="0dp"
+                               android:layout_height="47dp"
+                               android:layout_weight="1"
+                               android:id="@+id/averageCostImageView"
+                               app:srcCompat="@android:drawable/ic_menu_info_details"
+                               tools:ignore="ContentDescription"/>
+
+                    <android.support.v7.widget.LinearLayoutCompat android:layout_width="0dp"
+                                                                  android:layout_height="wrap_content"
+                                                                  android:padding="12dp"
+                                                                  android:layout_weight="9"
+                                                                  android:layout_gravity="center_vertical"
+                                                                  android:background="@drawable/spinner">
+
+                        <Spinner android:layout_width="match_parent"
+                                 android:layout_height="match_parent"
+                                 android:id="@+id/averageCostSpinner"
+                                 android:popupBackground="@color/colorPrimary"
+                                 android:entries="@array/cost"
+                                 tools:ignore="UnusedAttribute"
+                                 android:spinnerMode="dialog"
+                                 style="@style/Platform.Widget.AppCompat.Spinner">
+
+                        </Spinner>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
                 <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
                                                              android:layout_height="wrap_content">
 

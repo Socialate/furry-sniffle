@@ -1,6 +1,5 @@
 package com.socialteinc.socialate;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
@@ -15,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +55,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private FloatingActionButton mLikeButton;
     private EditText mCommentEditText;
     private ImageButton mCommentButton;
+    private Spinner mCostSpinner;
+    private ImageView mCostImage;
     private String mAuthor;
     private String commentorProfileImage;
     private Boolean mProcessLike = false;
@@ -80,6 +80,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCommentsDatabaseReference;
+    private DatabaseReference mCostDatabaseReference;
 
 
     @Override
@@ -103,7 +104,8 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mCommentEditText = findViewById(R.id.commentEditText);
         mCommentButton = findViewById(R.id.commentImageButton);
         mRecyclerView = findViewById(R.id.comment_recyclerView);
-        //mCommentDateTextView = findViewById(R.id.dateTextView);
+        mCostSpinner = findViewById(R.id.averageCostSpinner);
+        mCostImage = findViewById(R.id.averageCostImageView);
 
         // Initialize firebase
         FirebaseApp.initializeApp(this);
@@ -113,6 +115,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
         mCommentsDatabaseReference = mFireBaseDatabase.getReference().child("Comments");
+        mCostDatabaseReference = mFireBaseDatabase.getReference().child("cost");
 
         mToolbar = findViewById(R.id.ViewAddedAreaToolbar);
 
@@ -181,6 +184,64 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                         .load(photoUrl)
                         .into(mEntertainmentImage);
 
+                mCostDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String get_selected = (String) dataSnapshot.child(mFirebaseAuth.getCurrentUser().getUid()).getValue();
+
+                        if(!TextUtils.isEmpty(get_selected)){
+                            mCostSpinner.setSelection(((ArrayAdapter<String>)mCostSpinner.getAdapter()).getPosition(get_selected));
+
+                            int n = (int) dataSnapshot.getChildrenCount();
+                            int low = 1; int medium = 1; int high = 1;
+
+                            for(DataSnapshot child : dataSnapshot.getChildren()){
+                                String value = (String) child.getValue();
+
+                                if(value.equals("Low Cost")){
+                                    low++;
+
+                                }else if(value.equals("Medium Cost")){
+                                    medium++;
+
+                                }else if(value.equals("High Cost")){
+                                    high++;
+
+                                }
+                            }
+
+                            if(low > medium && low > high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low Cost");
+
+                            }else if(medium > low && medium > high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Cost");
+
+                            }else if(high > medium && high > low){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("High Cost");
+
+                            }else if(low == medium && low > high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium Low Cost");
+
+                            }else if((high == medium && high > low)){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Medium High Cost");
+
+                            }else if(low == high && low > medium){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("Low to High Cost");
+
+                            }else if(low == medium && medium == high){
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("No Rating");
+                            }else {
+                                mCostDatabaseReference.child(mEntertainmentKey).child("Average cost rating").setValue("No Rating");
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
                 postComments();
 
             }
@@ -211,6 +272,33 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
+        mCostImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do something
+            }
+        });
+
+        mCostSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                CostSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+    }
+
+    private void CostSpinner(){
+        final String get_selected = mCostSpinner.getSelectedItem().toString();
+
+        if(!TextUtils.isEmpty(get_selected) && !TextUtils.equals(get_selected,"How costly is this place for you?")){
+
+            mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(get_selected);
+        }
     }
 
     private void launchMap() {
@@ -238,7 +326,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
@@ -363,9 +450,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 cardview = v;
 
                 mLikeCommentCounterTextView = cardview.findViewById(R.id.likeCommentCounterTextView);
-                //mLikeCommentTextView = cardview.findViewById(R.id.likeTextView);
-                //mCommenterName = cardview.findViewById(R.id.commentorNameTextView);
-                //mDeleteComment = cardview.findViewById(R.id.deleteCommentImageButton);
 
                 mFirebaseDatabase = FirebaseDatabase.getInstance();
                 mFirebaseAuth = FirebaseAuth.getInstance();

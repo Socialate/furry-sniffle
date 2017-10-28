@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mEventsDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
+    private DatabaseReference mCostDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -92,10 +94,12 @@ public class MainActivity extends AppCompatActivity {
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
+        mCostDatabaseReference = mFireBaseDatabase.getReference().child("cost");
 
         mUsersDatabaseReference.keepSynced(true);
         mEventsDatabaseReference.keepSynced(true);
         mLikesDatabaseReference.keepSynced(true);
+        mCostDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -165,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 mEventsDatabaseReference
         ) {
             @Override
-            protected void populateViewHolder(EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
+            protected void populateViewHolder(final EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
 
                 final String mEntertainmentKey = getRef(position).getKey();
                 final String mEntertainmentName = model.getName();
@@ -195,6 +199,19 @@ public class MainActivity extends AppCompatActivity {
                         Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
                         profileViewIntent.putExtra("entertainmentUploader", mEntertainmentUploader);
                         startActivity(profileViewIntent);
+                    }
+                });
+
+                mCostDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String get_rating = (String) dataSnapshot.child("Average cost rating").getValue();
+                        viewHolder.setAverageCost(get_rating);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                     }
                 });
 
@@ -410,6 +427,18 @@ public class MainActivity extends AppCompatActivity {
         public void setName(String title){
             TextView event_title = mView.findViewById(R.id.titleTextView);
             event_title.setText(title);
+        }
+
+        private void setAverageCost(String cost){
+            TextView average_cost = mView.findViewById(R.id.averageCostTextView);
+            if(TextUtils.isEmpty(cost) || cost.equals("No Rating")){
+                average_cost.setVisibility(View.GONE);
+
+            }else {
+                //average_cost.setVisibility(View.VISIBLE);
+                average_cost.setText("Average cost: "+cost);
+            }
+
         }
 
         void setOwner(String author){
