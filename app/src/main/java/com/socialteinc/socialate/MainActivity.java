@@ -3,10 +3,7 @@ package com.socialteinc.socialate;
 
 import android.app.Fragment;
 import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
+import android.content.*;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -25,17 +22,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -53,10 +45,17 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mEventsDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
     private DatabaseReference mCostDatabaseReference;
+    private DatabaseReference mBookmarksDatabaseReference;
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
+
 
     private Boolean mProcessLike = false;
+    private boolean mProcessBookmark = false;
 
     SharedPreferences msharedPref;
 
@@ -65,12 +64,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        if(!isConnected()){
-            Snackbar sb = Snackbar.make(findViewById(R.id.layout_main_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
-            View v = sb.getView();
-            v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
-            sb.show();
-        }
         // Initialize references to views
         mToolbar = findViewById(R.id.mainPageToolBar);
         mEntertainmentSpotRecyclerView = findViewById(R.id.entertainmentSpotRecyclerView);
@@ -95,11 +88,13 @@ public class MainActivity extends AppCompatActivity {
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
         mCostDatabaseReference = mFireBaseDatabase.getReference().child("cost");
+        mBookmarksDatabaseReference = mFireBaseDatabase.getReference().child("Bookmarks");
 
         mUsersDatabaseReference.keepSynced(true);
         mEventsDatabaseReference.keepSynced(true);
         mLikesDatabaseReference.keepSynced(true);
         mCostDatabaseReference.keepSynced(true);
+        mBookmarksDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -123,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
         msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         //int syncConnPref = msharedPref.getInt("bar_val", 50);
         (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
+
+        //starting intent service
+        startIntentService();
     }
 
     /**
@@ -157,6 +155,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void startIntentService(){
+        //intentService
+        connect_receiver = new connect_receiver();
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -179,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setOwner(model.getAuthor());
                 viewHolder.setPhotoUrl(model.getPhotoUrl());
                 viewHolder.setLikeButton(mEntertainmentKey);
+                viewHolder.setbookmarkButton(mEntertainmentKey);
                 viewHolder.setLikeNumber(mEntertainmentKey);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -241,7 +251,31 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                viewHolder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mProcessBookmark = true;
+                        mBookmarksDatabaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessBookmark && mFirebaseAuth.getCurrentUser() != null) {
+                                    if (!dataSnapshot.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).exists()) {
+                                        mBookmarksDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).setValue("true");
+                                        mProcessBookmark = false;
+                                    } else {
+                                        mBookmarksDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).removeValue();
+                                        mProcessBookmark = false;
+                                    }
+                                }
+                            }
 
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
 
             }
         };
@@ -265,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        unregisterReceiver(connect_receiver);
     }
 
     @Override
@@ -327,14 +362,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment p = getFragmentManager().findFragmentByTag("settings pref");
-        if ((p).isVisible()) {
+        if(p == null){
+            super.onBackPressed();
+        }
+        else if ((p).isVisible()) {
             getFragmentManager().beginTransaction().remove(p).commit();
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setTitle("Socialate");
             setVisibility(1);
 
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -357,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * this function logs users out of firebase and the app.
      */
-    public boolean onLogout() {
+    private boolean onLogout() {
         mFirebaseAuth.signOut();
         LoginManager.getInstance().logOut();
         return true;
@@ -367,21 +403,25 @@ public class MainActivity extends AppCompatActivity {
 
         View mView;
         ImageView mLikeButton;
+        ImageView mBookmarkButton;
         TextView mEntertainmentLikes;
         TextView mEntertainmentOwner; //
         FirebaseDatabase mFirebaseDatabase;
         FirebaseAuth mFirebaseAuth;
         DatabaseReference mLikesDatabaseReference;
+        DatabaseReference mBookmarksDatabaseReference;
 
         public EntertainmentSpotAdapterViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
+            mBookmarkButton = mView.findViewById(R.id.bookmarkButton);
             mLikeButton = mView.findViewById(R.id.likeButton);
             mEntertainmentOwner = mView.findViewById(R.id.ownerTextView); //
             mEntertainmentLikes = mView.findViewById(R.id.likeCounterTextView);
             mFirebaseDatabase = FirebaseDatabase.getInstance();
             mFirebaseAuth = FirebaseAuth.getInstance();
             mLikesDatabaseReference = mFirebaseDatabase.getReference().child("Likes");
+            mBookmarksDatabaseReference = mFirebaseDatabase.getReference().child("Bookmarks");
             mLikesDatabaseReference.keepSynced(true);
         }
 
@@ -396,6 +436,29 @@ public class MainActivity extends AppCompatActivity {
 
                     }else {
                         mLikeButton.setImageResource(R.drawable.ic_fav_border);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        void setbookmarkButton(final String mEntertainmentKey){
+
+            mBookmarksDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    assert mFirebaseAuth.getCurrentUser() != null;
+                    if(dataSnapshot.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).exists()){
+                        mBookmarkButton.setImageResource(R.drawable.ic_action_bookmark_red);
+
+                    }else {
+                        mBookmarkButton.setImageResource(R.drawable.ic_action_bookmark);
 
                     }
                 }
@@ -477,11 +540,26 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    public class connect_receiver extends BroadcastReceiver {
 
-        return cm.getActiveNetworkInfo() != null;
-
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = true;
+        View fab = findViewById(R.id.floatingActionButton);
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+           if((!response1) && (response1 != response)){
+               Snackbar sb = Snackbar.make(findViewById(R.id.layout_main_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+               View v = sb.getView();
+               v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+               sb.show();
+               fab.setClickable(false);
+           }
+           else if(response1){
+               fab.setClickable(true);
+           }
+            response = response1;
+        }
     }
 
 }

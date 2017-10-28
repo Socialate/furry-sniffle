@@ -1,18 +1,25 @@
 package com.socialteinc.socialate;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,6 +65,11 @@ public class AddEntertainmentActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST_CODE = 1;
     private Toolbar mToolbar;
+
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +143,9 @@ public class AddEntertainmentActivity extends AppCompatActivity {
                 startPosting();
             }
         });
+
+        //starting the intent service
+        startIntentService();
 
     }
 
@@ -218,6 +233,12 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
+    }
+
     private String imageNameGenerator(){
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return mFirebaseUser.getUid() + currentDateTimeString;
@@ -265,5 +286,36 @@ public class AddEntertainmentActivity extends AppCompatActivity {
         opts.inSampleSize = originalSize / thumbnailSize;
         bitmap = BitmapFactory.decodeFile(path, opts);
         return bitmap;
+    }
+
+    public void startIntentService(){
+        //intentService
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        connect_receiver = new connect_receiver();
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
+    public class connect_receiver extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = true;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.addEntertainmentConstraintLayout), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+                View v = sb.getView();
+                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                sb.show();
+                findViewById(R.id.addEntertainmentAreaButton).setClickable(false);
+            }
+            else if((response1) && response1 != response ){
+                findViewById(R.id.addEntertainmentAreaButton).setClickable(true);
+            }
+            response = response1;
+        }
     }
 }

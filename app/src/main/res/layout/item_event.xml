@@ -85,13 +85,19 @@
             <TextView
                     android:layout_gravity="center_vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_weight="9"
+                    android:layout_weight="7.83"
                     android:paddingStart="4dp"
                     android:paddingEnd="4dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/likeCounterTextView"
                     android:textColor="@color/colorPrimaryText"/>
+
+            <ImageView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/favorite_icon"
+                android:src="@drawable/ic_action_bookmark"
+                android:layout_weight="1" android:id="@+id/bookmarkButton"/>
         </android.support.v7.widget.LinearLayoutCompat>
     </LinearLayout>
 </android.support.v7.widget.CardView>

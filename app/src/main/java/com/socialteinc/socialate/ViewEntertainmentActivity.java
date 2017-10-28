@@ -1,6 +1,9 @@
 package com.socialteinc.socialate;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,25 +18,31 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-//import com.firebase.geofire.core.GeoHashQuery;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+//import com.firebase.geofire.core.GeoHashQuery;
 
 public class ViewEntertainmentActivity extends AppCompatActivity {
 
@@ -82,6 +91,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private DatabaseReference mCommentsDatabaseReference;
     private DatabaseReference mCostDatabaseReference;
 
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,6 +326,15 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
                 mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(get_selected);
             }
         }
+        //starting the intent service
+        startIntentService();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
     }
 
     private void launchMap() {
@@ -624,5 +645,52 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
     }
 
+    public void startIntentService(){
+        //intentService
+        connect_receiver = new connect_receiver();
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
+    public class connect_receiver extends BroadcastReceiver {
+
+        public final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = true;
+        //View like = findViewById(R.id.likeButton);
+       // View ownerText = findViewById(R.id.ownerTextView);
+        View nav = findViewById(R.id.navigationImageView);
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.viewEntertainment_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+                View v = sb.getView();
+                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                sb.show();
+               // like.setClickable(false);
+               // ownerText.setClickable(false);
+                nav.setClickable(false);
+            }
+            else if(response1){
+               // like.setClickable(true);
+               // ownerText.setClickable(true);
+                nav.setClickable(true);
+            }
+            response = response1;
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }
