@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mEventsDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
+    private DatabaseReference mBookmarksDatabaseReference;
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     //intentService variables
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Boolean mProcessLike = false;
+    private boolean mProcessBookmark = false;
 
     SharedPreferences msharedPref;
 
@@ -82,10 +85,12 @@ public class MainActivity extends AppCompatActivity {
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
+        mBookmarksDatabaseReference = mFireBaseDatabase.getReference().child("Bookmarks");
 
         mUsersDatabaseReference.keepSynced(true);
         mEventsDatabaseReference.keepSynced(true);
         mLikesDatabaseReference.keepSynced(true);
+        mBookmarksDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -179,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setOwner(model.getAuthor());
                 viewHolder.setPhotoUrl(model.getPhotoUrl());
                 viewHolder.setLikeButton(mEntertainmentKey);
+                viewHolder.setbookmarkButton(mEntertainmentKey);
                 viewHolder.setLikeNumber(mEntertainmentKey);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +234,31 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                viewHolder.mBookmarkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mProcessBookmark = true;
+                        mBookmarksDatabaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessBookmark && mFirebaseAuth.getCurrentUser() != null) {
+                                    if (!dataSnapshot.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).exists()) {
+                                        mBookmarksDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).setValue("true");
+                                        mProcessBookmark = false;
+                                    } else {
+                                        mBookmarksDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).removeValue();
+                                        mProcessBookmark = false;
+                                    }
+                                }
+                            }
 
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
 
             }
         };
@@ -356,21 +386,25 @@ public class MainActivity extends AppCompatActivity {
 
         View mView;
         ImageView mLikeButton;
+        ImageView mBookmarkButton;
         TextView mEntertainmentLikes;
         TextView mEntertainmentOwner; //
         FirebaseDatabase mFirebaseDatabase;
         FirebaseAuth mFirebaseAuth;
         DatabaseReference mLikesDatabaseReference;
+        DatabaseReference mBookmarksDatabaseReference;
 
         public EntertainmentSpotAdapterViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
+            mBookmarkButton = mView.findViewById(R.id.bookmarkButton);
             mLikeButton = mView.findViewById(R.id.likeButton);
             mEntertainmentOwner = mView.findViewById(R.id.ownerTextView); //
             mEntertainmentLikes = mView.findViewById(R.id.likeCounterTextView);
             mFirebaseDatabase = FirebaseDatabase.getInstance();
             mFirebaseAuth = FirebaseAuth.getInstance();
             mLikesDatabaseReference = mFirebaseDatabase.getReference().child("Likes");
+            mBookmarksDatabaseReference = mFirebaseDatabase.getReference().child("Bookmarks");
             mLikesDatabaseReference.keepSynced(true);
         }
 
@@ -385,6 +419,29 @@ public class MainActivity extends AppCompatActivity {
 
                     }else {
                         mLikeButton.setImageResource(R.drawable.ic_fav_border);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        void setbookmarkButton(final String mEntertainmentKey){
+
+            mBookmarksDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    assert mFirebaseAuth.getCurrentUser() != null;
+                    if(dataSnapshot.child(mFirebaseAuth.getCurrentUser().getUid()).child(mEntertainmentKey).exists()){
+                        mBookmarkButton.setImageResource(R.drawable.ic_action_bookmark_red);
+
+                    }else {
+                        mBookmarkButton.setImageResource(R.drawable.ic_action_bookmark);
 
                     }
                 }
