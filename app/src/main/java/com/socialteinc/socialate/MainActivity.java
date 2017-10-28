@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -180,6 +181,14 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setPhotoUrl(model.getPhotoUrl());
                 viewHolder.setLikeButton(mEntertainmentKey);
                 viewHolder.setLikeNumber(mEntertainmentKey);
+
+                viewHolder.mShareButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent share = createShareEntertainmentIntent(mEntertainmentName);
+                        startActivity(share);
+                    }
+                });
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -367,6 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
         View mView;
         ImageView mLikeButton;
+        ImageView mShareButton;
         TextView mEntertainmentLikes;
         TextView mEntertainmentOwner; //
         FirebaseDatabase mFirebaseDatabase;
@@ -377,6 +387,7 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
             mView = itemView;
             mLikeButton = mView.findViewById(R.id.likeButton);
+            mShareButton = mView.findViewById(R.id.shareButton);
             mEntertainmentOwner = mView.findViewById(R.id.ownerTextView); //
             mEntertainmentLikes = mView.findViewById(R.id.likeCounterTextView);
             mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -483,6 +494,13 @@ public class MainActivity extends AppCompatActivity {
 
         return cm.getActiveNetworkInfo() != null;
 
+    }
+
+    private Intent createShareEntertainmentIntent(String mEventName) {
+        return ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText( mEventName + "-Come check out this place #SocialateApp")
+                .getIntent();
     }
 
 }
