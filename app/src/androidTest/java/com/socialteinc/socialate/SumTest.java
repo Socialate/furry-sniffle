@@ -42,13 +42,20 @@ public class SumTest {
     @Test
     @SmallTest
     public void test1() throws Exception{
-        Looper.prepare();
+        //Looper.prepare();
         Sum obj = new Sum();
         String description = "I am a summary mdsafm adfbsdhgfg afbgj afhhajg afgjagj fjagjfg kjjajgfgs sfsjg sgfjgj jsdgfjgs sjfdgjg jsgfjsg" +
                 "shgsj sdhfjg jsdbjhf sjdfh jsdgfj sdgjg jjjskdh dskkhfk";
         String summary = obj.summarize(description);
 
         assertEquals(summary , Sum.summarize(description));
+    }
+
+    @Test
+    @SmallTest
+    public void test2() throws Exception{
+        String description = "I am a paragraph. I am a paragraph. I am a paragraph.\n\n  I am a paragraph. I am a paragraph. I am a paragraph. I am a paragraph";
+        Sum.summarize(description);
 
     }
 
