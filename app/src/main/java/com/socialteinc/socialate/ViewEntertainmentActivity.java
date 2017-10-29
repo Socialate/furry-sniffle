@@ -326,6 +326,7 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         final String get_selected = mCostSpinner.getSelectedItem().toString();
 
         if(!TextUtils.isEmpty(get_selected)){
+            assert mFirebaseAuth.getCurrentUser() != null;
             final String uid = mFirebaseAuth.getCurrentUser().getUid();
 
             if(!TextUtils.isEmpty(uid)) {
