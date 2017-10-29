@@ -42,8 +42,6 @@ import static android.support.v4.content.ContextCompat.startActivity;
 public class ViewOtherUserProfileTest {
 
     FirebaseAuth mAuth;
-//    DatabaseReference mUsersDatabaseReference;
-//    FirebaseDatabase mFireBaseDatabase;
 
     @Rule
     public ActivityTestRule<ViewOtherUserProfile> rule2 = new ActivityTestRule<>(ViewOtherUserProfile.class);

@@ -105,6 +105,10 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
         mEntertainmentName = intent.getStringExtra("entertainmentName");
         mEntertainmentKey = intent.getStringExtra("entertainmentKey");
         //Log.d(TAG, "onCreate: "+ mEntertainmentKey);
+        // Testing purposes
+        if(mEntertainmentKey == null){
+            mEntertainmentKey = "-KuWs0YVBB_nWlC03LrE";
+        }
 
         // Initialize references to views
         mEntertainmentImage = findViewById(R.id.ViewAddedAreaImageView);
@@ -165,10 +169,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
             }
         });
 
-        // Testing purposes
-        if(mEntertainmentKey == null){
-            mEntertainmentKey = "-KuWs0YVBB_nWlC03LrE";
-        }
         mEventsDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
 
             @Override
