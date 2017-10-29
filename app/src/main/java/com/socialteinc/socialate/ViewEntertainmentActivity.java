@@ -327,9 +327,9 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         if(!TextUtils.isEmpty(get_selected)){
             assert mFirebaseAuth.getCurrentUser() != null;
-            final String uid = mFirebaseAuth.getCurrentUser().getUid();
+            //final String uid = mFirebaseAuth.getCurrentUser().getUid();
 
-            if(!TextUtils.isEmpty(uid)) {
+            if(!TextUtils.isEmpty(mFirebaseAuth.getCurrentUser().getUid())) {
                 if(TextUtils.equals(get_selected,"How costly is this place for you?")){
                     mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
                 }else{
