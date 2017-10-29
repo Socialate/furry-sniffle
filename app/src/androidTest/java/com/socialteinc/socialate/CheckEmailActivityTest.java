@@ -39,9 +39,15 @@ public class CheckEmailActivityTest {
         onView(withId(R.id.nextButton)).perform(click());
     }
 
-    /*@Test
-    public void ValidEmailTest(){
-        onView(withId(R.id.emailEditText)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
-        onView(withId(R.id.nextButton)).perform(click());
-    }*/
+    @Test
+    public void CheckEmailTest() throws Exception{
+        //onView(withId(R.id.emailEditText)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
+        //onView(withId(R.id.nextButton)).perform(click());
+        final String email1 = "joe@gmail.com";
+        final String email2 = "john@gmail.com";
+        CheckEmailActivity obj = new CheckEmailActivity();
+        obj.checkAccountEmailExistsInFirebase(email1);
+        obj.checkAccountEmailExistsInFirebase(email2);
+
+    }
 }

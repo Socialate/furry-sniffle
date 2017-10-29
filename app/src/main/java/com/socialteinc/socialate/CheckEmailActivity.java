@@ -93,7 +93,7 @@ public class CheckEmailActivity extends AppCompatActivity {
      sign up.
      Author Francis Tinashe Mudavanhu
      */
-    private void checkAccountEmailExistsInFirebase(final String email) {
+    public void checkAccountEmailExistsInFirebase(final String email) {
         FirebaseApp.initializeApp(this);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.fetchProvidersForEmail(email).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
