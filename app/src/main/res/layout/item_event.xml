@@ -54,6 +54,19 @@
                 android:text="@string/francis_tinashe_mudavanhu" android:textSize="24sp"
                 android:focusableInTouchMode="true" android:contextClickable="true" tools:ignore="UnusedAttribute"/>
 
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="0dp"
+            android:text="@string/mansa_night_club"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
         <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"
                                                       android:paddingStart="8dp"

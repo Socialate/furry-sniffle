@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.EventLogTags;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -186,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 final String mEntertainmentUploader = model.getUID();
 
                 viewHolder.setName(model.getName());
+                viewHolder.setDescription(Sum.summarize(model.getDescription()));
                 viewHolder.setOwner(model.getAuthor());
                 viewHolder.setPhotoUrl(model.getPhotoUrl());
                 viewHolder.setLikeButton(mEntertainmentKey);
@@ -496,6 +498,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+        }
+
+        public void setDescription(String description){
+            int MAX_CHAR = 100;
+            TextView event_description = mView.findViewById(R.id.descriptionTextView);
+
+            int maxLength = (description.length() < MAX_CHAR)?description.length():MAX_CHAR;
+            String inputString = description.substring(0, maxLength);
+            if(description.length() > MAX_CHAR){
+                inputString = inputString + "...";
+                event_description.setText(inputString);
+            }else {
+                event_description.setText(inputString);
+            }
         }
 
         public void setName(String title){
