@@ -109,7 +109,7 @@
                     android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".RegisterActivity"/>
-        <activity android:name=".Activity_nearby">
+        <activity android:name=".nearbyAreasActivity">
         </activity>
     </application>
 

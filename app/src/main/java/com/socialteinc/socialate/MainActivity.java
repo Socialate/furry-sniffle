@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onNearby(){
-        Intent nearby = new Intent(this, Activity_nearby.class);
+        Intent nearby = new Intent(this, nearbyAreasActivity.class);
         startActivity(nearby);
     }
 

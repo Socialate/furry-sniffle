@@ -33,7 +33,7 @@ import im.delight.android.location.SimpleLocation;
 
 import java.util.ArrayList;
 
-public class Activity_nearby extends AppCompatActivity {
+public class nearbyAreasActivity extends AppCompatActivity {
 
     private DatabaseReference ref;
     private DatabaseReference mEntertainmentref;
@@ -297,7 +297,7 @@ public class Activity_nearby extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent eventIntent = new Intent(Activity_nearby.this, ViewEntertainmentActivity.class);
+                    Intent eventIntent = new Intent(nearbyAreasActivity.this, ViewEntertainmentActivity.class);
                     eventIntent.putExtra("entertainmentName", (String) mDataset[pos].child("name").getValue());
                     eventIntent.putExtra("entertainmentKey", mDataset[pos].getKey());
                     startActivity(eventIntent);
