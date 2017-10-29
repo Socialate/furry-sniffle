@@ -2,16 +2,12 @@ package com.socialteinc.socialate;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 
 
-class SummaryTool{
-	ArrayList<Sentence> sentences, contentSummary;
-	ArrayList<Paragraph> paragraphs;
+public class SummaryTool{
+	private ArrayList<Sentence> sentences, contentSummary;
+	private ArrayList<Paragraph> paragraphs;
 	private int noOfSentences, noOfParagraphs;
-	private double[][] intersectionMatrix;
-	LinkedHashMap<Sentence,Double> dictionary;
-
 
 	SummaryTool(){
 		noOfSentences = 0;
@@ -19,10 +15,9 @@ class SummaryTool{
 	}
 
 	void init(){
-		sentences = new ArrayList<Sentence>();
-		paragraphs = new ArrayList<Paragraph>();
-		contentSummary = new ArrayList<Sentence>();
-		dictionary = new LinkedHashMap<Sentence,Double>();
+		sentences = new ArrayList<>();
+		paragraphs = new ArrayList<>();
+		contentSummary = new ArrayList<>();
 		noOfSentences = 0;
 		noOfParagraphs = 0;
 	}
@@ -33,12 +28,12 @@ class SummaryTool{
 		String[] paragraphs = description.split("(?m)^--$\\R?");
 		noOfParagraphs = paragraphs.length;
 		for(int i = 0; i < noOfParagraphs; i++){
-			String [] sentence = paragraphs[0].split("\\.|\\?|\\!");
-				for (int j = 0; j < sentence.length; j++){
-					sentences.add(new Sentence(noOfSentences,sentence[j],sentence[j].length(),i));
-					noOfSentences++;
+			String [] sentence = paragraphs[0].split("\\.|\\?|!");
+			for (String aSentence : sentence) {
+				sentences.add(new Sentence(noOfSentences, aSentence, aSentence.length(), i));
+				noOfSentences++;
 
-				}
+			}
 
 
 		}
@@ -49,13 +44,11 @@ class SummaryTool{
 		Paragraph paragraph = new Paragraph(0);
 
 		for(int i=0;i<noOfSentences;i++){
-			if(sentences.get(i).paragraphNumber == paraNum){
-				//continue
-			}else{
+			if (sentences.get(i).paragraphNumber != paraNum) {
 				paragraphs.add(paragraph);
 				paraNum++;
 				paragraph = new Paragraph(paraNum);
-				
+
 			}
 			paragraph.sentences.add(sentences.get(i));
 		}
@@ -78,7 +71,7 @@ class SummaryTool{
 	}
 
 	void createIntersectionMatrix(){
-		intersectionMatrix = new double[noOfSentences][noOfSentences];
+		double[][] intersectionMatrix = new double[noOfSentences][noOfSentences];
 		for(int i=0;i<noOfSentences;i++){
 			for(int j=0;j<noOfSentences;j++){
 
@@ -91,17 +84,6 @@ class SummaryTool{
 				}
 				
 			}
-		}
-	}
-
-	void createDictionary(){
-		for(int i=0;i<noOfSentences;i++){
-			double score = 0;
-			for(int j=0;j<noOfSentences;j++){
-				score+=intersectionMatrix[i][j];
-			}
-			dictionary.put(sentences.get(i), score);
-			sentences.get(i).score = score;
 		}
 	}
 
@@ -123,9 +105,9 @@ class SummaryTool{
 	}
 
 	String printSummary(){
-		String Summary = null;
+		String Summary = "";
 		for(Sentence sentence : contentSummary){
-			Summary = Summary+ " "+ sentence+".";
+			Summary = Summary+ " "+ sentence.value+".";
 		}
 		return Summary;
 	}

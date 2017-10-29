@@ -2,7 +2,7 @@ package com.socialteinc.socialate;
 
 import java.util.ArrayList;
 
-class Paragraph{
+public class Paragraph{
 	int number;
 	ArrayList<Sentence> sentences;
 

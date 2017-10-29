@@ -1,6 +1,6 @@
 package com.socialteinc.socialate;
 
-class Sentence{
+public class Sentence{
 	int stringLength;
 	int paragraphNumber;
 	int number;

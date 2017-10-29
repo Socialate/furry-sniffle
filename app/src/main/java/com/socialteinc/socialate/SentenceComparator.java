@@ -2,7 +2,7 @@ package com.socialteinc.socialate;
 
 import java.util.Comparator;
 
-class SentenceComparator  implements Comparator<Sentence>{
+public class SentenceComparator  implements Comparator<Sentence>{
 	@Override
 	public int compare(Sentence sentence, Sentence sentence1) {
 		if(sentence.score > sentence1.score){
