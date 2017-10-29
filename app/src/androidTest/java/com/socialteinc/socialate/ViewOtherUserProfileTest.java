@@ -81,19 +81,4 @@ public class ViewOtherUserProfileTest {
         onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void profileTest2() throws InterruptedException{
-//        Thread.sleep(8000);
-//
-//        //onView(withId(android.R.id.home)).perform(ViewActions.pressBack());
-//        //onView(isRoot()).perform(ViewActions.pressBack());
-//
-////        onView(withId(R.id.displayNameTextView)).check(matches(isDisplayed()));
-////        onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
-////        onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));
-////        onView(withId(R.id.imageView2)).check(matches(isDisplayed()));
-//
-//    }
-
-
 }
