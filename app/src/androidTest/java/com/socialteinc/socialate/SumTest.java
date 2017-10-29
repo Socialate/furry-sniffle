@@ -14,7 +14,8 @@ import static junit.framework.Assert.assertEquals;
 public class SumTest {
     @Test
     public void summarize() throws Exception {
-        assertEquals(Sum.summarize("A wiki is run using wiki software, otherwise known as a wiki engine. " +
+        Sum sum = new Sum();
+        assertEquals(sum.summarize("A wiki is run using wiki software, otherwise known as a wiki engine. " +
                         "A wiki engine is a type of content management system, but it differs from most other such systems, including blog software, " +
                         "in that the content is created without any defined owner or leader, and wikis have little implicit structure, " +
                         "allowing structure to emerge according to the needs of the users.[2] There are dozens of different wiki engines in use, " +
