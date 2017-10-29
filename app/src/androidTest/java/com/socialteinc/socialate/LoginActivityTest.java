@@ -6,16 +6,8 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.clearText;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -50,20 +42,20 @@ public class LoginActivityTest {
 //
 //    }
 //
-    @Test
-    public void noValidEmailTest() {
-        onView(withId(R.id.email_field)).perform(typeText("invalidsocialate.com"), closeSoftKeyboard());
-        onView(withId(R.id.password_field)).perform(typeText("furry"), closeSoftKeyboard());
-        onView(withId(R.id.SinginButton)).perform(click());
-    }
-
-    @Test
-    public void noValidPasswordTest(){
-        onView(withId(R.id.email_field)).perform(typeText("invalid@socialate.com"), closeSoftKeyboard());
-        onView(withId(R.id.password_field)).perform(typeText("furry"), closeSoftKeyboard());
-        onView(withId(R.id.password_field)).perform(clearText());
-        onView(withId(R.id.SinginButton)).perform(click());
-    }
+//    @Test
+//    public void noValidEmailTest() {
+//        onView(withId(R.id.email_field)).perform(typeText("invalidsocialate.com"), closeSoftKeyboard());
+//        onView(withId(R.id.password_field)).perform(typeText("furry"), closeSoftKeyboard());
+//        onView(withId(R.id.SinginButton)).perform(click());
+//    }
+//
+//    @Test
+//    public void noValidPasswordTest(){
+//        onView(withId(R.id.email_field)).perform(typeText("invalid@socialate.com"), closeSoftKeyboard());
+//        onView(withId(R.id.password_field)).perform(typeText("furry"), closeSoftKeyboard());
+//        onView(withId(R.id.password_field)).perform(clearText());
+//        onView(withId(R.id.SinginButton)).perform(click());
+//    }
 //
 //    @Test
 //    public void loginTesting() throws InterruptedException {
