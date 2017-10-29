@@ -1,26 +1,25 @@
-package com.socialteinc.socialate;
+//package com.socialteinc.socialate;
+//
+//
+//import android.support.test.runner.AndroidJUnit4;
+//
+//import org.junit.FixMethodOrder;
+//import org.junit.runner.RunWith;
+//import org.junit.runners.MethodSorters;
+//
+//@RunWith(AndroidJUnit4.class)
+//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+//public class LoginActivityTest {
 
-
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-
-import org.junit.FixMethodOrder;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-
-@RunWith(AndroidJUnit4.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LoginActivityTest {
-
-    @Rule
-    public ActivityTestRule<LoginActivity> main = new ActivityTestRule<>(LoginActivity.class);
+//    @Rule
+//    public ActivityTestRule<LoginActivity> main = new ActivityTestRule<>(LoginActivity.class);
 
 //    @Before
 //    public void startActivity(){
 //        main.getActivity();
 //    }
 //
+
 //    @Test
 //    public void isDisplayedTest() throws InterruptedException{
 //        Thread.sleep(2000);
@@ -86,4 +85,4 @@ public class LoginActivityTest {
 //
 //    }
 
-}
+//}

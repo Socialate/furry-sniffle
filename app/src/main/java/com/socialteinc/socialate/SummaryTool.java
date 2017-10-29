@@ -4,38 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class SummaryTool{
-	private ArrayList<Sentence> sentences, contentSummary;
-	private ArrayList<Paragraph> paragraphs;
-	private int noOfSentences, noOfParagraphs;
+class SummaryTool{
+    private ArrayList<Sentence> sentences = new ArrayList<>();
+    private ArrayList<Paragraph> paragraphs = new ArrayList<>();
+    private ArrayList<Sentence> contentSummary = new ArrayList<>();
+    private int noOfSentences = 0;
+    private int noOfParagraphs = 0;
 
-	SummaryTool(){
-		noOfSentences = 0;
-		noOfParagraphs = 0;
-	}
-
-	void init(){
-		sentences = new ArrayList<>();
-		paragraphs = new ArrayList<>();
-		contentSummary = new ArrayList<>();
-		noOfSentences = 0;
-		noOfParagraphs = 0;
-	}
 
 	/*Gets the sentences from the entire passage*/
 	void extractSentenceFromContext(String description){
 
-		String[] paragraphs = description.split("(?m)^--$\\R?");
+		String[] paragraphs = description.split("(?m)(?=^\\n{2})");
 		noOfParagraphs = paragraphs.length;
 		for(int i = 0; i < noOfParagraphs; i++){
 			String [] sentence = paragraphs[0].split("\\.|\\?|!");
 			for (String aSentence : sentence) {
 				sentences.add(new Sentence(noOfSentences, aSentence, aSentence.length(), i));
 				noOfSentences++;
-
 			}
-
-
 		}
 	}
 

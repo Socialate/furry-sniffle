@@ -1,6 +1,6 @@
 package com.socialteinc.socialate;
 
-public class Sentence{
+class Sentence{
 	int stringLength;
 	int paragraphNumber;
 	int number;
@@ -11,7 +11,7 @@ public class Sentence{
 	Sentence(int number, String value, int stringLength, int paragraphNumber){
 		this.number = number;
 		this.stringLength = stringLength;
-		this.value = new String(value);
+		this.value = value;
 		noOfWords = value.split("\\s+").length;
 		score = 0.0;
 		this.paragraphNumber=paragraphNumber;
