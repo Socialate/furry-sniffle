@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -29,8 +30,7 @@ import org.junit.runners.MethodSorters;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeUp;
+import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
@@ -100,7 +100,6 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @SmallTest
     public void ViewTest3() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);
@@ -115,7 +114,6 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @SmallTest
     public void ViewTest31() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);
@@ -130,7 +128,6 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @SmallTest
     public void ViewTest32() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);
@@ -145,7 +142,6 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @SmallTest
     public void ViewTest33() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);
@@ -157,6 +153,24 @@ public class ViewEntertainmentTest2 {
         onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
         onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
         Thread.sleep(4000);
+    }
+
+    @Test
+    @MediumTest
+    public void ViewTest4() throws InterruptedException{
+        rule2.getActivity();
+        Thread.sleep(20000);
+        onView(isRoot()).perform(swipeUp());
+        Thread.sleep(2000);
+
+        onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.commentEditText)).perform(typeText("Auto-Generated test #Testing"));
+        onView(withId(R.id.commentImageButton)).perform(click());
+
+        Thread.sleep(5000);
     }
 
 }

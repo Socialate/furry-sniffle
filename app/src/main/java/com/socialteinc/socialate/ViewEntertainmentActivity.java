@@ -325,15 +325,25 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private void CostSpinner(){
         final String get_selected = mCostSpinner.getSelectedItem().toString();
 
+        // Declare -- for testing
+        FirebaseDatabase mFireBaseDatabase2;
+        DatabaseReference mCostDatabaseReference2;
+        FirebaseAuth mFirebaseAuth2;
+
+        FirebaseApp.initializeApp(this);
+        mFireBaseDatabase2 = FirebaseDatabase.getInstance();
+        mCostDatabaseReference2 = mFireBaseDatabase2.getReference().child("cost");
+        mFirebaseAuth2 = FirebaseAuth.getInstance();
+
         if(!TextUtils.isEmpty(get_selected)){
-            assert mFirebaseAuth.getCurrentUser() != null;
+            assert mFirebaseAuth2.getCurrentUser() != null;
             //final String uid = mFirebaseAuth.getCurrentUser().getUid();
 
-            if(!TextUtils.isEmpty(mFirebaseAuth.getCurrentUser().getUid())) {
+            if(!TextUtils.isEmpty(mFirebaseAuth2.getCurrentUser().getUid())) {
                 if(TextUtils.equals(get_selected,"How costly is this place for you?")){
-                    mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
+                    mCostDatabaseReference2.child(mEntertainmentKey).child(mFirebaseAuth2.getCurrentUser().getUid()).removeValue();
                 }else{
-                    mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(get_selected);
+                    mCostDatabaseReference2.child(mEntertainmentKey).child(mFirebaseAuth2.getCurrentUser().getUid()).setValue(get_selected);
                 }
             }
 
