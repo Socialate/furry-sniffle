@@ -17,6 +17,10 @@ class Sentence{
 		this.paragraphNumber=paragraphNumber;
 	}
 
+	public Sentence() {
+
+	}
+
 	public void setStringLength(int stringLength) {
 		this.stringLength = stringLength;
 	}
