@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.os.Looper;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
@@ -45,7 +46,8 @@ public class CheckEmailActivityTest {
         //onView(withId(R.id.nextButton)).perform(click());
         final String email1 = "joe@gmail.com";
         final String email2 = "john@gmail.com";
-        CheckEmailActivity obj = new CheckEmailActivity();
+        Looper.prepare();
+        final CheckEmailActivity obj = new CheckEmailActivity();
         obj.checkAccountEmailExistsInFirebase(email1);
         obj.checkAccountEmailExistsInFirebase(email2);
 

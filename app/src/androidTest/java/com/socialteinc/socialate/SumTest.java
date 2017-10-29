@@ -42,8 +42,8 @@ public class SumTest {
     @Test
     @SmallTest
     public void test1() throws Exception{
-        //Looper.prepare();
-        Sum obj = new Sum();
+        Looper.prepare();
+        final Sum obj = new Sum();
         String description = "I am a summary mdsafm adfbsdhgfg afbgj afhhajg afgjagj fjagjfg kjjajgfgs sfsjg sgfjgj jsdgfjgs sjfdgjg jsgfjsg" +
                 "shgsj sdhfjg jsdbjhf sjdfh jsdgfj sdgjg jjjskdh dskkhfk";
         String summary = obj.summarize(description);
