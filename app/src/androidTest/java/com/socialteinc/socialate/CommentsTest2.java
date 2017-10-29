@@ -70,22 +70,22 @@ public class CommentsTest2 {
     }
 
 
-//    @Test
-//    public void isDisplayedTest() throws InterruptedException {
-//        Thread.sleep(15000);
-//
-//        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
-//        onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
-//        onView(withId(R.id.ViewAddedAreaImageView)).check(matches(isDisplayed()));
-//        onView(withId(R.id.authorImageView)).check(matches(isDisplayed()));
-//
-//        onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
-//
-//        onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
-//        onView(withId(R.id.navigationImageView)).check(matches(isDisplayed()));
-//        //onView(withId(R.id.de)).check(matches(isDisplayed()));
-//
-//    }
+    @Test
+    public void isDisplayedTest() throws InterruptedException {
+        Thread.sleep(15000);
+
+        onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
+        onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
+        onView(withId(R.id.ViewAddedAreaImageView)).check(matches(isDisplayed()));
+        onView(withId(R.id.authorImageView)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.ViewAddedAreaImageView)).perform(swipeUp());
+
+        onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
+        onView(withId(R.id.navigationImageView)).check(matches(isDisplayed()));
+        //onView(withId(R.id.de)).check(matches(isDisplayed()));
+
+    }
 
     @Test
     public void testComment() throws InterruptedException{
