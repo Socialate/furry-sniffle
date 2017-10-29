@@ -1,13 +1,23 @@
 package com.socialteinc.socialate;
 
 
+import android.app.Fragment;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,11 +25,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -36,17 +52,25 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mEventsDatabaseReference;
     private DatabaseReference mLikesDatabaseReference;
+    private DatabaseReference mCostDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private Boolean mProcessLike = false;
+
+    SharedPreferences msharedPref;
 
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
+        if(!isConnected()){
+            Snackbar sb = Snackbar.make(findViewById(R.id.layout_main_activity), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+            View v = sb.getView();
+            v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+            sb.show();
+        }
         // Initialize references to views
         mToolbar = findViewById(R.id.mainPageToolBar);
         mEntertainmentSpotRecyclerView = findViewById(R.id.entertainmentSpotRecyclerView);
@@ -70,10 +94,12 @@ public class MainActivity extends AppCompatActivity {
         mEventsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUsersDatabaseReference = mFireBaseDatabase.getReference().child("users");
         mLikesDatabaseReference = mFireBaseDatabase.getReference().child("Likes");
+        mCostDatabaseReference = mFireBaseDatabase.getReference().child("cost");
 
         mUsersDatabaseReference.keepSynced(true);
         mEventsDatabaseReference.keepSynced(true);
         mLikesDatabaseReference.keepSynced(true);
+        mCostDatabaseReference.keepSynced(true);
 
         // Initialize Firebase AuthStateListener to listen for changes in authentication
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -83,16 +109,20 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 if(user == null){
-
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                     finish();
+
                 }
             }
         };
 
         checkProfileExist();
+        /**Checks if initial settings value is present**/
+        msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        //int syncConnPref = msharedPref.getInt("bar_val", 50);
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -100,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
      * and if not the user is redirected to the pofile set up page
      * before they can look at the data on the application
      */
-    private void checkProfileExist() {
+    public void checkProfileExist() {
 
         if(mFirebaseAuth.getCurrentUser() != null){
 
@@ -139,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 mEventsDatabaseReference
         ) {
             @Override
-            protected void populateViewHolder(EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
+            protected void populateViewHolder(final EntertainmentSpotAdapterViewHolder viewHolder, Entertainment model, int position) {
 
                 final String mEntertainmentKey = getRef(position).getKey();
                 final String mEntertainmentName = model.getName();
@@ -169,6 +199,19 @@ public class MainActivity extends AppCompatActivity {
                         Intent profileViewIntent = new Intent(getApplicationContext(), ViewOtherUserProfile.class);
                         profileViewIntent.putExtra("entertainmentUploader", mEntertainmentUploader);
                         startActivity(profileViewIntent);
+                    }
+                });
+
+                mCostDatabaseReference.child(mEntertainmentKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String get_rating = (String) dataSnapshot.child("Average cost rating").getValue();
+                        viewHolder.setAverageCost(get_rating);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                     }
                 });
 
@@ -228,17 +271,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search_btn).getActionView();
+
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.requestFocus(1);
+        //searchView.setSubmitButtonEnabled(true);
+
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if(id == R.id.action_add_entertainment){
-            onAddEntertainment();
-            return true;
-        }
 
         if(id == R.id.action_view_edit_profile){
             onEditProfile();
@@ -248,14 +299,49 @@ public class MainActivity extends AppCompatActivity {
             onLogout();
             return true;
         }
+        if(id == R.id.action_settings){
+            launchFrag();
+            setVisibility(0);
+
+            return true;
+        }
+        if(id == android.R.id.home){
+            getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentByTag("settings pref")).commit();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            setVisibility(1);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+    private void launchFrag() {
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Settings");
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(View.GONE);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new preferencesFrag(),"settings pref")
+                .commit();
+    }
+    @Override
+    public void onBackPressed() {
+        Fragment p = getFragmentManager().findFragmentByTag("settings pref");
+        if ((p).isVisible()) {
+            getFragmentManager().beginTransaction().remove(p).commit();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("Socialate");
+            setVisibility(1);
+
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     /**
      * This function launches add entertainment activity to create a new spot
      */
-    private void onAddEntertainment(){
+    public void onAddEntertainment(View v){
         Intent addEntertainmentIntent = new Intent(this, AddEntertainmentActivity.class);
         startActivity(addEntertainmentIntent);
     }
@@ -271,7 +357,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * this function logs users out of firebase and the app.
      */
-    private void onLogout() { mFirebaseAuth.signOut(); }
+    public boolean onLogout() {
+        mFirebaseAuth.signOut();
+        LoginManager.getInstance().logOut();
+        return true;
+        }
 
     public static class EntertainmentSpotAdapterViewHolder extends RecyclerView.ViewHolder{
 
@@ -339,6 +429,18 @@ public class MainActivity extends AppCompatActivity {
             event_title.setText(title);
         }
 
+        private void setAverageCost(String cost){
+            TextView average_cost = mView.findViewById(R.id.averageCostTextView);
+            if(TextUtils.isEmpty(cost) || cost.equals("No Rating")){
+                average_cost.setVisibility(View.GONE);
+
+            }else {
+                //average_cost.setVisibility(View.VISIBLE);
+                average_cost.setText("Average cost: "+cost);
+            }
+
+        }
+
         void setOwner(String author){
             mEntertainmentOwner.setText(author);
         }
@@ -349,19 +451,38 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(event_image.getContext())
                     .load(image)
                     .into(event_image, new Callback() {
-                @Override
-                public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
-                }
+                        @Override
+                        public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                        }
 
-                @Override
-                public void onError() {
+                        @Override
+                        public void onError() {
 
-                }
-            });
+                        }
+                    });
         }
     }
 
+    public boolean setVisibility(int v){
+        if(v == 0){
+            v = View.INVISIBLE;
+        }
+        else{
+            v = View.VISIBLE;
+        }
+        (findViewById(R.id.floatingActionButton)).setVisibility(v);
+        (findViewById(R.id.search_btn)).setVisibility(v);
+        (findViewById(R.id.entertainmentSpotRecyclerView)).setVisibility(v);
 
+        return true;
+    }
+
+    public boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+
+    }
 
 }

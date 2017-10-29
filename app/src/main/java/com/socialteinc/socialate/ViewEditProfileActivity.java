@@ -19,9 +19,12 @@ import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ViewEditProfileActivity extends AppCompatActivity {
 
@@ -53,7 +56,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     private static final int GALLERY_REQUEST_CODE = 1;
     private String mAuthor;
-    private String mUsersKey;
+    public String mUsersKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mProfileDatabaseReference = mFireBaseDatabase.getReference().child("users");
-        mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
+        //mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
 
         mUsersKey = mFirebaseAuth.getCurrentUser().getUid();
@@ -111,7 +114,6 @@ public class ViewEditProfileActivity extends AppCompatActivity {
                 String user_phone = (String) dataSnapshot.child("phone number").getValue();
                 String user_address = (String) dataSnapshot.child("physical address").getValue();
                 String user_gender = (String) dataSnapshot.child("gender").getValue();
-                //imageUri = (Uri) dataSnapshot.child("profileImage").getValue();
                 String user_email = mFirebaseAuth.getCurrentUser().getEmail();
 
                 getDisplayName.setText(user_display);
@@ -124,7 +126,16 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
                 Picasso.with(getApplicationContext())
                         .load(user_image)
-                        .into(getProfilePicture);
+                        .into(getProfilePicture, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                (findViewById(R.id.ViewProfileProgress4)).setVisibility(View.GONE);
+                            }
+                            @Override
+                            public void onError() {
+                            }
+                        });
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -158,7 +169,7 @@ public class ViewEditProfileActivity extends AppCompatActivity {
 
     }
 
-    private void updateAccount(){
+    public void updateAccount(){
         final String user_id = mFirebaseAuth.getCurrentUser().getUid();
         final String full_name = getFullName.getText().toString();
         final String display_name = getDisplayName.getText().toString();
@@ -168,48 +179,61 @@ public class ViewEditProfileActivity extends AppCompatActivity {
         final String home_address = getHome_address.getText().toString();
         final String gender_selected = getGender.getSelectedItem().toString();
 
-        if(imageUri == null){
+       /* if(imageUri == null){
             imageUri = Uri.parse("android.resourse://com.socialteinc.socialate/drawable/eventplaceholder.jpg");
-        }
+        }*/
 
-        if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(full_name) && !TextUtils.isEmpty(display_name) && !TextUtils.isEmpty(email) &&  imageUri != null) {
+        if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(full_name) && !TextUtils.isEmpty(display_name) && !TextUtils.isEmpty(email)) {
 
-            Log.d("MyAPP", "started Upload");
-            StorageReference filepath = mStorageReference.child(user_id);
+            //Log.d("MyAPP", "started Upload");
+            mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
+            mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
+            mProfileDatabaseReference.child(user_id).child("description").setValue(description);
+            mProfileDatabaseReference.child(user_id).child("phone number").setValue(phone_number);
+            mProfileDatabaseReference.child(user_id).child("physical address").setValue(home_address);
+            mProfileDatabaseReference.child(user_id).child("gender").setValue(gender_selected);
 
-            filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d("MyAPP","Upload is successful");
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            if(imageUri != null){
+                StorageReference filepath = mStorageReference.child(user_id);
 
-                    mProfileDatabaseReference.child(user_id).child("name").setValue(full_name);
-                    mProfileDatabaseReference.child(user_id).child("displayName").setValue(display_name);
-                    mProfileDatabaseReference.child(user_id).child("description").setValue(description);
-                    mProfileDatabaseReference.child(user_id).child("phone number").setValue(phone_number);
-                    mProfileDatabaseReference.child(user_id).child("physical address").setValue(home_address);
-                    mProfileDatabaseReference.child(user_id).child("gender").setValue(gender_selected);
+                filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Log.d("MyAPP","Upload is successful");
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                    assert downloadUrl != null;
-                    mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
-                    mProgressDialog.dismiss();
-                    Toast.makeText(ViewEditProfileActivity.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
+                        assert downloadUrl != null;
+                        mProfileDatabaseReference.child(user_id).child("profileImage").setValue(downloadUrl.toString());
 
-                    Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mainIntent);
-                    finish();
+                        mProgressDialog.dismiss();
+                        Toast.makeText(ViewEditProfileActivity.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
+                        Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
+                        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainIntent);
+                        finish();
 
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    mProgressDialog.dismiss();
-                    Log.d("MyAPP","Upload failed");
-                    Toast.makeText(ViewEditProfileActivity.this, "Failed to update your profile, please try again.", Toast.LENGTH_LONG).show();
-                }
-            });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mProgressDialog.dismiss();
+                        //Log.d("MyAPP","Upload failed");
+                        Toast.makeText(ViewEditProfileActivity.this, "Failed to update your profile, please try again.", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }else {
+                mProgressDialog.dismiss();
+                Toast.makeText(ViewEditProfileActivity.this, "Profile successfully updated", Toast.LENGTH_LONG).show();
+
+                Intent mainIntent = new Intent(ViewEditProfileActivity.this, MainActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainIntent);
+                finish();
+
+            }
+
         }
     }
 

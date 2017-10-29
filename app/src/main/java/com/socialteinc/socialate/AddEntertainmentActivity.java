@@ -53,7 +53,7 @@ import java.util.Date;
 public class AddEntertainmentActivity extends AppCompatActivity /*implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener*/{
 
-    private String TAG =AddEntertainmentActivity.class.getSimpleName();
+    //private String TAG =AddEntertainmentActivity.class.getSimpleName();
     private static final String ANONYMOUS = "anonymous";
     private final static int MY_PERMISSION_FINE_LOCATION=101;
 
@@ -306,8 +306,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         }
 
         if(!TextUtils.isEmpty(mAuthor) && !TextUtils.isEmpty(title_val) && !TextUtils.isEmpty(address_val) && !TextUtils.isEmpty(description_val) &&  imageUri != null){
-
-            Log.d("MyAPP","started Upload");
+           // Log.d("MyAPP","started Upload");
 
             StorageReference filepath = mStorageReference.child(imageNameGenerator());
 
@@ -315,8 +314,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
                 @Override
                 public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-
-                    Log.d("MyAPP","Upload is successful");
+                    //Log.d("MyAPP","Upload is successful");
 
                     final Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
@@ -357,6 +355,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                                         Intent mainIntent = new Intent(AddEntertainmentActivity.this, MainActivity.class);
                                         startActivity(mainIntent);
                                         finish();
+                                        Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_SHORT).show();
 
                                     } else {
                                         mProgressDialog.dismiss();
@@ -379,7 +378,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d("MyAPP","Upload failed");
+                    //Log.d("MyAPP","Upload failed");
                 }
             });
         }
@@ -390,6 +389,32 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap;
+        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+
+            imageUri = data.getData();
+            mEntertainmentImageView.setImageURI(imageUri);
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(2,2)
+                    .start(this);
+            //mEntertainmentImageView.setImageBitmap(bitmap);
+        }
+        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+
+                imageUri = result.getUri();
+                mEntertainmentImageView.setImageURI(imageUri);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(AddEntertainmentActivity.this, "Failed to get profile picture, Try Again.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
     //This function downscales the image size
     private Bitmap getThumbnailBitmap(final String path, final int thumbnailSize) {

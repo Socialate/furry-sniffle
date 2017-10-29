@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
-        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:id="@+id/viewEntertainment_activity" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
@@ -48,9 +48,9 @@
 
         <android.support.v7.widget.CardView android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:elevation="5dp"
-        app:cardUseCompatPadding="true">
+                                            android:layout_marginBottom="16dp"
+                                            android:elevation="5dp"
+                                            app:cardUseCompatPadding="true" android:id="@+id/cardView1">
 
             <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                           android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                                android:layout_height="wrap_content"
                                android:contentDescription="@string/entetainment_spot_owner"
                                android:src="@mipmap/ic_owner"
-                               android:layout_weight="1"/>
+                               android:layout_weight="1" android:id="@+id/authorImageView"/>
 
                     <TextView
                             android:layout_gravity="center_vertical"
@@ -85,11 +85,14 @@
                                                               android:orientation="horizontal"
                                                               android:padding="12dp">
 
-                    <ImageView android:layout_width="0dp"
-                               android:layout_height="wrap_content"
-                               android:contentDescription="@string/entertainment_spot_address"
-                               android:src="@mipmap/ic_address"
-                               android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/navigationImageView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/entertainment_spot_address"
+                        android:paddingTop="8dp"
+                        android:src="@drawable/ic_address" />
 
                     <TextView
                             android:layout_gravity="center_vertical"
@@ -104,7 +107,6 @@
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
-
                 <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               android:orientation="horizontal"
@@ -114,7 +116,7 @@
                                android:layout_height="wrap_content"
                                android:contentDescription="@string/entertainment_spot_description"
                                android:src="@mipmap/ic_description"
-                               android:layout_weight="1"/>
+                               android:layout_weight="1" android:id="@+id/descriptImageView"/>
 
                     <TextView
                             android:layout_gravity="center_vertical"
@@ -128,27 +130,88 @@
                             android:textColor="@color/colorPrimaryText"/>
 
                 </android.support.v7.widget.LinearLayoutCompat>
+
                 <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
                                                               android:layout_height="wrap_content"
                                                               android:orientation="horizontal"
                                                               android:padding="12dp">
 
-                    <TextView
-                            android:layout_gravity="center_vertical"
-                            android:padding="12dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:layout_weight="9"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/comment"
-                            android:textColor="@color/colorPrimaryText" android:text="Comment"
-                            tools:ignore="HardcodedText"/>
+                    <ImageView android:layout_width="0dp"
+                               android:layout_height="47dp"
+                               android:layout_weight="1"
+                               android:id="@+id/averageCostImageView"
+                               app:srcCompat="@android:drawable/ic_menu_info_details"
+                               tools:ignore="ContentDescription"/>
+
+                    <android.support.v7.widget.LinearLayoutCompat android:layout_width="0dp"
+                                                                  android:layout_height="wrap_content"
+                                                                  android:padding="12dp"
+                                                                  android:layout_weight="9"
+                                                                  android:layout_gravity="center_vertical"
+                                                                  android:background="@drawable/spinner">
+
+                        <Spinner android:layout_width="match_parent"
+                                 android:layout_height="match_parent"
+                                 android:id="@+id/averageCostSpinner"
+                                 android:popupBackground="@color/colorPrimary"
+                                 android:entries="@array/cost"
+                                 tools:ignore="UnusedAttribute"
+                                 android:spinnerMode="dialog"
+                                 style="@style/Platform.Widget.AppCompat.Spinner">
+
+                        </Spinner>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
 
                 </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView android:layout_width="0dp"
+                                                            android:id="@+id/comment_recyclerView"
+                                                            android:scrollbars="vertical"
+                                                            android:layout_marginRight="8dp"
+                                                            app:layout_constraintRight_toRightOf="parent"
+                                                            android:layout_marginLeft="8dp"
+                                                            app:layout_constraintLeft_toLeftOf="parent"
+                                                            app:layout_constraintTop_toTopOf="parent"
+                                                            android:layout_marginTop="8dp"
+                                                            app:layout_constraintHorizontal_bias="0.0"
+                                                            android:layout_height="200dp">
+
+                    </android.support.v7.widget.RecyclerView>
+
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.v7.widget.LinearLayoutCompat android:layout_width="match_parent"
+                                                              android:layout_height="wrap_content"
+                                                              android:padding="12dp"
+                                                              android:orientation="horizontal">
+
+                    <EditText android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="8"
+                              android:padding="12dp" android:inputType="textMultiLine"
+                              android:id="@+id/commentEditText"
+                              android:hint="@string/write_a_comment"/>
+
+                    <ImageButton android:layout_width="0dp"
+                                 android:layout_height="match_parent"
+                                 android:layout_weight="2"
+                                 app:srcCompat="@android:drawable/ic_menu_send"
+                                 android:elevation="0dp" android:tint="@color/colorWhite"
+                                 android:scaleType="fitCenter" android:id="@+id/commentImageButton"
+                                 android:backgroundTint="@color/colorPrimaryLight" android:contentDescription=""
+                                 tools:ignore="ContentDescription"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
             </android.support.v7.widget.LinearLayoutCompat>
         </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
-    
+
     <android.support.design.widget.FloatingActionButton android:layout_width="wrap_content"
                                                         android:layout_height="wrap_content"
                                                         android:id="@+id/likeFloatingActionButton"

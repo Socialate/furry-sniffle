@@ -1,4 +1,8 @@
 <resources>
+
+    <string name="facebook_app_id">125133701478821</string>
+    <string name="fb_login_protocol_scheme">fb125133701478821</string>
+
     <string name="app_name">Socialate</string>
     <string name="email_registration">Email Registration</string>
     <string name="next">next</string>
@@ -20,7 +24,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="socialate">SOCIALATE</string>
-    <string name="need_an_account">Need an account? </string>
+    <string name="need_an_account">Need an account?</string>
     <string name="click_here">Click here.</string>
     <string name="add_entertainment_spot">Add Entertainment Spot</string>
     <string name="logout">Logout</string>
@@ -63,8 +67,18 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <array name="gender">
+        <item>Select gender</item>
         <item>Male</item>
         <item>Female</item>
+    </array>
+    <string name="affordable">Low Cost</string>
+    <string name="mediumPrice">Medium Cost</string>
+    <string name="highPrice">High Cost</string>
+    <array name="cost">
+        <item>How costly is this place for you?</item>
+        <item>Low Cost</item>
+        <item>Medium Cost</item>
+        <item>High Cost</item>
     </array>
     <string name="image_for_the_entertainment_spot">Image for the entertainment spot</string>
     <string name="francis_tinashe_mudavanhu">Francis Tinashe Mudavanhu</string>
@@ -86,4 +100,31 @@
     <string name="name_nsfvvashfhjgafjag">Name NSFVVASHFHJGAFJAG</string>
     <string name="textview">TextView</string>
     <string name="textview2">TextView</string>
+    <string name="action_search">Search</string>
+    <string name="app_label">Socialate</string>
+    <string name="search_hint">Search for a spot</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="search_desc">search option</string>
+    <string name="write_a_comment">Write a comment...</string>
+    <string name="multiautocompletetextview_ajfgajhgfjgahdfg">MultiAutoCompleteTextView ajfgajhgfjgahdfg</string>
+    <string name="musa_rikhotso">Musa Rikhotso</string>
+    <string name="musa_rikhotso1">Musa Rikhotso</string>
+    <string name="_2017_08_20_14_00pm">2017-08-20 14:00pm</string>
+    <string name="_2">2</string>
+    <string name="like">Like</string>
+    <string name="_22">2</string>
+    <string name="likes">Like</string>
+    <string name="continue_with_google">Continue with Google</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="proximity_desc">This setting will be used to search nearby areas</string>
+    <string name="proximity">Proximity</string>
+    <string name="_10_km">10 KM</string>
+    <string name="_25_km">25 KM</string>
+    <string name="_50_km">50 KM</string>
+    <string name="_100_km">100 KM</string>
+    <string name="the_average_person_says_this_place_overpriced">The average person says this place overpriced</string>
+    <string name="average_rate_low_cost">Average rate: Low Cost</string>
 </resources>
