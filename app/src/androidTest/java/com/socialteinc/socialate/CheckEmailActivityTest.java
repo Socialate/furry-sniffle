@@ -44,11 +44,13 @@ public class CheckEmailActivityTest {
     public void CheckEmailTest() throws Exception{
         //onView(withId(R.id.emailEditText)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
         //onView(withId(R.id.nextButton)).perform(click());
-        final String email1 = "joe@gmail.com";
+
+        //final String email1 = "joe@gmail.com";
         final String email2 = "john@gmail.com";
+
         Looper.prepare();
         final CheckEmailActivity obj = new CheckEmailActivity();
-        obj.checkAccountEmailExistsInFirebase(email1);
+        //obj.checkAccountEmailExistsInFirebase(email1);
         obj.checkAccountEmailExistsInFirebase(email2);
 
     }
