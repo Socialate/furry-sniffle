@@ -299,6 +299,10 @@ public class MainActivity extends AppCompatActivity {
             onLogout();
             return true;
         }
+        if(id == R.id.action_nearby){
+
+            onNearby();
+        }
         if(id == R.id.action_settings){
             launchFrag();
             setVisibility(0);
@@ -336,6 +340,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void onNearby(){
+        Intent nearby = new Intent(this, Activity_nearby.class);
+        startActivity(nearby);
     }
 
     /**

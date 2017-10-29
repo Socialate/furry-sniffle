@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
@@ -96,7 +97,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
         // Initialize Firebase components
         mFireBaseDatabase = FirebaseDatabase.getInstance();
-        mFirebaseStorage =FirebaseStorage.getInstance();
+        mFirebaseStorage = FirebaseStorage.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
 
@@ -104,11 +105,11 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         mEntertainmentsDatabaseReference = mFireBaseDatabase.getReference().child("Entertainments");
         mUserDatabaseReference = mFireBaseDatabase.getReference().child("users").child(mFirebaseUser.getUid());
         mStorageReference = mFirebaseStorage.getReference().child("Entertainment_images");
-        mGeoFire =new GeoFire(mFireBaseDatabase.getReference().child("GeoFire"));
+        mGeoFire = new GeoFire(mFireBaseDatabase.getReference("GeoFire"));
         Intent intent = getIntent();
         mEntertainmentName = intent.getStringExtra("entertainmentName");
         mEntertainmentKey = intent.getStringExtra("entertainmentKey");
-        Log.d(TAG, "onCreate: "+ mEntertainmentKey);
+        //Log.d(TAG, "onCreate: "+ mEntertainmentKey);
 
 
         // Initialize references to views
@@ -183,9 +184,13 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                 mProgressDialog.setCanceledOnTouchOutside(false);
                 mProgressDialog.show();
 
+
+
                 // Create Entertainment on click
+
                 startPosting();
-                /*setLocation(mFirebaseUser.getUid(), new GeoLocation(location.latitude, location.longitude));*/
+
+
 
             }
         });
@@ -217,32 +222,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-      /*  Bitmap bitmap;
-        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
-
-            imageUri = data.getData();
-            bitmap = getThumbnailBitmap(imageUri.getPath(),1000);
-            //mEntertainmentImageView.setImageURI(imageUri);
-            mEntertainmentImageView.setImageBitmap(bitmap);
-        }else {
-            Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
-            mProgressDialog.dismiss();
-
-        }*/
-
-       /* if(requestCode == GALLERY_REQUEST_CODE ){
-
-            if(resultCode == RESULT_OK) {
-                imageUri = data.getData();
-                mEntertainmentImageView.setImageURI(imageUri);
-            }
-
-            else {
-                Toast.makeText(getApplicationContext(), "Failed to get image. Try Again!", Toast.LENGTH_SHORT).show();
-                mProgressDialog.dismiss();
-            }
-
-        }*/
         if(requestCode == GALLERY_REQUEST_CODE  ){
             if(resultCode == RESULT_OK) {
                 Uri ImageUri = data.getData();
@@ -276,7 +255,7 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
                 }
                 mEntertainmentTitleEditText.setText(place.getName());
                 mEntertainmentAddress.setText(place.getAddress());
-                location=place.getLatLng();
+                location = place.getLatLng();
 
 
 
@@ -349,7 +328,17 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
                                     if(task.isSuccessful()){
 
-                                        mGeoFire.setLocation(mEntertainmentsDatabaseReference.child(mEventId).getKey(), new GeoLocation(location.latitude, location.longitude));
+                                        mGeoFire.setLocation(mEntertainmentsDatabaseReference.child(mEventId).getKey(), new GeoLocation(location.latitude, location.longitude),
+                                                new GeoFire.CompletionListener() {
+                                                    @Override
+                                            public void onComplete(String key, DatabaseError error) {
+                                                if (error != null) {
+                                                    System.err.println("There was an error saving the location to GeoFire: " + error);
+                                                } else {
+                                                    System.out.println("Location saved on server successfully!");
+                                                }
+                                            }
+                                        });
                                         mProgressDialog.dismiss();
                                         //handling layout of the successfully added area
                                         Intent mainIntent = new Intent(AddEntertainmentActivity.this, MainActivity.class);
@@ -388,51 +377,5 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap;
-        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
-
-            imageUri = data.getData();
-            mEntertainmentImageView.setImageURI(imageUri);
-            CropImage.activity(imageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(2,2)
-                    .start(this);
-            //mEntertainmentImageView.setImageBitmap(bitmap);
-        }
-        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-
-                imageUri = result.getUri();
-                mEntertainmentImageView.setImageURI(imageUri);
-
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(AddEntertainmentActivity.this, "Failed to get profile picture, Try Again.", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    //This function downscales the image size
-    private Bitmap getThumbnailBitmap(final String path, final int thumbnailSize) {
-        Bitmap bitmap;
-        BitmapFactory.Options bounds = new BitmapFactory.Options();
-        bounds.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(path, bounds);
-        if ((bounds.outWidth == -1) || (bounds.outHeight == -1)) {
-            bitmap = null;
-        }
-        int originalSize = (bounds.outHeight > bounds.outWidth) ? bounds.outHeight
-                : bounds.outWidth;
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inSampleSize = originalSize / thumbnailSize;
-        bitmap = BitmapFactory.decodeFile(path, opts);
-        return bitmap;
-    }
-
-
 
 }
