@@ -25,7 +25,7 @@ import static junit.framework.Assert.assertNotNull;
          **/
 
         @Test
-        public void EmailTest(){
+        public void sort_bar_test(){
 
             assertEquals(50,Activity_nearby.translateSeekbar(2));
             ArrayList<Float> location = new ArrayList<>();

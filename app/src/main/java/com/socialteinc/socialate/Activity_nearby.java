@@ -218,7 +218,7 @@ public class Activity_nearby extends AppCompatActivity {
 
     }
 
-    private class MyLocationListener implements LocationListener {
+    public class MyLocationListener implements LocationListener {
 
         public void onLocationChanged(Location loc) {
 
