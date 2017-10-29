@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -145,7 +146,7 @@ public class Activity_nearby extends AppCompatActivity {
 
     }
 
-    public String[] insertionSort(ArrayList<String> keys, ArrayList<Float> locations){
+    public static String[] insertionSort(ArrayList<String> keys, ArrayList<Float> locations){
 
         Float x;
         String y;
@@ -169,7 +170,7 @@ public class Activity_nearby extends AppCompatActivity {
         return keys.toArray(new String[keys.size()]);
     }
 
-    public int translateSeekbar(int bar_val){
+    public static int translateSeekbar(int bar_val){
 
         switch(bar_val){
             case 0:
@@ -207,6 +208,15 @@ public class Activity_nearby extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 
     private class MyLocationListener implements LocationListener {
 
@@ -335,5 +345,9 @@ public class Activity_nearby extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
