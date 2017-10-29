@@ -19,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.EventLogTags;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;

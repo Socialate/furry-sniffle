@@ -46,8 +46,8 @@ class SummaryTool{
 	private double noOfCommonWords(Sentence str1, Sentence str2){
 		double commonCount = 0;
 
-		for(String str1Word : str1.value.split("\\s+")){
-			for(String str2Word : str2.value.split("\\s+")){
+		for(String str1Word : str1.value.split("\\\\\\\\s+")){ // added 6 backslashes
+			for(String str2Word : str2.value.split("\\\\\\\\s+")){ // added 6 backslashes
 				if(str1Word.compareToIgnoreCase(str2Word) == 0){
 					commonCount++;
 				}
