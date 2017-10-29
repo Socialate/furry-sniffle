@@ -1,7 +1,13 @@
 package com.socialteinc.socialate;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -32,7 +38,7 @@ public class Activity_nearby extends AppCompatActivity {
     private DatabaseReference ref;
     private DatabaseReference mEntertainmentref;
     private GeoFire geoFire;
-    private SimpleLocation location;
+
     private GeoLocation mylocation;
     private ArrayList<String> geokeys;
     private ArrayList<GeoLocation> geoLocations;
@@ -40,9 +46,10 @@ public class Activity_nearby extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Location location;
+    private LocationListener locationListener;
+    private SharedPreferences msharedPref;
 
-
-    private Map<String, GeoLocation> userIdsToLocations = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,35 +59,39 @@ public class Activity_nearby extends AppCompatActivity {
         geokeys = new ArrayList<>();
         geoLocations = new ArrayList<>();
 
-         ref = FirebaseDatabase.getInstance().getReference("GeoFire");
-         mEntertainmentref = FirebaseDatabase.getInstance().getReference("Entertainments");
-         geoFire = new GeoFire(ref);
 
-        location = new SimpleLocation(getApplicationContext());
+        //initializing the Firebase storage
+        ref = FirebaseDatabase.getInstance().getReference("GeoFire");
+        mEntertainmentref = FirebaseDatabase.getInstance().getReference("Entertainments");
+        geoFire = new GeoFire(ref);
 
+        //for displaying the results
         mRecyclerView = findViewById(R.id.nearby_recyclerView);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
-        // if we can't access the location yet
-        if (!location.hasLocationEnabled()) {
-            // ask the user to enable location access
-            SimpleLocation.openSettings(this);
+        //Location Manager book keeping stuff
+        LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        Criteria locationCriteria = new Criteria();
+        String providerName = locationManager.getBestProvider(locationCriteria,
+                true);
+        if(providerName!=null) {
+            location = locationManager.getLastKnownLocation(providerName);
         }
+        locationListener = new MyLocationListener();
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                0, locationListener);
 
-       mylocation = new GeoLocation(-26.193458399999997,28.036759200000006);
 
-        System.out.println("my latlong: "+location.getLatitude() +" "+ location.getLongitude());
+        msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int radius = msharedPref.getInt("bar_val", 2);
 
-        GeoQuery geoQuery = geoFire.queryAtLocation(mylocation, 10);
-
-         GeoQueryEventListener a = new GeoQueryEventListener() {
+        System.out.println("my LatLong: "+ location.getLatitude()+ " "+ location.getLongitude());
+        System.out.println("settings radius is: "+ radius);
+        mylocation = new GeoLocation(location.getLatitude(),location.getLongitude());
+        GeoQuery geoQuery = geoFire.queryAtLocation(mylocation, radius);
+        GeoQueryEventListener a = new GeoQueryEventListener() {
 
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
@@ -100,7 +111,7 @@ public class Activity_nearby extends AppCompatActivity {
 
             @Override
             public void onGeoQueryReady() {
-                    publish();
+                publish();
             }
 
             @Override
@@ -108,11 +119,26 @@ public class Activity_nearby extends AppCompatActivity {
 
             }
         };
-
         geoQuery.addGeoQueryEventListener(a);
 
 
 
+    }
+
+    public int translateSeekbar(int bar_val){
+
+        switch(bar_val){
+            case 0:
+                return 10;
+            case 1:
+                return 25;
+            case 2:
+                return 50;
+            case 3:
+                return 100;
+
+        }
+        return 0;
     }
 
     public void publish(){
@@ -138,6 +164,27 @@ public class Activity_nearby extends AppCompatActivity {
         });
     }
 
+
+    private class MyLocationListener implements LocationListener {
+
+        public void onLocationChanged(Location loc) {
+
+            if (loc != null) {
+                location = loc;
+
+            }
+        }
+
+        public void onProviderDisabled(String provider) {
+
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    }
 
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private DataSnapshot[] mDataset;
