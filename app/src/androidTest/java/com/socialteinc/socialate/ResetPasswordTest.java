@@ -29,14 +29,14 @@ public class ResetPasswordTest{
 
     @Test
     public void test2() throws InterruptedException{
-        onView(withId(R.id.resetEmailEditText)).perform(typeText("abcd@gmail.com"), pressBack());
+        onView(withId(R.id.resetEmailEditText)).perform(typeText("abcd@gmail.com"));
         Thread.sleep(1000);
 
     }
 
     @Test
     public void checkEmailExistsTest() throws InterruptedException{
-        onView(withId(R.id.resetEmailEditText)).perform(typeText("musa950820@gmail.com"), pressBack());
+        onView(withId(R.id.resetEmailEditText)).perform(typeText("musa950820@gmail.com"));
         Thread.sleep(1000);
     }
 
