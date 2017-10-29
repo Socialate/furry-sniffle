@@ -103,6 +103,7 @@ public class Activity_nearby extends AppCompatActivity {
         System.out.println("my LatLong: "+ mlocation.getLatitude()+ " "+ mlocation.getLongitude());
         System.out.println("settings radius is: "+ translateSeekbar(radius));
         mylocation = new GeoLocation(mlocation.getLatitude(), mlocation.getLongitude());
+
         GeoQuery geoQuery = geoFire.queryAtLocation(mylocation, translateSeekbar(radius));
         GeoQueryEventListener a = new GeoQueryEventListener() {
 

@@ -1,5 +1,7 @@
 package com.socialteinc.socialate;
 
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
@@ -8,6 +10,8 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
@@ -26,18 +30,23 @@ import static junit.framework.Assert.assertNotNull;
 
         @Test
         public void sort_bar_test(){
-
-            assertEquals(50,Activity_nearby.translateSeekbar(2));
-            ArrayList<Float> location = new ArrayList<>();
-            location.add((float) 15.2);
-            location.add((float) 78.54);
-            ArrayList<String> keys = new ArrayList<>();
-            keys.add("-rode");
-            keys.add("-dive");
-            String[] arr = {"-rode","-dive"};
-            assertNotNull( Activity_nearby.insertionSort(keys,location));
+//
+//            assertEquals(50,Activity_nearby.translateSeekbar(2));
+//            ArrayList<Float> location = new ArrayList<>();
+//            location.add((float) 15.2);
+//            location.add((float) 78.54);
+//            ArrayList<String> keys = new ArrayList<>();
+//            keys.add("-rode");
+//            keys.add("-dive");
+//            String[] arr = {"-rode","-dive"};
+//            assertNotNull( Activity_nearby.insertionSort(keys,location));
 
         }
+
+        @Test
+        public void test_ui(){
+            onView(withId(R.id.nearby_recyclerView)).perform(ViewActions.click());
+    }
 
 
 
