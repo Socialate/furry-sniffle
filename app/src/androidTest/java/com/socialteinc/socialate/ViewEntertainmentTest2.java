@@ -55,7 +55,7 @@ public class ViewEntertainmentTest2 {
         FirebaseApp.initializeApp(rule2.getActivity());
         mAuth = FirebaseAuth.getInstance();
 
-        mAuth.signInWithEmailAndPassword("joe@gmail.com", "sandile")
+        mAuth.signInWithEmailAndPassword("musa@gmail.com", "password")
                 .addOnCompleteListener(rule2.getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
