@@ -1,11 +1,14 @@
 package com.socialteinc.socialate;
 
+import android.os.Looper;
+import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertSame;
 
 /**
  * Created by Francis on 10/29/2017.
@@ -33,6 +36,19 @@ public class SumTest {
                         "including blog software, in that the content is created without any defined owner or leader, and wikis have little implicit structure, " +
                         "allowing structure to emerge according to the needs of the users. [2] There are dozens of different wiki engines in use, " +
                         "both standalone and part of other software, such as bug tracking systems." );
+
+    }
+
+    @Test
+    @SmallTest
+    public void test1() throws Exception{
+        Looper.prepare();
+        Sum obj = new Sum();
+        String description = "I am a summary mdsafm adfbsdhgfg afbgj afhhajg afgjagj fjagjfg kjjajgfgs sfsjg sgfjgj jsdgfjgs sjfdgjg jsgfjsg" +
+                "shgsj sdhfjg jsdbjhf sjdfh jsdgfj sdgjg jjjskdh dskkhfk";
+        String summary = obj.summarize(description);
+
+        assertEquals(summary , Sum.summarize(description));
 
     }
 
