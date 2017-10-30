@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertSame;
 
 /**
  * Created by Francis on 10/29/2017.
@@ -51,14 +50,16 @@ public class SumTest {
                 "shgsj sdhfjg jsdbjhf sjdfh jsdgfj sdgjg jjjskdh dskkhfk";
         String summary = obj.summarize(description);
 
-        assertEquals(summary , Sum.summarize(description));
+        Sum sum = new Sum();
+        assertEquals(summary , sum.summarize(description));
     }
 
     @Test
     @SmallTest
     public void test2() throws Exception{
         String description = "I am a paragraph. I am a paragraph. I am a paragraph.\n\n  I am a paragraph. I am a paragraph. I am a paragraph. I am a paragraph";
-        Sum.summarize(description);
+        Sum sum = new Sum();
+        sum.summarize(description);
 
     }
 
