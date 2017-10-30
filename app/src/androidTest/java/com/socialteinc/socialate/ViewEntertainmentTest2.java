@@ -157,7 +157,6 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @MediumTest
     public void ViewTest4() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);
@@ -168,11 +167,11 @@ public class ViewEntertainmentTest2 {
         onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.commentEditText)).perform(typeText("Auto-Generated test #Testing"), closeSoftKeyboard());
-        Thread.sleep(1000);
-        onView(withId(R.id.commentImageButton)).perform(click());
-
-        Thread.sleep(5000);
+//        onView(withId(R.id.commentEditText)).perform(typeText("Auto-Generated test #Testing"), closeSoftKeyboard());
+//        Thread.sleep(1000);
+//        onView(withId(R.id.commentImageButton)).perform(click());
+//
+//        Thread.sleep(5000);
     }
 
 
