@@ -33,7 +33,7 @@ import im.delight.android.location.SimpleLocation;
 
 import java.util.ArrayList;
 
-public class nearbyAreasActivity extends AppCompatActivity {
+public class nearbyAreasActivity extends AppCompatActivity implements LocationListener{
 
     private DatabaseReference ref;
     private DatabaseReference mEntertainmentref;
@@ -48,10 +48,9 @@ public class nearbyAreasActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Location mlocation;
-    private LocationListener locationListener;
     private SharedPreferences msharedPref;
-    private SimpleLocation temp;
     String[] sortedkeys;
+    private LocationManager locationManager;
 
     private Toolbar mToolbar;
 
@@ -65,7 +64,7 @@ public class nearbyAreasActivity extends AppCompatActivity {
         geoLocations = new ArrayList<>();
         geoDistances = new ArrayList<>();
         mToolbar = findViewById(R.id.nearby_app_bar);
-
+        msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         setSupportActionBar(mToolbar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,26 +83,28 @@ public class nearbyAreasActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //Location Manager book keeping stuff
-        LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         Criteria locationCriteria = new Criteria();
         String providerName = locationManager.getBestProvider(locationCriteria,
                 true);
-        if(providerName!=null) {
+        if(providerName != null) {
             mlocation = locationManager.getLastKnownLocation(providerName);
+            if(mlocation == null){
+                locationManager.requestLocationUpdates(providerName, 1000, 0, this);
+            }else{
+                processLocation();
+            }
         }
-        locationListener = new MyLocationListener();
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-                0, locationListener);
 
 
+    }
 
-        msharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+    public void processLocation(){
+
         int radius = msharedPref.getInt("bar_val", 2);
 
-        System.out.println("my LatLong: "+ mlocation.getLatitude()+ " "+ mlocation.getLongitude());
-        System.out.println("settings radius is: "+ translateSeekbar(radius));
         mylocation = new GeoLocation(mlocation.getLatitude(), mlocation.getLongitude());
-
+        System.out.println(translateSeekbar(radius));
         GeoQuery geoQuery = geoFire.queryAtLocation(mylocation, translateSeekbar(radius));
         GeoQueryEventListener a = new GeoQueryEventListener() {
 
@@ -114,7 +115,6 @@ public class nearbyAreasActivity extends AppCompatActivity {
                 Location tmp = new Location(LocationManager.GPS_PROVIDER);
                 tmp.setLatitude(location.latitude);
                 tmp.setLongitude(location.longitude);
-                System.out.println("distance to: "+  mlocation.distanceTo(tmp));
                 geoDistances.add(mlocation.distanceTo(tmp));
             }
 
@@ -132,9 +132,6 @@ public class nearbyAreasActivity extends AppCompatActivity {
             public void onGeoQueryReady() {
 
               sortedkeys = insertionSort(geokeys,geoDistances);
-                for(int i = 0; i < sortedkeys.length; i++){
-                    System.out.println("key: " + sortedkeys[i]);
-                }
                 publish();
             }
 
@@ -144,7 +141,6 @@ public class nearbyAreasActivity extends AppCompatActivity {
             }
         };
         geoQuery.addGeoQueryEventListener(a);
-
     }
 
     public static String[] insertionSort(ArrayList<String> keys, ArrayList<Float> locations){
@@ -188,7 +184,6 @@ public class nearbyAreasActivity extends AppCompatActivity {
 
     public void publish(){
         geoLocationSnap = new DataSnapshot[geoLocations.size()];
-        System.out.println("*********************************** "+ geoLocations.size());
         mEntertainmentref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -219,26 +214,29 @@ public class nearbyAreasActivity extends AppCompatActivity {
 
     }
 
-    public class MyLocationListener implements LocationListener {
+    @Override
+    public void onLocationChanged(Location location) {
+        locationManager.removeUpdates(this);
+        mlocation = location;
+        processLocation();
 
-        public void onLocationChanged(Location loc) {
-
-            if (loc != null) {
-                mlocation = loc;
-
-            }
-        }
-
-        public void onProviderDisabled(String provider) {
-
-        }
-
-        public void onProviderEnabled(String provider) {
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-        }
     }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
+
 
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private DataSnapshot[] mDataset;
