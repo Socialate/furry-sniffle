@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.EventLogTags;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -181,13 +180,13 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(final EntertainmentSpotAdapterViewHolder viewHolder, final Entertainment model, int position) {
-
+                Sum sum = new Sum();
                 final String mEntertainmentKey = getRef(position).getKey();
                 final String mEntertainmentName = model.getName();
                 final String mEntertainmentUploader = model.getUID();
 
                 viewHolder.setName(model.getName());
-                viewHolder.setDescription(Sum.summarize(model.getDescription()));
+                viewHolder.setDescription(sum.summarize(model.getDescription()));
                 viewHolder.setOwner(model.getAuthor());
                 viewHolder.setPhotoUrl(model.getPhotoUrl());
                 viewHolder.setLikeButton(mEntertainmentKey);
