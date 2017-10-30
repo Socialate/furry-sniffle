@@ -54,6 +54,7 @@
                     android:name="android.app.default_searchable"
                     android:value=".SearchableActivity"/>
         </activity>
+
         <activity android:name=".ViewEditProfileActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -82,14 +83,10 @@
         </activity>
         <activity android:name=".CreateProfileActivity">
         </activity>
-        <activity
-                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                android:theme="@style/Base.Theme.AppCompat"/>
-        <activity android:name=".ViewEntertainmentActivity">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".MainActivity"/>
-        </activity>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                  android:theme="@style/Base.Theme.AppCompat"/>
+        <activity android:name=".ViewEntertainmentActivity"/>
+
         <activity android:name=".ResetPasswordActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -110,6 +107,18 @@
         </activity>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".nearbyAreasActivity">
+        </activity>
+
+
+        <service
+                android:name=".connection_service"
+                android:exported="false">
+        </service>
+
+        <activity android:name=".BookmarkActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ViewEditProfileActivity" />
         </activity>
     </application>
 

@@ -125,7 +125,9 @@
     <string name="_25_km">25 KM</string>
     <string name="_50_km">50 KM</string>
     <string name="_100_km">100 KM</string>
+    <string name="bookmarks">Bookmarks</string>
     <string name="the_average_person_says_this_place_overpriced">The average person says this place overpriced</string>
     <string name="average_rate_low_cost">Average rate: Low Cost</string>
+    <string name="share_button">share button</string>
     <string name="nearby_areas">Nearby Areas</string>
 </resources>

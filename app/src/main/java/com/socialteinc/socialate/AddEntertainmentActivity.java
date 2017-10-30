@@ -2,8 +2,11 @@ package com.socialteinc.socialate;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -13,13 +16,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.common.ConnectionResult;
@@ -87,6 +94,11 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
     private Toolbar mToolbar;
     private String mEntertainmentKey;
     private String mEntertainmentName;
+
+    //intentService variables
+    private connect_receiver connect_receiver;
+    private IntentFilter intentFilter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +206,9 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
 
             }
         });
+
+        //starting the intent service
+        startIntentService();
 
     }
 
@@ -373,9 +388,89 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(connect_receiver);
+    }
+
     private String imageNameGenerator(){
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap;
+        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+
+            imageUri = data.getData();
+            mEntertainmentImageView.setImageURI(imageUri);
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(2,2)
+                    .start(this);
+            //mEntertainmentImageView.setImageBitmap(bitmap);
+        }
+        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+
+                imageUri = result.getUri();
+                mEntertainmentImageView.setImageURI(imageUri);
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(AddEntertainmentActivity.this, "Failed to get profile picture, Try Again.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    //This function downscales the image size
+    private Bitmap getThumbnailBitmap(final String path, final int thumbnailSize) {
+        Bitmap bitmap;
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, bounds);
+        if ((bounds.outWidth == -1) || (bounds.outHeight == -1)) {
+            bitmap = null;
+        }
+        int originalSize = (bounds.outHeight > bounds.outWidth) ? bounds.outHeight
+                : bounds.outWidth;
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = originalSize / thumbnailSize;
+        bitmap = BitmapFactory.decodeFile(path, opts);
+        return bitmap;
+    }
+
+    public void startIntentService(){
+        //intentService
+        intentFilter = new IntentFilter(connect_receiver.PROCESS_RESPONSE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        connect_receiver = new connect_receiver();
+        registerReceiver(connect_receiver,intentFilter);
+        Intent service = new Intent(getApplicationContext(), connection_service.class);
+        startService(service);
+    }
+
+    public class connect_receiver extends BroadcastReceiver {
+
+        public static final String PROCESS_RESPONSE = "com.socialteinc.socialate.intent.action.PROCESS_RESPONSE";
+        boolean response = true;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean response1 = intent.getBooleanExtra("response",true);
+            if((!response1) && (response1 != response)){
+                Snackbar sb = Snackbar.make(findViewById(R.id.addEntertainmentConstraintLayout), "Oops, No data connection?", Snackbar.LENGTH_LONG);
+                View v = sb.getView();
+                v.setBackgroundColor(ContextCompat.getColor(getApplication(), R.color.colorPrimary));
+                sb.show();
+                findViewById(R.id.addEntertainmentAreaButton).setClickable(false);
+            }
+            else if((response1) && response1 != response ){
+                findViewById(R.id.addEntertainmentAreaButton).setClickable(true);
+            }
+            response = response1;
+        }
+    }
 }
