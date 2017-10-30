@@ -9,8 +9,7 @@
       <w>165</w>
       <h>45</h>
     </coordinates>
-    <panel_attributes>*Main*
-bg=gray</panel_attributes>
+    <panel_attributes>*Main*</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -95,7 +94,7 @@ show nearby areas</panel_attributes>
       <h>45</h>
     </coordinates>
     <panel_attributes>*FirebaseDatabase*
-bg=white</panel_attributes>
+bg=pink</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -175,7 +174,7 @@ bg=blue</panel_attributes>
       <h>45</h>
     </coordinates>
     <panel_attributes>*SharedPreferennces*
-bg=pink</panel_attributes>
+bg=gray</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
