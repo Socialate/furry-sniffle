@@ -17,8 +17,8 @@
             app:layout_constraintVertical_bias="0.0"
     />
     <android.support.v7.widget.RecyclerView
-            android:layout_width="364dp"
-            android:layout_height="644dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="0dp" android:layout_marginLeft="2dp" app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="2dp" app:layout_constraintRight_toRightOf="parent"
             android:id="@+id/nearby_recyclerView" app:layout_constraintTop_toBottomOf="@+id/nearby_app_bar"

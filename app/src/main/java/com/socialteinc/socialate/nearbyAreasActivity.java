@@ -288,6 +288,9 @@ public class nearbyAreasActivity extends AppCompatActivity implements LocationLi
             ((TextView) holder.cardview.findViewById(R.id.titleTextView)).setText((position + 1) + ". " + mDataset[position].child("name").getValue());
             ((TextView) holder.cardview.findViewById(R.id.ownerTextView)).setText((String) mDataset[position].child("author").getValue());
             setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
+            //Sum sum = new Sum();
+
+           // ((TextView) holder.cardview.findViewById(R.id.descriptionTextView)).setText((String) mDataset[position].child().getValue());
             setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCounterTextView));
             final int pos = position;
             final ImageView[] imageView = new ImageView[1];
