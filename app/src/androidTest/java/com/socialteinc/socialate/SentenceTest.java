@@ -138,4 +138,16 @@ public class SentenceTest {
         String result = instance.getValue();
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testSentenceCharacter() {
+        System.out.println("testSentenceCharacter");
+        String name = "This website is aw3som3.";
+        Sentence instance = new Sentence();
+        instance.sentenceCount(name);
+        assertEquals(instance.getVowels(), 7);
+        assertEquals(instance.getConsonants(), 11);
+        assertEquals(instance.getDigits(), 2);
+        assertEquals(instance.getSpaces(), 3);
+    }
 }

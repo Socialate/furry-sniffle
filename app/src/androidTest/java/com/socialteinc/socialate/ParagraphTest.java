@@ -62,4 +62,16 @@ public class ParagraphTest {
         ArrayList<Sentence> result = instance.getSentences();
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testParagraphCharacter() {
+        System.out.println("testSentenceCharacter");
+        String name = "This website is aw3som3.";
+        Paragraph instance = new Paragraph();
+        instance.paragraphCount(name);
+        assertEquals(instance.getVowels(), 7);
+        assertEquals(instance.getConsonants(), 11);
+        assertEquals(instance.getDigits(), 2);
+        assertEquals(instance.getSpaces(), 3);
+    }
 }

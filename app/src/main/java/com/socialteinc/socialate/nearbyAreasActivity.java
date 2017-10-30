@@ -7,9 +7,9 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,15 +21,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import im.delight.android.location.SimpleLocation;
 
 import java.util.ArrayList;
 
@@ -288,9 +292,9 @@ public class nearbyAreasActivity extends AppCompatActivity implements LocationLi
             ((TextView) holder.cardview.findViewById(R.id.titleTextView)).setText((position + 1) + ". " + mDataset[position].child("name").getValue());
             ((TextView) holder.cardview.findViewById(R.id.ownerTextView)).setText((String) mDataset[position].child("author").getValue());
             setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
-            //Sum sum = new Sum();
+            Sum sum = new Sum();
+            setDescription((TextView)holder.cardview.findViewById(R.id.descriptionTextView), sum.summarize((String)mDataset[position].child("description").getValue()) );
 
-           // ((TextView) holder.cardview.findViewById(R.id.descriptionTextView)).setText((String) mDataset[position].child().getValue());
             setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCounterTextView));
             final int pos = position;
             final ImageView[] imageView = new ImageView[1];
@@ -343,6 +347,19 @@ public class nearbyAreasActivity extends AppCompatActivity implements LocationLi
                 }
             });
 
+        }
+
+        public void setDescription(TextView event_description, String description){
+            int MAX_CHAR = 100;
+
+            int maxLength = (description.length() < MAX_CHAR)?description.length():MAX_CHAR;
+            String inputString = description.substring(0, maxLength);
+            if(description.length() > MAX_CHAR){
+                inputString = inputString + "...";
+                event_description.setText(inputString);
+            }else {
+                event_description.setText(inputString);
+            }
         }
 
     }

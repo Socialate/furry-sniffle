@@ -17,9 +17,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -178,6 +184,8 @@ public class SearchableActivity extends AppCompatActivity {
             // holder.mTextView.setText(mDataset[position]);
             ((TextView) holder.cardview.findViewById(R.id.titleTextView)).setText((position + 1) + ". " + mDataset[position].child("name").getValue());
             ((TextView) holder.cardview.findViewById(R.id.ownerTextView)).setText((String) mDataset[position].child("author").getValue());
+            Sum sum = new Sum();
+            setDescription((TextView)holder.cardview.findViewById(R.id.descriptionTextView), sum.summarize((String)mDataset[position].child("description").getValue()) );
             setPhotoUrl((String) mDataset[position].child("photoUrl").getValue(), holder);
             setLikeNumber(mDataset[position].getKey(), (TextView) holder.cardview.findViewById(R.id.likeCounterTextView));
             final int pos = position;
@@ -231,6 +239,19 @@ public class SearchableActivity extends AppCompatActivity {
                 }
             });
 
+        }
+
+        public void setDescription(TextView event_description, String description){
+            int MAX_CHAR = 100;
+
+            int maxLength = (description.length() < MAX_CHAR)?description.length():MAX_CHAR;
+            String inputString = description.substring(0, maxLength);
+            if(description.length() > MAX_CHAR){
+                inputString = inputString + "...";
+                event_description.setText(inputString);
+            }else {
+                event_description.setText(inputString);
+            }
         }
 
     }
