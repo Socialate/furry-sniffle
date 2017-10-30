@@ -399,32 +399,6 @@ public class AddEntertainmentActivity extends AppCompatActivity /*implements Goo
         return mFirebaseUser.getUid() + currentDateTimeString;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap;
-        if(requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
-
-            imageUri = data.getData();
-            mEntertainmentImageView.setImageURI(imageUri);
-            CropImage.activity(imageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(2,2)
-                    .start(this);
-            //mEntertainmentImageView.setImageBitmap(bitmap);
-        }
-        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-
-                imageUri = result.getUri();
-                mEntertainmentImageView.setImageURI(imageUri);
-
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(AddEntertainmentActivity.this, "Failed to get profile picture, Try Again.", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 
     //This function downscales the image size
     private Bitmap getThumbnailBitmap(final String path, final int thumbnailSize) {
