@@ -5,21 +5,32 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version"/>
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyAGu2TvAa_EJV-I49jYqMnPlYx_nDCLzFw"/>
+        <meta-data
+                android:name="com.facebook.sdk.ApplicationId"
+                android:value="@string/facebook_app_id"/>
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
+        <activity
+                android:name="com.facebook.FacebookActivity"
+                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="@string/app_name"/>
         <activity
                 android:name="com.facebook.CustomTabActivity"
                 android:exported="true">
@@ -38,8 +49,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <meta-data android:name="android.app.default_searchable"
-                       android:value=".SearchableActivity" />
+
+            <meta-data
+                    android:name="android.app.default_searchable"
+                    android:value=".SearchableActivity"/>
         </activity>
 
         <activity android:name=".ViewEditProfileActivity">
@@ -81,17 +94,21 @@
         </activity>
         <activity
                 android:name=".SearchableActivity"
-
                 android:label="@string/title_activity_searchable"
                 android:launchMode="singleTop"
                 android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable"/>
+
+            <meta-data
+                    android:name="android.app.searchable"
+                    android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".RegisterActivity"/>
+        <activity android:name=".nearbyAreasActivity">
+        </activity>
+
 
         <service
                 android:name=".connection_service"
