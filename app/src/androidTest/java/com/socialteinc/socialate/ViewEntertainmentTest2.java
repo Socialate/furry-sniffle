@@ -168,8 +168,8 @@ public class ViewEntertainmentTest2 {
         onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.commentEditText)).perform(typeText("Auto-Generated test #Testing"), closeSoftKeyboard());
-        onView(withId(R.id.commentImageButton)).perform(click());
+//        onView(withId(R.id.commentEditText)).perform(typeText("Auto-Generated test #Testing"), closeSoftKeyboard());
+//        onView(withId(R.id.commentImageButton)).perform(click());
 
         Thread.sleep(5000);
     }

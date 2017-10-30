@@ -331,9 +331,6 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
 
         // For testing
         FirebaseApp.initializeApp(this);
-        mFireBaseDatabase2 = FirebaseDatabase.getInstance();
-        mCostDatabaseReference2 = mFireBaseDatabase2.getReference().child("cost");
-
         if(!TextUtils.isEmpty(get_selected)){
                 if(TextUtils.equals(get_selected,"How costly is this place for you?")){
                     mCostDatabaseReference.child(mEntertainmentKey).child("rv32DonlxHVQz7IHcCSUyx4xRx42").removeValue();
