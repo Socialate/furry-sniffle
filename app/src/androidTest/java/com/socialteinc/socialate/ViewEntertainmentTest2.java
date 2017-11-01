@@ -77,7 +77,7 @@ public class ViewEntertainmentTest2 {
     @SmallTest
     public void ViewTests1() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(15000);
+        Thread.sleep(10000);
 
         onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
         onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
@@ -91,9 +91,8 @@ public class ViewEntertainmentTest2 {
     @SmallTest
     public void ViewTests2() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(15000);
+        Thread.sleep(10000);
         onView(isRoot()).perform(swipeUp());
-        Thread.sleep(2000);
         onView(withId(R.id.descriptImageView)).check(matches(isDisplayed()));
         onView(withId(R.id.averageCostImageView)).check(matches(isDisplayed()));
         onView(withId(R.id.ViewAddedAreaDescText)).check(matches(isDisplayed()));
@@ -101,82 +100,32 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     public void ViewTest3() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(15000);
         onView(isRoot()).perform(swipeUp());
         Thread.sleep(2000);
-
         String name = "Low Cost";
-        onView(withId(R.id.averageCostSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
-        onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-       // Thread.sleep(4000);
-    }
-
-    @Test
-    @SmallTest
-    public void ViewTest31() throws InterruptedException{
-        rule2.getActivity();
-        Thread.sleep(15000);
-        onView(isRoot()).perform(swipeUp());
-        Thread.sleep(2000);
-
-        String name = "Medium Cost";
-        onView(withId(R.id.averageCostSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
-        onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-        //Thread.sleep(4000);
-    }
-
-    @Test
-    @SmallTest
-    public void ViewTest32() throws InterruptedException{
-        rule2.getActivity();
-        Thread.sleep(15000);
-        onView(isRoot()).perform(swipeUp());
-        Thread.sleep(2000);
-
-        String name = "High Cost";
-        onView(withId(R.id.averageCostSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
-        onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-       // Thread.sleep(4000);
-    }
-
-    @Test
-    @SmallTest
-    public void ViewTest33() throws InterruptedException{
-        rule2.getActivity();
-        Thread.sleep(15000);
-        onView(isRoot()).perform(swipeUp());
-        Thread.sleep(2000);
-
-        String name = "How costly is this place for you?";
-        onView(withId(R.id.averageCostSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
-        onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-        //Thread.sleep(4000);
+        for(int i=0; i<3;i++){
+            if(i==1){ name = "Medium Cost"; }
+            if(i==2){ name = "High Cost"; }
+            onView(withId(R.id.averageCostSpinner)).perform(click());
+            onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
+            onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
+        }
     }
 
     @Test
     @SmallTest
     public void ViewTest4() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(15000);
+        Thread.sleep(10000);
         onView(isRoot()).perform(swipeUp());
-        Thread.sleep(2000);
-
         onView(withId(R.id.comment_recyclerView)).check(matches(isDisplayed()));
         onView(withId(R.id.commentEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.commentImageButton)).check(matches(isDisplayed()));
 
-//        onView(withId(R.id.commentEditText)).perform(typeText("Auto-Generated test #Testing"), closeSoftKeyboard());
-//        Thread.sleep(1000);
-//        onView(withId(R.id.commentImageButton)).perform(click());
-//
-//        Thread.sleep(5000);
     }
 
 

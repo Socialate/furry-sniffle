@@ -116,20 +116,20 @@ public class MainTest1 {
         Thread.sleep(4000);
     }
 
-    @Test
-    @SmallTest
-    public void testView() throws InterruptedException{
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.entertainmentSpotRecyclerView),
-                    withParent(allOf(withId(R.id.cardView1),
-                        withParent(withId(android.R.id.content)))),
-                    isDisplayed()));
-        //recyclerView.check(matches(isDisplayed()));
-
-        ViewInteraction action = onView(
-                allOf(withId(R.id.titleTextView), withContentDescription("Bikini Beach"), isDisplayed()));
-        //action.perform(click());
-    }
+//    @Test
+//    @SmallTest
+//    public void testView() throws InterruptedException{
+//        ViewInteraction recyclerView = onView(
+//                allOf(withId(R.id.entertainmentSpotRecyclerView),
+//                    withParent(allOf(withId(R.id.cardView1),
+//                        withParent(withId(android.R.id.content)))),
+//                    isDisplayed()));
+//        //recyclerView.check(matches(isDisplayed()));
+//
+//        ViewInteraction action = onView(
+//                allOf(withId(R.id.titleTextView), withContentDescription("Bikini Beach"), isDisplayed()));
+//        //action.perform(click());
+//    }
 
 //    @Test
 //    public void ViewCommentsTest() throws InterruptedException{
