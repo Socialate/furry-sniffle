@@ -13,8 +13,6 @@ android:
     - sys-img-armeabi-v7a-android-22
   sudo: enabled
 
-install: travis_wait mvn install
-
 before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
   - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -29,6 +27,8 @@ before_script:
   - adb shell settings put global transition_animation_scale 0 &
   - adb shell settings put global animator_duration_scale 0 &
   - adb shell input keyevent 82 &
+
+install: travis_wait mvn install
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
