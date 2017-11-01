@@ -28,7 +28,9 @@ before_script:
   - adb shell settings put global animator_duration_scale 0 &
   - adb shell input keyevent 82 &
 
-install: travis_wait mvn install
+  after_success:
+    - "cd .."
+    - "travis_wait mvn install"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
