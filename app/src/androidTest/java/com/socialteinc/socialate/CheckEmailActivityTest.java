@@ -1,6 +1,7 @@
 package com.socialteinc.socialate;
 
 import android.os.Looper;
+import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
@@ -26,8 +27,8 @@ public class CheckEmailActivityTest {
     **/
 
     @Test
+    @SmallTest
     public void EmailTest(){
-
         assertEquals(false, CheckEmailActivity.isValidEmail("mmmmm"));
         assertEquals(false, CheckEmailActivity.isValidEmail("abcd.com"));
         assertEquals(true, CheckEmailActivity.isValidEmail("socialate@gmail.com"));
@@ -35,23 +36,9 @@ public class CheckEmailActivityTest {
     }
 
     @Test
+    @SmallTest
     public void InvalidEmailTest() throws InterruptedException {
         onView(withId(R.id.emailEditText)).perform(typeText("invalidemail.com"));
         onView(withId(R.id.nextButton)).perform(click());
     }
-
-//    @Test
-//    public void CheckEmailTest() throws Exception{
-//        //onView(withId(R.id.emailEditText)).perform(typeText("joe@gmail.com"), closeSoftKeyboard());
-//        //onView(withId(R.id.nextButton)).perform(click());
-//
-//        //final String email1 = "joe@gmail.com";
-//        final String email2 = "john@gmail.com";
-//
-//        Looper.prepare();
-//        final CheckEmailActivity obj = new CheckEmailActivity();
-//        //obj.checkAccountEmailExistsInFirebase(email1);
-//        obj.checkAccountEmailExistsInFirebase(email2);
-//
-//    }
 }

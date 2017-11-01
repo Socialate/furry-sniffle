@@ -1,6 +1,7 @@
 package com.socialteinc.socialate;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -35,12 +36,11 @@ public class createPasswordTest {
         onView(withId(R.id.loginEmailEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.loginPasswordEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.createAccountButton)).check(matches(isDisplayed()));
-        Thread.sleep(2000);
 
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     public void test1() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.loginEmailEditText)).perform(click());
@@ -51,7 +51,7 @@ public class createPasswordTest {
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     public void test2() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.loginEmailEditText)).perform(typeText("joe11@gmail.com"), closeSoftKeyboard());
@@ -61,7 +61,7 @@ public class createPasswordTest {
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     public void test3() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.loginEmailEditText)).perform(click()).perform(typeText("joe11@gmail.com"));

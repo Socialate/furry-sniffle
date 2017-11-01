@@ -26,10 +26,8 @@ public class SentenceComparatorForSummaryTest {
     public void comparator() throws Exception {
         Sentence instance = new Sentence(1,"This is a test sentence.",0, 0);
         Sentence instance1 = new Sentence(2,"This is a test sentence.",0, 0);
-
         assertEquals(sentence.compare(instance1, instance), 1);
         assertEquals(sentence.compare(instance, instance1), -1);
-
         instance1.number = 1;
         assertEquals(sentence.compare(instance, instance1), 0);
     }

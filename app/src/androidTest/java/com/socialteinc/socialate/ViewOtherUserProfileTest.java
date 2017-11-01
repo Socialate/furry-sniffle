@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -70,11 +71,10 @@ public class ViewOtherUserProfileTest {
 
 
     @Test
-    @SmallTest
+    @MediumTest
     public void profileViewTests1() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);
-
         onView(withId(R.id.displayNameTextView)).check(matches(isDisplayed()));
         onView(withId(R.id.describeEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.fullNameTextView)).check(matches(isDisplayed()));

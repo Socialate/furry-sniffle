@@ -31,36 +31,7 @@ public class ResetPasswordTest{
 
     @Test
     @SmallTest
-    public void test2() throws InterruptedException{
-        onView(withId(R.id.resetEmailEditText)).perform(typeText("abcd@gmail.com"));
-        Thread.sleep(1000);
-
-    }
-
-    @Test
-    @SmallTest
     public void checkEmailExistsTest() throws InterruptedException{
         onView(withId(R.id.resetEmailEditText)).perform(typeText("musa950820@gmail.com"));
-        Thread.sleep(1000);
     }
-
-//    @Test
-//    public void test3() throws InterruptedException{
-//        Thread.sleep(1000);
-//        onView(withId(R.id.resetEmailEditText)).perform(typeText("abcd@gmail.com"), closeSoftKeyboard());
-//        onView(withId(R.id.resetPasswordButton)).perform(click());
-//        Thread.sleep(9000);
-//        //onView(withId(R.id.resetPasswordConstraintLayout)).check(matches(isDisplayed()));
-//    }
-//
-//    @Test
-//    public void test4() throws InterruptedException{
-//        Thread.sleep(1000);
-//        onView(withId(R.id.resetEmailEditText)).perform(typeText("musa@gmail.com"), closeSoftKeyboard());
-//        onView(withId(R.id.resetPasswordButton)).perform(click());
-//        Thread.sleep(9000);
-//        //onView(withId(R.id.resetPasswordConstraintLayout)).check(matches(isDisplayed()));
-//    }
-
-
 }

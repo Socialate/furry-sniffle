@@ -5,6 +5,7 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
+import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -35,8 +36,6 @@ public class CreateProfileTest {
     private String displayName;
     private String fullName;
     private FirebaseAuth mAuth;
-    private DatabaseReference mUsersDatabaseReference;
-    private FirebaseDatabase mFireBaseDatabase;
 
     @Rule
     public ActivityTestRule<CreateProfileActivity> rule = new ActivityTestRule<>(CreateProfileActivity.class);
@@ -65,33 +64,14 @@ public class CreateProfileTest {
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     public void test1() throws InterruptedException{
         Thread.sleep(3000);
         onView(withId(R.id.displayNameEditText)).check(matches(isClickable()));
-    }
-
-    @Test
-    @SmallTest
-    public void test2() throws InterruptedException{
-        Thread.sleep(3000);
         onView(withId(R.id.setupPictureButton)).check(matches(isClickable()));
-    }
 
-//    @Test
-//    public void test3() throws InterruptedException{
-//        Thread.sleep(3000);
-//        onView(withId(R.id.accountSetupTextView)).check(matches(isDisplayed()));
-//    }
-
-    @Test
-    @SmallTest
-    public void createProfileLaunchTest() throws InterruptedException{
-        Thread.sleep(3000);
         onView(withId(R.id.displayNameEditText)).perform(typeText(displayName),pressBack());
         onView(withId(R.id.fullNameEditText)).perform(typeText(fullName),pressBack());
-        //onView(withId(R.id.setupSubmitButton)).perform(click());
-        Thread.sleep(8000);
     }
 
 

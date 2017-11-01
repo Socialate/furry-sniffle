@@ -74,7 +74,7 @@ public class ViewEntertainmentTest2 {
 
 
     @Test
-    @SmallTest
+    @MediumTest
     public void ViewTests1() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(10000);
@@ -88,7 +88,7 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     public void ViewTests2() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(10000);
@@ -117,7 +117,7 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
-    @SmallTest
+    @MediumTest
     public void ViewTest4() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(10000);

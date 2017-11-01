@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
@@ -20,15 +21,11 @@ public class CheckEmailTest {
     public ActivityTestRule<CheckEmailActivity> rule = new ActivityTestRule<>(CheckEmailActivity.class);
 
     @Test
+    @SmallTest
     public void checkEmailLaunchTest() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.emailEditText)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void checkEmailExistsTest(){
 
         onView(withId(R.id.emailEditText)).perform(typeText("invalid@socialate.com"), closeSoftKeyboard());
-       // onView(withId(R.id.nextButton)).perform(click());
     }
 }
