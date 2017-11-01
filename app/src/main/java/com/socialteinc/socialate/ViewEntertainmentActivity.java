@@ -325,33 +325,29 @@ public class ViewEntertainmentActivity extends AppCompatActivity {
     private void CostSpinner(){
         final String get_selected = mCostSpinner.getSelectedItem().toString();
 
-//        // Declare -- for testing
-//        FirebaseDatabase mFireBaseDatabase2;
-//        DatabaseReference mCostDatabaseReference2;
-//
-//        // For testing
-//        FirebaseApp.initializeApp(this);
-//        if(!TextUtils.isEmpty(get_selected)){
-//                if(TextUtils.equals(get_selected,"How costly is this place for you?")){
-//                    mCostDatabaseReference.child(mEntertainmentKey).child("rv32DonlxHVQz7IHcCSUyx4xRx42").removeValue();
-//                }else{
-//                    mCostDatabaseReference.child(mEntertainmentKey).child("rv32DonlxHVQz7IHcCSUyx4xRx42").setValue(get_selected);
-//                }
-//        }
-
+        // For testing
+        FirebaseApp.initializeApp(this);
         if(!TextUtils.isEmpty(get_selected)){
-            assert mFirebaseAuth.getCurrentUser() != null;
-            //final String uid = mFirebaseAuth.getCurrentUser().getUid();
-
-            if(!TextUtils.isEmpty(mFirebaseAuth.getCurrentUser().getUid())) {
                 if(TextUtils.equals(get_selected,"How costly is this place for you?")){
-                    mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
+                    mCostDatabaseReference.child(mEntertainmentKey).child("rv32DonlxHVQz7IHcCSUyx4xRx42").removeValue();
                 }else{
-                    mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(get_selected);
+                    mCostDatabaseReference.child(mEntertainmentKey).child("rv32DonlxHVQz7IHcCSUyx4xRx42").setValue(get_selected);
                 }
-            }
-
         }
+
+//        if(!TextUtils.isEmpty(get_selected)){
+//            assert mFirebaseAuth.getCurrentUser() != null;
+//            //final String uid = mFirebaseAuth.getCurrentUser().getUid();
+//
+//            if(!TextUtils.isEmpty(mFirebaseAuth.getCurrentUser().getUid())) {
+//                if(TextUtils.equals(get_selected,"How costly is this place for you?")){
+//                    mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).removeValue();
+//                }else{
+//                    mCostDatabaseReference.child(mEntertainmentKey).child(mFirebaseAuth.getCurrentUser().getUid()).setValue(get_selected);
+//                }
+//            }
+//
+//        }
 
 
         //starting the intent service

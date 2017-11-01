@@ -119,7 +119,7 @@ public class ViewEntertainmentTest2 {
     @SmallTest
     public void ViewTest31() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(20000);
+        Thread.sleep(15000);
         onView(isRoot()).perform(swipeUp());
         Thread.sleep(2000);
 
