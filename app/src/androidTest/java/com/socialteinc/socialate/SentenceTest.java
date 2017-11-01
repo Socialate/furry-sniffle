@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -14,6 +15,7 @@ import static junit.framework.Assert.assertEquals;
 public class SentenceTest {
 
     @Test
+    @SmallTest
     public void testSentence() {
         System.out.println("constructorSentence");
         Sentence instance = new Sentence(0,"This is a test sentence.",0, 0);
@@ -26,6 +28,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testSetStringLength() {
         System.out.println("setStringLength");
         int length = 1;
@@ -35,6 +38,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testGetStringLength() {
         System.out.println("getStringLength");
         Sentence instance = new Sentence();
@@ -45,6 +49,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testSetParagraphNumber() {
         System.out.println("setParagraphNumber");
         int number = 1;
@@ -54,6 +59,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testGetPargraphNumber() {
         System.out.println("getParagraphNumber");
         Sentence instance = new Sentence();
@@ -64,6 +70,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testSetNumber() {
         System.out.println("setNumber");
         int number = 1;
@@ -73,6 +80,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testGetNumber() {
         System.out.println("getNumber");
         Sentence instance = new Sentence();
@@ -83,6 +91,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testSetScore() {
         System.out.println("setScore");
         double score = 1.0;
@@ -92,6 +101,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testGetScore() {
         System.out.println("getScore");
         Sentence instance = new Sentence();
@@ -102,6 +112,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testSetNoOfWords() {
         System.out.println("setNoOfWords");
         int number = 1;
@@ -111,6 +122,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testGetNoOfWords() {
         System.out.println("getNoOfWords");
         Sentence instance = new Sentence();
@@ -121,6 +133,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testSetValue() {
         System.out.println("setValue");
         String name = "Francis";
@@ -130,6 +143,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testGetValue() {
         System.out.println("getValue");
         Sentence instance = new Sentence();
@@ -140,6 +154,7 @@ public class SentenceTest {
     }
 
     @Test
+    @SmallTest
     public void testSentenceCharacter() {
         System.out.println("testSentenceCharacter");
         String name = "This website is aw3som3.";

@@ -3,7 +3,7 @@ apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.1.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.socialteinc.socialate"
         minSdkVersion 22
@@ -45,7 +45,7 @@ tasks.coveralls {
     onlyIf { System.env.'CI' }
 }
 configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'
+    resolutionStrategy.force 'com.android.support:support-annotations:26.0.1'
 }
 
 dependencies {
@@ -68,11 +68,11 @@ dependencies {
     testCompile 'org.mockito:mockito-core:1.10.19'
     compile 'com.squareup.picasso:picasso:2.5.2'
     // Optional -- UI testing with UI Automator
-    compile 'com.android.support:exifinterface:26.1.0'
+    compile 'com.android.support:exifinterface:26.0.1'
     compile 'com.github.delight-im:Android-SimpleLocation:v1.0.1'
     compile 'pub.devrel:easypermissions:0.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:cardview-v7:26.1.0'
+    compile 'com.android.support:cardview-v7:26.0.1'
     compile 'com.google.firebase:firebase-core:11.4.2'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
@@ -88,11 +88,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'pub.devrel:easypermissions:0.2.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:palette-v7:26.1.0'
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:palette-v7:26.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support:design:26.0.1'
+    compile 'com.android.support:recyclerview-v7:26.0.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'

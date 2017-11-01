@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -14,7 +15,9 @@ import static org.junit.Assert.assertEquals;
 public class SentenceComparatorTest {
 
     private final SentenceComparator sentence = new SentenceComparator();
+
     @Test
+    @SmallTest
     public void comparator() throws Exception {
         Sentence instance = new Sentence(0,"This is a test sentence.",0, 0);
         Sentence instance1 = new Sentence(0,"This is a test sentence.",0, 0);

@@ -7,6 +7,8 @@ import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.filters.MediumTest;
+import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
@@ -71,6 +73,8 @@ public class MainTest1 {
 //    }
 
     @Test
+    @SmallTest
+
     public void signOutTest() throws InterruptedException {
         Thread.sleep(6000);
         mAuth.signOut();
@@ -81,6 +85,7 @@ public class MainTest1 {
 
 
     @Test
+    @MediumTest
     public void checkProfileTest() throws InterruptedException{
         Thread.sleep(6000);
         mFireBaseDatabase = FirebaseDatabase.getInstance();
@@ -112,6 +117,7 @@ public class MainTest1 {
     }
 
     @Test
+    @SmallTest
     public void testView() throws InterruptedException{
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.entertainmentSpotRecyclerView),

@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.SupportActivity;
@@ -69,6 +70,7 @@ public class ViewOtherUserProfileTest {
 
 
     @Test
+    @SmallTest
     public void profileViewTests1() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);

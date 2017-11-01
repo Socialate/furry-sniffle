@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -16,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class ParagraphTest {
 
     @Test
+    @SmallTest
     public void testParagraph() {
         System.out.println("constructorParagraph");
         Paragraph instance = new Paragraph(0);
@@ -25,6 +27,7 @@ public class ParagraphTest {
     }
 
     @Test
+    @SmallTest
     public void testSetNumber() {
         System.out.println("setNumber");
         int number = 1;
@@ -35,6 +38,7 @@ public class ParagraphTest {
 
 
     @Test
+    @SmallTest
     public void testGetNumber() {
         System.out.println("getNumber");
         Paragraph instance = new Paragraph();
@@ -45,6 +49,7 @@ public class ParagraphTest {
     }
 
     @Test
+    @SmallTest
     public void testSetSentences() {
         System.out.println("setSentences");
         ArrayList<Sentence> init = null;
@@ -54,6 +59,7 @@ public class ParagraphTest {
     }
 
     @Test
+    @SmallTest
     public void testGetSentences() {
         System.out.println("getSentences");
         Paragraph instance = new Paragraph();
@@ -64,6 +70,7 @@ public class ParagraphTest {
     }
 
     @Test
+    @SmallTest
     public void testParagraphCharacter() {
         System.out.println("testSentenceCharacter");
         String name = "This website is aw3som3.";

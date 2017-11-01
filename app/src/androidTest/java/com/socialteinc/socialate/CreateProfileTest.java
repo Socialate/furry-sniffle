@@ -5,6 +5,7 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
+import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
@@ -64,12 +65,14 @@ public class CreateProfileTest {
     }
 
     @Test
+    @SmallTest
     public void test1() throws InterruptedException{
         Thread.sleep(3000);
         onView(withId(R.id.displayNameEditText)).check(matches(isClickable()));
     }
 
     @Test
+    @SmallTest
     public void test2() throws InterruptedException{
         Thread.sleep(3000);
         onView(withId(R.id.setupPictureButton)).check(matches(isClickable()));
@@ -82,6 +85,7 @@ public class CreateProfileTest {
 //    }
 
     @Test
+    @SmallTest
     public void createProfileLaunchTest() throws InterruptedException{
         Thread.sleep(3000);
         onView(withId(R.id.displayNameEditText)).perform(typeText(displayName),pressBack());

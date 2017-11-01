@@ -1,12 +1,10 @@
 package com.socialteinc.socialate;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import org.junit.After;
-import org.junit.FixMethodOrder;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
@@ -24,12 +22,13 @@ public class createPasswordTest {
     @Rule
     public ActivityTestRule<RegisterEmailActivity> rule = new ActivityTestRule<>(RegisterEmailActivity.class);
 
-    @Test
+    @Before
     public void init() {
         rule.getActivity();
     }
 
     @Test
+    @SmallTest
     public void isDisplayedTest() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.createPasswordTextView)).check(matches(isDisplayed()));
@@ -41,6 +40,7 @@ public class createPasswordTest {
     }
 
     @Test
+    @SmallTest
     public void test1() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.loginEmailEditText)).perform(click());
@@ -51,6 +51,7 @@ public class createPasswordTest {
     }
 
     @Test
+    @SmallTest
     public void test2() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.loginEmailEditText)).perform(typeText("joe11@gmail.com"), closeSoftKeyboard());
@@ -60,6 +61,7 @@ public class createPasswordTest {
     }
 
     @Test
+    @SmallTest
     public void test3() throws InterruptedException {
         Thread.sleep(2000);
         onView(withId(R.id.loginEmailEditText)).perform(click()).perform(typeText("joe11@gmail.com"));

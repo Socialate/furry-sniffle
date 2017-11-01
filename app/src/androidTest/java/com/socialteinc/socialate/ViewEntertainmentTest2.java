@@ -77,7 +77,7 @@ public class ViewEntertainmentTest2 {
     @SmallTest
     public void ViewTests1() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(20000);
+        Thread.sleep(15000);
 
         onView(withId(R.id.ViewAddedAreaOwnerText)).check(matches(isDisplayed()));
         onView(withId(R.id.ViewAddedAreaAddressText)).check(matches(isDisplayed()));
@@ -91,7 +91,7 @@ public class ViewEntertainmentTest2 {
     @SmallTest
     public void ViewTests2() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(20000);
+        Thread.sleep(15000);
         onView(isRoot()).perform(swipeUp());
         Thread.sleep(2000);
         onView(withId(R.id.descriptImageView)).check(matches(isDisplayed()));
@@ -101,9 +101,10 @@ public class ViewEntertainmentTest2 {
     }
 
     @Test
+    @SmallTest
     public void ViewTest3() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(20000);
+        Thread.sleep(15000);
         onView(isRoot()).perform(swipeUp());
         Thread.sleep(2000);
 
@@ -111,10 +112,11 @@ public class ViewEntertainmentTest2 {
         onView(withId(R.id.averageCostSpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
         onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-        Thread.sleep(4000);
+       // Thread.sleep(4000);
     }
 
     @Test
+    @SmallTest
     public void ViewTest31() throws InterruptedException{
         rule2.getActivity();
         Thread.sleep(20000);
@@ -125,13 +127,14 @@ public class ViewEntertainmentTest2 {
         onView(withId(R.id.averageCostSpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
         onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
     }
 
     @Test
+    @SmallTest
     public void ViewTest32() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(20000);
+        Thread.sleep(15000);
         onView(isRoot()).perform(swipeUp());
         Thread.sleep(2000);
 
@@ -139,13 +142,14 @@ public class ViewEntertainmentTest2 {
         onView(withId(R.id.averageCostSpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
         onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-        Thread.sleep(4000);
+       // Thread.sleep(4000);
     }
 
     @Test
+    @SmallTest
     public void ViewTest33() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(20000);
+        Thread.sleep(15000);
         onView(isRoot()).perform(swipeUp());
         Thread.sleep(2000);
 
@@ -153,13 +157,14 @@ public class ViewEntertainmentTest2 {
         onView(withId(R.id.averageCostSpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(name))).perform(click());
         onView(withId(R.id.averageCostSpinner)).check(matches(withSpinnerText(containsString(name))));
-        Thread.sleep(4000);
+        //Thread.sleep(4000);
     }
 
     @Test
+    @SmallTest
     public void ViewTest4() throws InterruptedException{
         rule2.getActivity();
-        Thread.sleep(20000);
+        Thread.sleep(15000);
         onView(isRoot()).perform(swipeUp());
         Thread.sleep(2000);
 

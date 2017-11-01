@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ public class CommentsClassTest {
      */
 
     @Test
+    @SmallTest
     public void testEntertainment() {
         Comments instance = new Comments(null, null, null, null, null, null);
         assertEquals(instance.getTimestamp(), null);
@@ -26,6 +28,7 @@ public class CommentsClassTest {
      * Test of setComment method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testSetComment() {
         String comment = "I like this place";
         Comments instance = new Comments();
@@ -37,6 +40,7 @@ public class CommentsClassTest {
      * Test of getComment method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testGetComment() {
         Comments instance = new Comments();
         String expResult = "I like this place";
@@ -48,6 +52,7 @@ public class CommentsClassTest {
      * Test of setTimestamp method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testSetTimestamp() {
         String time = "2017-08-20 14:30";
         Comments instance = new Comments();
@@ -59,6 +64,7 @@ public class CommentsClassTest {
      * Test of getTimestamp method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testGetTimestamp() {
         Comments instance = new Comments();
         String expResult = "2017-08-20 14:30";
@@ -71,6 +77,7 @@ public class CommentsClassTest {
      * Test of getEntertainmentUID method, of class Comment.
      */
     @Test
+    @SmallTest
     public void testSetEntertainmentUID() {
         String eUID = "-KuWs0YVBB_nWlC03LrE";
         Comments instance = new Comments();
@@ -82,6 +89,7 @@ public class CommentsClassTest {
      * Test of getEntertainmentUID method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testGetEntertainmentUID() {
         Comments instance = new Comments();
         String expResult = "-KuWs0YVBB_nWlC03LrE";
@@ -94,6 +102,7 @@ public class CommentsClassTest {
      * Test of setPhotoUrl method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testSetPhotoUrl() {
         String photoUrl = "photo of author";
         Comments instance = new Comments();
@@ -105,6 +114,7 @@ public class CommentsClassTest {
      * Test of getPhotoUrl method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testGetPhotoUrl() {
         Comments instance = new Comments();
         String expResult = "photo of author";
@@ -117,6 +127,7 @@ public class CommentsClassTest {
      * Test of setUID method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testSetUID() {
         String UID = "commenter UID";
         Comments instance = new Comments();
@@ -128,6 +139,7 @@ public class CommentsClassTest {
      * Test of getUID method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testGetUID() {
         Comments instance = new Comments();
         String expResult = "commenter UID";
@@ -140,6 +152,7 @@ public class CommentsClassTest {
      * Test of setAuthor method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testSetAuthor() {
         String author = "author name";
         Comments instance = new Comments();
@@ -151,6 +164,7 @@ public class CommentsClassTest {
      * Test of getAuthor method, of class Comments.
      */
     @Test
+    @SmallTest
     public void testGetAuthor() {
         Comments instance = new Comments();
         String expResult = "author";

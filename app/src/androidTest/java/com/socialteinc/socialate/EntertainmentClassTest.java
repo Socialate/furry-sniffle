@@ -1,5 +1,6 @@
 package com.socialteinc.socialate;
 
+import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
@@ -16,6 +17,7 @@ public class EntertainmentClassTest {
      */
 
     @Test
+    @SmallTest
     public void testEntertainment() {
         System.out.println("constructorEntertainment");
         Entertainment instance = new Entertainment(null,null,null,null,null,null,null,null,null,null);
@@ -33,6 +35,7 @@ public class EntertainmentClassTest {
      * Test of setOwner method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetOwner() {
         System.out.println("setOwner");
         String name = "james";
@@ -45,6 +48,7 @@ public class EntertainmentClassTest {
      * Test of getOwner method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetOwner() {
         System.out.println("getOwner");
         Entertainment instance = new Entertainment();
@@ -57,6 +61,7 @@ public class EntertainmentClassTest {
      * Test of setName method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetName() {
         System.out.println("setName");
         String name = "Truth";
@@ -69,6 +74,7 @@ public class EntertainmentClassTest {
      * Test of getName method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetName() {
         System.out.println("getName");
         Entertainment instance = new Entertainment();
@@ -82,6 +88,7 @@ public class EntertainmentClassTest {
      * Test of getAddress method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetAddress() {
         System.out.println("setAddress");
         String address = "289 10th Ave, New York, NY 10001, USA";
@@ -94,6 +101,7 @@ public class EntertainmentClassTest {
      * Test of getAddress method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetAddress() {
         System.out.println("getAddress");
         Entertainment instance = new Entertainment();
@@ -107,6 +115,7 @@ public class EntertainmentClassTest {
      * Test of setDescription method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetDescription() {
         System.out.println("setDesciption");
         String description = "Colorful, multi-tiered dance club featuring 30-foot ceilings, LED screens & plenty of night owls.";
@@ -119,6 +128,7 @@ public class EntertainmentClassTest {
      * Test of getDescription method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetDescription() {
         System.out.println("getDescription");
         Entertainment instance = new Entertainment();
@@ -132,6 +142,7 @@ public class EntertainmentClassTest {
      * Test of getLongitude method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetLongitude() {
         System.out.println("setLongitude");
         String longitude = "28.0481282";
@@ -144,6 +155,7 @@ public class EntertainmentClassTest {
      * Test of getlongitude method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetLongitude() {
         System.out.println("getLongitude");
         Entertainment instance = new Entertainment();
@@ -157,6 +169,7 @@ public class EntertainmentClassTest {
      * Test of setLatitude method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetLatitude() {
         System.out.println("setLatitude");
         String latitude = "-26.1818356";
@@ -169,6 +182,7 @@ public class EntertainmentClassTest {
      * Test of getLatitude method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetLatitude() {
         System.out.println("getLongitude");
         Entertainment instance = new Entertainment();
@@ -182,6 +196,7 @@ public class EntertainmentClassTest {
      * Test of setPhotoUrl method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetPhotoUrl() {
         System.out.println("setPhotoUrl");
         String photoUrl = "photo of place";
@@ -194,6 +209,7 @@ public class EntertainmentClassTest {
      * Test of getPhotoUrl method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetPhotoUrl() {
         System.out.println("getPhotoUrl");
         Entertainment instance = new Entertainment();
@@ -207,6 +223,7 @@ public class EntertainmentClassTest {
      * Test of setUID method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetUID() {
         System.out.println("setUID");
         String UID = "creater UID";
@@ -219,6 +236,7 @@ public class EntertainmentClassTest {
      * Test of getUID method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetUID() {
         System.out.println("getUID");
         Entertainment instance = new Entertainment();
@@ -232,6 +250,7 @@ public class EntertainmentClassTest {
      * Test of setAuthor method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetAuthor() {
         System.out.println("setAuthor");
         String author = "author name";
@@ -244,6 +263,7 @@ public class EntertainmentClassTest {
      * Test of getAuthor method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetAuthor() {
         System.out.println("getAuthor");
         Entertainment instance = new Entertainment();
@@ -257,6 +277,7 @@ public class EntertainmentClassTest {
      * Test of setEstablishmentCategory method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testSetEstablishmentCategory() {
         System.out.println("setEstablishmentCategory");
         String category = "club";
@@ -269,6 +290,7 @@ public class EntertainmentClassTest {
      * Test of getEstablishmentCategory method, of class Entertainment.
      */
     @Test
+    @SmallTest
     public void testGetEstablishmentCategory() {
         System.out.println("getEstablishmentCategory");
         Entertainment instance = new Entertainment();

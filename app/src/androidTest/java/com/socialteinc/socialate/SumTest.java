@@ -1,6 +1,7 @@
 package com.socialteinc.socialate;
 
 import android.os.Looper;
+import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -14,7 +15,9 @@ import static junit.framework.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class SumTest {
+
     @Test
+    @MediumTest
     public void summarize() throws Exception {
         Sum sum = new Sum();
         assertEquals(sum.summarize("A wiki is run using wiki software, otherwise known as a wiki engine. " +
