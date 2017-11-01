@@ -5,13 +5,15 @@ android:
     - android-22
     - android-26
     - platform-tools
-    - build-tools-26.0.1
+    - build-tools-26.0.2
     - extra-android-m2repository
     - tools
 
     # To run emulator during your tests
     - sys-img-armeabi-v7a-android-22
   sudo: enabled
+
+install: travis_wait mvn install
 
 before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
